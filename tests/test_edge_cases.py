@@ -43,7 +43,7 @@ def extract_critic_status(critic_review: Any) -> Any:
     if isinstance(critic_review, str):
         return critic_review
     if isinstance(critic_review, dict):
-        for key in ("status", "critic_status", "value"):
+        for key in ("recommended_status", "status", "critic_status", "value"):
             if key in critic_review:
                 return critic_review[key]
     return None
@@ -139,6 +139,10 @@ def main() -> int:
     print(f"  passed: {passed}")
     print(f"  failed: {failed}")
     return 0 if failed == 0 else 1
+
+
+def test_edge_cases() -> None:
+    assert main() == 0
 
 
 if __name__ == "__main__":

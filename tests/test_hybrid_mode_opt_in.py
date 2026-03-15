@@ -62,7 +62,7 @@ def case_deterministic_bypasses_client() -> tuple[bool, str]:
 
         llm_client.get_chat_model = fail_if_called
         result = run_graph("I have a headache.")
-        status = result.get("critic_review", {}).get("status")
+        status = result.get("critic_review", {}).get("recommended_status")
         return status in {"pass", "revise", "fail"}, f"critic status: {status}"
     except Exception as exc:
         return False, str(exc)
@@ -76,7 +76,7 @@ def case_hybrid_missing_key_falls_back() -> tuple[bool, str]:
     try:
         result = run_graph("I have fever and cough.")
         errors = result.get("errors", [])
-        status = result.get("critic_review", {}).get("status")
+        status = result.get("critic_review", {}).get("recommended_status")
         has_marker = any("hybrid_fallback" in str(item) for item in errors)
         ok = has_marker and status in {"pass", "revise", "fail"}
         return ok, f"errors={errors}, status={status}"
@@ -122,6 +122,10 @@ def main() -> int:
     print(f"  passed: {passed}")
     print(f"  failed: {failed}")
     return 0 if failed == 0 else 1
+
+
+def test_hybrid_mode_opt_in() -> None:
+    assert main() == 0
 
 
 if __name__ == "__main__":

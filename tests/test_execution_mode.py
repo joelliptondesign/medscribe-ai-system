@@ -108,5 +108,9 @@ def main() -> int:
     return 0 if failed == 0 else 1
 
 
+def test_execution_mode() -> None:
+    assert main() == 0
+
+
 if __name__ == "__main__":
     raise SystemExit(main())
