@@ -1,7 +1,11 @@
+.DS_Store
 .env
 .env.example
 .gitignore
+FREEZE_MANIFEST.json
 README.md
+REPO_TREE.txt
+SHA256SUMS.txt
 app.py
 requirements.txt
 .claude/settings.local.json
