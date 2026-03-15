@@ -1,8 +1,0 @@
-{
-  "venv_interpreter_path": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3.13",
-  "venv_dns_check_succeeded": false,
-  "diagnostic_path_used": ".venv/bin/python - <<'PY' import socket; socket.getaddrinfo('api.openai.com', 443, type=socket.SOCK_STREAM) PY",
-  "diagnostic_dns_check_succeeded": false,
-  "mismatch_detected": false,
-  "likely_explanation": "Both the exact virtualenv interpreter check and the prior diagnostic-style check fail with the same DNS resolution error, so the failure is environmental rather than caused by a diagnostic path mismatch."
-}

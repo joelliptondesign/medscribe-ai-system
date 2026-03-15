@@ -81,13 +81,11 @@ examples/ — canonical governed output artifact
 
 tests/ — deterministic validation tests
 
-_archive_dev/ — archived diagnostics and historical artifacts
-
 NOTES
 
 This repository focuses on demonstrating a governed reasoning workflow architecture.
 
-Development diagnostics and experimental artifacts have been archived under `_archive_dev` to keep the demo surface focused.
+This repository is intentionally scoped to the primary governed workflow demo surface.
 
 Validation
 
