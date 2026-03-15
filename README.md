@@ -27,6 +27,8 @@ governance_policy
 ↓
 final_formatter
 
+See docs/architecture.md for the visual pipeline diagram.
+
 Key design elements:
 
 • structured reasoning pipeline
@@ -86,3 +88,10 @@ NOTES
 This repository focuses on demonstrating a governed reasoning workflow architecture.
 
 Development diagnostics and experimental artifacts have been archived under `_archive_dev` to keep the demo surface focused.
+
+Validation
+
+With this repository state:
+
+• python app.py runs successfully
+• pytest passes (3 tests)
