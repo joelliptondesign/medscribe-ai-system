@@ -1,0 +1,97 @@
+[
+  {
+    "label": "chest pain",
+    "icd_code": "R07.9",
+    "icd_label": "Chest pain, unspecified"
+  },
+  {
+    "label": "shortness of breath",
+    "icd_code": "R06.02",
+    "icd_label": "Shortness of breath"
+  },
+  {
+    "label": "fever",
+    "icd_code": "R50.9",
+    "icd_label": "Fever, unspecified"
+  },
+  {
+    "label": "cough",
+    "icd_code": "R05.9",
+    "icd_label": "Cough, unspecified"
+  },
+  {
+    "label": "sore throat",
+    "icd_code": "J02.9",
+    "icd_label": "Acute pharyngitis, unspecified"
+  },
+  {
+    "label": "headache",
+    "icd_code": "R51.9",
+    "icd_label": "Headache, unspecified"
+  },
+  {
+    "label": "abdominal pain",
+    "icd_code": "R10.9",
+    "icd_label": "Unspecified abdominal pain"
+  },
+  {
+    "label": "nausea/vomiting",
+    "icd_code": "R11.2",
+    "icd_label": "Nausea with vomiting, unspecified"
+  },
+  {
+    "label": "urinary burning",
+    "icd_code": "R30.0",
+    "icd_label": "Dysuria"
+  },
+  {
+    "label": "back pain",
+    "icd_code": "M54.9",
+    "icd_label": "Dorsalgia, unspecified"
+  },
+  {
+    "label": "Upper respiratory infection",
+    "icd_code": "J06.9",
+    "icd_label": "Acute upper respiratory infection, unspecified"
+  },
+  {
+    "label": "Viral syndrome",
+    "icd_code": "B34.9",
+    "icd_label": "Viral infection, unspecified"
+  },
+  {
+    "label": "Pharyngitis",
+    "icd_code": "J02.9",
+    "icd_label": "Acute pharyngitis, unspecified"
+  },
+  {
+    "label": "Tension headache",
+    "icd_code": "G44.209",
+    "icd_label": "Tension-type headache, unspecified"
+  },
+  {
+    "label": "Gastroenteritis",
+    "icd_code": "K52.9",
+    "icd_label": "Noninfective gastroenteritis and colitis, unspecified"
+  },
+  {
+    "label": "Dysuria",
+    "icd_code": "R30.0",
+    "icd_label": "Dysuria"
+  },
+  {
+    "label": "Musculoskeletal back pain",
+    "icd_code": "M54.9",
+    "icd_label": "Dorsalgia, unspecified"
+  },
+  {
+    "label": "Chest pain syndrome",
+    "icd_code": "R07.9",
+    "icd_label": "Chest pain, unspecified"
+  },
+  {
+    "label": "Dyspnea",
+    "icd_code": "R06.00",
+    "icd_label": "Dyspnea, unspecified"
+  }
+]

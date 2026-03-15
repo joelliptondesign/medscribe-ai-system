@@ -1,0 +1,49 @@
+{
+  "execution_mode": "hybrid",
+  "critic_review": {
+    "diagnosis_consistency_score": 0.42,
+    "symptom_alignment_score": 0.78,
+    "icd_specificity_score": 0.3,
+    "recommended_status": "fail",
+    "confidence": 0.62,
+    "reason_codes": [
+      "DUPLICATE_ICD_MAPPING",
+      "LOW_ICD_SPECIFICITY"
+    ],
+    "summary": "Critic evidence indicates failure."
+  },
+  "governance_result": {
+    "final_status": "FAIL",
+    "escalation_required": true,
+    "policy_version": "policy_v1",
+    "governance_version": "governance_v1",
+    "applied_rules": [
+      "RULE_DIAGNOSIS_CONSISTENCY_FAIL",
+      "RULE_SYMPTOM_ALIGNMENT_REVISE",
+      "RULE_ICD_SPECIFICITY_FAIL",
+      "RULE_CONFIDENCE_REVISE",
+      "RULE_CRITIC_RECOMMENDATION_FAIL"
+    ],
+    "reason_codes": [
+      "DUPLICATE_ICD_MAPPING",
+      "LOW_ICD_SPECIFICITY",
+      "LOW_DIAGNOSIS_CONSISTENCY",
+      "LOW_SYMPTOM_ALIGNMENT",
+      "LOW_CRITIC_CONFIDENCE"
+    ]
+  },
+  "final_output": {
+    "status": "FAIL",
+    "escalation_required": true,
+    "policy_version": "policy_v1",
+    "governance_version": "governance_v1",
+    "reason_codes": [
+      "DUPLICATE_ICD_MAPPING",
+      "LOW_ICD_SPECIFICITY",
+      "LOW_DIAGNOSIS_CONSISTENCY",
+      "LOW_SYMPTOM_ALIGNMENT",
+      "LOW_CRITIC_CONFIDENCE"
+    ],
+    "summary": "Escalation required due to policy thresholds."
+  }
+}

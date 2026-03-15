@@ -1,0 +1,21 @@
+Node purpose:
+Validate pipeline outputs for contract compliance and obvious contradictions before final formatting.
+
+Expected input:
+- intake_data
+- triage
+- diagnoses
+- icd_mappings
+- escalation_required flag
+
+Required output shape:
+- status: pass | revise | fail
+- findings: list of validation findings
+
+Constraints:
+- Return valid JSON only.
+- Do not include markdown fences or commentary.
+- Required keys: status, findings.
+- status must be one of: pass, revise, fail.
+- Validate structure, controlled values, and demo-safe contradictions only.
+- Preserve contract-safe behavior with no extra commentary.

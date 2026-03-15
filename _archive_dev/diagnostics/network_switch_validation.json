@@ -1,0 +1,9 @@
+{
+  "execution_mode": "hybrid",
+  "dns_check_attempted": true,
+  "dns_check_succeeded": false,
+  "hybrid_execution_attempted": false,
+  "hybrid_execution_succeeded": false,
+  "fallback_nodes": [],
+  "likely_outcome": "dns_still_blocked"
+}

@@ -1,0 +1,24 @@
+{
+  "entrypoint": "app.py",
+  "startup_diagnostics": {
+    "interpreter_path": "/Users/joel/Desktop/Med_Scribe_Demo/.venv/bin/python",
+    "cwd": "/Users/joel/Desktop/Med_Scribe_Demo",
+    "repo_root": "/Users/joel/Desktop/Med_Scribe_Demo",
+    "execution_mode": "hybrid",
+    "model_name": "gpt-4o-mini",
+    "openai_api_key_present": true,
+    "openai_api_key_masked": "sk-p...078A",
+    "dns_resolution_result": {
+      "attempted": true,
+      "succeeded": false,
+      "error_type": "gaierror"
+    },
+    "direct_client_preflight_result": {
+      "attempted": true,
+      "succeeded": false
+    },
+    "direct_client_preflight_error_type": "APIConnectionError",
+    "direct_client_preflight_error_message": "Connection error."
+  },
+  "timestamp": "2026-03-14T20:52:08Z"
+}

@@ -1,0 +1,13 @@
+{
+  "execution_mode": "hybrid",
+  "model_name": "gpt-4o-mini",
+  "client_helper_imported": true,
+  "client_constructed": true,
+  "request_attempted": true,
+  "response_returned": false,
+  "content_extracted": false,
+  "failure_stage": "request_submission_failure",
+  "exception_type": "APIConnectionError",
+  "exception_message_sanitized": "APIConnectionError",
+  "likely_root_cause": "unknown"
+}

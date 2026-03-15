@@ -1,0 +1,96 @@
+{
+  "intake_parser": {
+    "intake_data": {
+      "symptoms": ["string"],
+      "duration": "string | null",
+      "medications": ["string"],
+      "allergies": ["string"],
+      "comorbidities": ["string"],
+      "severity_descriptors": ["string"],
+      "missing_fields": ["string"],
+      "missing_data_questions": ["string"]
+    },
+    "completeness": {
+      "has_symptoms": true,
+      "has_duration": true,
+      "has_minimum_intake": true
+    }
+  },
+  "triage_engine": {
+    "triage": {
+      "level": "urgent | routine | home_care | escalate",
+      "rationale": "string",
+      "valid_levels": ["escalate", "home_care", "routine", "urgent"]
+    }
+  },
+  "diagnosis_engine": {
+    "diagnoses": ["string"]
+  },
+  "icd_mapper": {
+    "icd_mappings": [
+      {
+        "label": "string",
+        "icd_code": "string",
+        "icd_label": "string",
+        "status": "OK | PARTIAL_MATCH | NO_MATCH_FOUND"
+      }
+    ]
+  },
+  "critic": {
+    "critic_review": {
+      "diagnosis_consistency_score": 0.0,
+      "symptom_alignment_score": 0.0,
+      "icd_specificity_score": 0.0,
+      "recommended_status": "pass | revise | fail",
+      "confidence": 0.0,
+      "reason_codes": ["UPPERCASE_REASON_CODE"],
+      "summary": "string"
+    }
+  },
+  "governance_policy": {
+    "governance_result": {
+      "final_status": "PASS | REVISE | FAIL",
+      "escalation_required": true,
+      "policy_version": "policy_v1",
+      "governance_version": "governance_v1",
+      "applied_rules": ["RULE_ID"],
+      "reason_codes": ["UPPERCASE_REASON_CODE"]
+    },
+    "escalation_required": true
+  },
+  "final_formatter": {
+    "final_output": {
+      "status": "PASS | REVISE | FAIL",
+      "escalation_required": true,
+      "policy_version": "policy_v1",
+      "governance_version": "governance_v1",
+      "reason_codes": ["UPPERCASE_REASON_CODE"],
+      "summary": "string"
+    }
+  },
+  "state_surfaces": {
+    "intake_data": {},
+    "completeness": {},
+    "triage": {},
+    "diagnoses": ["string"],
+    "icd_mappings": [
+      {
+        "label": "string",
+        "icd_code": "string",
+        "icd_label": "string",
+        "status": "OK | PARTIAL_MATCH | NO_MATCH_FOUND"
+      }
+    ],
+    "critic_review": {},
+    "governance_result": {},
+    "escalation_required": true,
+    "final_output": {
+      "status": "PASS | REVISE | FAIL",
+      "escalation_required": true,
+      "policy_version": "policy_v1",
+      "governance_version": "governance_v1",
+      "reason_codes": ["UPPERCASE_REASON_CODE"],
+      "summary": "string"
+    }
+  }
+}

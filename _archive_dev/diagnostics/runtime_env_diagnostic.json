@@ -1,0 +1,24 @@
+{
+  "entrypoint": "scripts/local_hybrid_eval.py",
+  "startup_diagnostics": {
+    "interpreter_path": "/Users/joel/Desktop/Med_Scribe_Demo/.venv/bin/python",
+    "cwd": "/Users/joel/Desktop/Med_Scribe_Demo",
+    "repo_root": "/Users/joel/Desktop/Med_Scribe_Demo",
+    "execution_mode": "hybrid",
+    "model_name": "gpt-4o-mini",
+    "openai_api_key_present": true,
+    "openai_api_key_masked": "sk-p...078A",
+    "dns_resolution_result": {
+      "attempted": true,
+      "succeeded": true,
+      "error_type": null
+    },
+    "direct_client_preflight_result": {
+      "attempted": true,
+      "succeeded": true
+    },
+    "direct_client_preflight_error_type": null,
+    "direct_client_preflight_error_message": null
+  },
+  "timestamp": "2026-03-15T18:14:33Z"
+}

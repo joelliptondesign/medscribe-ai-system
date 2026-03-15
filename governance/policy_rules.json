@@ -1,0 +1,26 @@
+{
+  "policy_version": "policy_v1",
+  "governance_version": "governance_v1",
+  "thresholds": {
+    "diagnosis_consistency_min_for_pass": 0.75,
+    "diagnosis_consistency_min_for_revise": 0.5,
+    "symptom_alignment_min_for_pass": 0.8,
+    "symptom_alignment_min_for_revise": 0.6,
+    "icd_specificity_min_for_pass": 0.75,
+    "icd_specificity_min_for_revise": 0.4,
+    "confidence_min_for_pass": 0.7,
+    "confidence_min_for_revise": 0.4
+  },
+  "rule_ids": {
+    "diagnosis_consistency_pass": "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+    "diagnosis_consistency_revise": "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+    "symptom_alignment_pass": "RULE_SYMPTOM_ALIGNMENT_PASS",
+    "symptom_alignment_revise": "RULE_SYMPTOM_ALIGNMENT_REVISE",
+    "icd_specificity_pass": "RULE_ICD_SPECIFICITY_PASS",
+    "icd_specificity_revise": "RULE_ICD_SPECIFICITY_REVISE",
+    "confidence_pass": "RULE_CONFIDENCE_PASS",
+    "confidence_revise": "RULE_CONFIDENCE_REVISE",
+    "critic_recommendation_fail": "RULE_CRITIC_RECOMMENDATION_FAIL",
+    "critic_recommendation_revise": "RULE_CRITIC_RECOMMENDATION_REVISE"
+  }
+}

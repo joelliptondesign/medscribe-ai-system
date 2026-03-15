@@ -1,0 +1,17 @@
+Node purpose:
+Produce up to three suggested diagnoses from recognized symptom patterns.
+
+Expected input:
+- intake_data.symptoms
+- triage recommendation when available
+
+Required output shape:
+- diagnoses: list with maximum length 3
+
+Constraints:
+- Return valid JSON only.
+- Do not include markdown fences or commentary.
+- Required key: diagnoses.
+- diagnoses must be an array of strings with length <= 3.
+- Keep outputs aligned to the existing demo-safe diagnosis contract.
+- Do not add speculative claims beyond compact placeholder reasoning.

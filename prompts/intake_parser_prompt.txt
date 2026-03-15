@@ -1,0 +1,23 @@
+Node purpose:
+Transform raw intake text into structured intake data for downstream pipeline steps.
+
+Expected input:
+- raw_input: free-text patient intake string
+
+Required output shape:
+- symptoms: list of symptom labels
+- duration: string or null
+- medications: list
+- allergies: list
+- comorbidities: list
+- severity_descriptors: list
+- missing_fields: list
+- missing_data_questions: list
+
+Constraints:
+- Return valid JSON only.
+- Do not include markdown fences or commentary.
+- Required keys: symptoms, duration, medications, allergies, comorbidities, severity_descriptors, missing_fields, missing_data_questions.
+- Symptoms must be an array of strings using the local demo symptom vocabulary when possible.
+- Do not make diagnoses.
+- Keep output JSON-compatible and aligned to the local schema contract.

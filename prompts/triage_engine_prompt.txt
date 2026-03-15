@@ -1,0 +1,19 @@
+Node purpose:
+Assign a controlled triage recommendation from structured intake data.
+
+Expected input:
+- intake_data with extracted symptoms and severity descriptors
+- completeness metadata when available
+
+Required output shape:
+- level: urgent | routine | home_care | escalate
+- rationale: string
+- valid_levels: list
+
+Constraints:
+- Return valid JSON only.
+- Do not include markdown fences or commentary.
+- Required keys: level, rationale, valid_levels.
+- level must be one of: urgent, routine, home_care, escalate.
+- Keep routing reproducible and contract-safe.
+- Do not add speculative medical reasoning beyond the demo-safe rules.
