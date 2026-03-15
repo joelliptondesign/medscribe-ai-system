@@ -58,7 +58,7 @@ Each run produces a structured artifact containing:
 • governance policy outcomes
 • final decision state
 
-This allows decisions to be inspected, audited, and replayed.
+This allows decisions to be inspected, audited, and analyzed, and provides the foundation for replayable execution.
 
 4. Separation of reasoning and arbitration
 
