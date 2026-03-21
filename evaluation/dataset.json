@@ -1,0 +1,203 @@
+{
+  "cases": [
+
+    {
+      "case_id": "V1",
+      "scenario_type": "valid",
+      "input": {
+        "age": 34,
+        "gender": "female",
+        "symptoms": ["fever", "cough", "fatigue"],
+        "duration": "4 days",
+        "notes": "Gradual onset, no chronic conditions."
+      },
+      "expected_behavior": "PASS",
+      "scenario_tags": ["clear_alignment"]
+    },
+    {
+      "case_id": "V2",
+      "scenario_type": "valid",
+      "input": {
+        "age": 52,
+        "gender": "male",
+        "symptoms": ["chest pain", "shortness of breath"],
+        "duration": "1 day",
+        "notes": "Symptoms worsen with exertion."
+      },
+      "expected_behavior": "PASS",
+      "scenario_tags": ["strong_signal"]
+    },
+    {
+      "case_id": "V3",
+      "scenario_type": "valid",
+      "input": {
+        "age": 28,
+        "gender": "male",
+        "symptoms": ["sore throat", "fever"],
+        "duration": "2 days",
+        "notes": "No additional complications."
+      },
+      "expected_behavior": "PASS",
+      "scenario_tags": ["simple_case"]
+    },
+    {
+      "case_id": "V4",
+      "scenario_type": "valid",
+      "input": {
+        "age": 45,
+        "gender": "female",
+        "symptoms": ["burning urination", "frequent urination"],
+        "duration": "3 days",
+        "notes": "No back pain reported."
+      },
+      "expected_behavior": "PASS",
+      "scenario_tags": ["clear_mapping"]
+    },
+    {
+      "case_id": "V5",
+      "scenario_type": "valid",
+      "input": {
+        "age": 60,
+        "gender": "male",
+        "symptoms": ["joint pain", "morning stiffness"],
+        "duration": "2 weeks",
+        "notes": "Symptoms improve with movement."
+      },
+      "expected_behavior": "PASS",
+      "scenario_tags": ["chronic_pattern"]
+    },
+
+    {
+      "case_id": "A1",
+      "scenario_type": "ambiguous",
+      "input": {
+        "age": 41,
+        "gender": "female",
+        "symptoms": ["fatigue", "headache"],
+        "duration": "3 days",
+        "notes": "No additional symptoms reported."
+      },
+      "expected_behavior": "REVISE",
+      "scenario_tags": ["low_specificity"]
+    },
+    {
+      "case_id": "A2",
+      "scenario_type": "ambiguous",
+      "input": {
+        "age": 37,
+        "gender": "male",
+        "symptoms": ["fever", "fatigue", "muscle aches"],
+        "duration": "2 days",
+        "notes": "No respiratory symptoms."
+      },
+      "expected_behavior": "REVISE",
+      "scenario_tags": ["multiple_possible_diagnoses"]
+    },
+    {
+      "case_id": "A3",
+      "scenario_type": "ambiguous",
+      "input": {
+        "age": 50,
+        "gender": "female",
+        "symptoms": ["abdominal discomfort", "nausea"],
+        "duration": "1 day",
+        "notes": "Symptoms are mild and intermittent."
+      },
+      "expected_behavior": "REVISE",
+      "scenario_tags": ["weak_evidence"]
+    },
+    {
+      "case_id": "A4",
+      "scenario_type": "ambiguous",
+      "input": {
+        "age": 29,
+        "gender": "male",
+        "symptoms": ["cough", "fatigue"],
+        "duration": "1 day",
+        "notes": "No fever present."
+      },
+      "expected_behavior": "REVISE",
+      "scenario_tags": ["early_stage"]
+    },
+    {
+      "case_id": "A5",
+      "scenario_type": "ambiguous",
+      "input": {
+        "age": 65,
+        "gender": "female",
+        "symptoms": ["dizziness", "fatigue"],
+        "duration": "5 days",
+        "notes": "No clear triggering factors."
+      },
+      "expected_behavior": "REVISE",
+      "scenario_tags": ["underspecified_input"]
+    },
+
+    {
+      "case_id": "I1",
+      "scenario_type": "invalid",
+      "input": {
+        "age": 33,
+        "gender": "male",
+        "symptoms": ["runny nose", "sneezing"],
+        "duration": "2 days",
+        "notes": "No fever or systemic symptoms."
+      },
+      "expected_behavior": "FAIL",
+      "scenario_tags": ["overdiagnosis_risk"]
+    },
+    {
+      "case_id": "I2",
+      "scenario_type": "invalid",
+      "input": {
+        "age": 47,
+        "gender": "female",
+        "symptoms": ["mild headache"],
+        "duration": "1 day",
+        "notes": "No additional symptoms."
+      },
+      "expected_behavior": "FAIL",
+      "scenario_tags": ["insufficient_evidence"]
+    },
+    {
+      "case_id": "I3",
+      "scenario_type": "invalid",
+      "input": {
+        "age": 55,
+        "gender": "male",
+        "symptoms": ["chest pain", "leg swelling"],
+        "duration": "3 days",
+        "notes": "Symptoms do not clearly align."
+      },
+      "expected_behavior": "FAIL",
+      "scenario_tags": ["conflicting_signals"]
+    },
+    {
+      "case_id": "I4",
+      "scenario_type": "invalid",
+      "input": {
+        "age": 39,
+        "gender": "female",
+        "symptoms": ["fever", "cough", "burning urination"],
+        "duration": "4 days",
+        "notes": "Multiple unrelated symptom clusters."
+      },
+      "expected_behavior": "FAIL",
+      "scenario_tags": ["multi_cluster_conflict"]
+    },
+    {
+      "case_id": "I5",
+      "scenario_type": "invalid",
+      "input": {
+        "age": 62,
+        "gender": "male",
+        "symptoms": ["fatigue"],
+        "duration": "1 day",
+        "notes": "No supporting detail."
+      },
+      "expected_behavior": "FAIL",
+      "scenario_tags": ["extreme_underspecification"]
+    }
+
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "total_cases": 15,
+  "behavior_accuracy": 0.8,
+  "distribution": {
+    "pass_rate": 0.3333333333333333,
+    "revise_rate": 0.5333333333333333,
+    "fail_rate": 0.13333333333333333
+  },
+  "governance_impact": {
+    "status_change_rate": 0.06666666666666667,
+    "unchanged_rate": 0.9333333333333333,
+    "corrections_to_fail": 0,
+    "corrections_to_revise": 1
+  },
+  "average_score": 5.732666666666665
+}

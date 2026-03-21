@@ -1,0 +1,346 @@
+{
+  "results": [
+    {
+      "case_id": "V1",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "actual_final_status": "PASS",
+      "computed_final_status": "PASS",
+      "total_score": 7.0,
+      "critic_scores": {
+        "diagnosis_consistency_score": 1.0,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "pass",
+        "confidence": 1.0,
+        "reason_codes": [
+          "CRITIC_REVIEW_CLEAR"
+        ],
+        "summary": "Critic evidence supports pass.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "V2",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "actual_final_status": "PASS",
+      "computed_final_status": "PASS",
+      "total_score": 7.0,
+      "critic_scores": {
+        "diagnosis_consistency_score": 1.0,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "pass",
+        "confidence": 1.0,
+        "reason_codes": [
+          "CRITIC_REVIEW_CLEAR"
+        ],
+        "summary": "Critic evidence supports pass.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "V3",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "actual_final_status": "PASS",
+      "computed_final_status": "PASS",
+      "total_score": 7.0,
+      "critic_scores": {
+        "diagnosis_consistency_score": 1.0,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "pass",
+        "confidence": 1.0,
+        "reason_codes": [
+          "CRITIC_REVIEW_CLEAR"
+        ],
+        "summary": "Critic evidence supports pass.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "V4",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "actual_final_status": "PASS",
+      "computed_final_status": "PASS",
+      "total_score": 7.0,
+      "critic_scores": {
+        "diagnosis_consistency_score": 1.0,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "pass",
+        "confidence": 1.0,
+        "reason_codes": [
+          "CRITIC_REVIEW_CLEAR"
+        ],
+        "summary": "Critic evidence supports pass.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "V5",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "actual_final_status": "PASS",
+      "computed_final_status": "PASS",
+      "total_score": 7.0,
+      "critic_scores": {
+        "diagnosis_consistency_score": 1.0,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "pass",
+        "confidence": 1.0,
+        "reason_codes": [
+          "CRITIC_REVIEW_CLEAR"
+        ],
+        "summary": "Critic evidence supports pass.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "A1",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 6.02,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "AMBIGUOUS_SYMPTOM_PATTERN",
+          "AMBIGUITY_STRUCTURED_HANDLING"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "A2",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 6.02,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "AMBIGUOUS_SYMPTOM_PATTERN",
+          "AMBIGUITY_STRUCTURED_HANDLING"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "A3",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 6.02,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "AMBIGUOUS_SYMPTOM_PATTERN",
+          "AMBIGUITY_STRUCTURED_HANDLING"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "A4",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 6.02,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "AMBIGUOUS_SYMPTOM_PATTERN",
+          "AMBIGUITY_STRUCTURED_HANDLING"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "A5",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 6.02,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "AMBIGUOUS_SYMPTOM_PATTERN",
+          "AMBIGUITY_STRUCTURED_HANDLING"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "I1",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "actual_final_status": "FAIL",
+      "computed_final_status": "FAIL",
+      "total_score": 2.9,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.45,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 0.0,
+        "recommended_status": "fail",
+        "confidence": 0.45,
+        "reason_codes": [
+          "GENERIC_DIAGNOSIS",
+          "NO_ICD_MATCH_FOUND"
+        ],
+        "summary": "Critic evidence indicates failure.",
+        "completeness_score": 1.0,
+        "specificity_score": 0.0,
+        "coherence_score": 0.0
+      }
+    },
+    {
+      "case_id": "I2",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "actual_final_status": "FAIL",
+      "computed_final_status": "REVISE",
+      "total_score": 5.85,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "fail",
+        "confidence": 0.45,
+        "reason_codes": [
+          "LOW_EVIDENCE_PRESENTATION",
+          "AMBIGUITY_STRUCTURED_HANDLING"
+        ],
+        "summary": "Critic evidence indicates failure.",
+        "completeness_score": 1.0,
+        "specificity_score": 1.0,
+        "coherence_score": 1.0
+      }
+    },
+    {
+      "case_id": "I3",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 5.47,
+      "critic_scores": {
+        "diagnosis_consistency_score": 1.0,
+        "symptom_alignment_score": 1.0,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "AMBIGUITY_STRUCTURED_HANDLING",
+          "STRUCTURAL_CONTRADICTION_CAP"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 0.45,
+        "coherence_score": 0.4
+      }
+    },
+    {
+      "case_id": "I4",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "actual_final_status": "REVISE",
+      "computed_final_status": "REVISE",
+      "total_score": 4.87,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.7,
+        "symptom_alignment_score": 0.7,
+        "icd_specificity_score": 1.0,
+        "recommended_status": "revise",
+        "confidence": 0.62,
+        "reason_codes": [
+          "MULTI_CLUSTER_CONFLICT_HANDLED",
+          "AMBIGUITY_STRUCTURED_HANDLING",
+          "STRUCTURAL_CONTRADICTION_CAP"
+        ],
+        "summary": "Critic evidence suggests revision.",
+        "completeness_score": 1.0,
+        "specificity_score": 0.45,
+        "coherence_score": 0.4
+      }
+    },
+    {
+      "case_id": "I5",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "actual_final_status": "FAIL",
+      "computed_final_status": "FAIL",
+      "total_score": 1.8,
+      "critic_scores": {
+        "diagnosis_consistency_score": 0.45,
+        "symptom_alignment_score": 0.45,
+        "icd_specificity_score": 0.0,
+        "recommended_status": "fail",
+        "confidence": 0.3,
+        "reason_codes": [
+          "LOW_EVIDENCE_PRESENTATION",
+          "GENERIC_DIAGNOSIS",
+          "ICD_MAPPING_MISSING"
+        ],
+        "summary": "Critic evidence indicates failure.",
+        "completeness_score": 0.6,
+        "specificity_score": 0.0,
+        "coherence_score": 0.0
+      }
+    }
+  ]
+}

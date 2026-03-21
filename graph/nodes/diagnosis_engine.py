@@ -12,24 +12,59 @@ from graph.prompt_loader import load_prompt
 
 DIAGNOSIS_RULES = [
     ({"fever", "cough", "sore throat"}, "Upper respiratory infection"),
+    ({"fever", "fatigue", "muscle aches"}, "Influenza-like illness"),
+    ({"fever", "cough", "fatigue"}, "Viral syndrome"),
     ({"fever", "cough"}, "Viral syndrome"),
+    ({"fever", "sore throat"}, "Pharyngitis"),
+    ({"chest pain", "shortness of breath"}, "Chest pain syndrome"),
     ({"sore throat"}, "Pharyngitis"),
     ({"headache"}, "Tension headache"),
     ({"abdominal pain", "nausea/vomiting"}, "Gastroenteritis"),
+    ({"urinary burning", "frequent urination"}, "Dysuria"),
     ({"urinary burning"}, "Dysuria"),
+    ({"joint pain", "morning stiffness"}, "Arthralgia"),
     ({"back pain"}, "Musculoskeletal back pain"),
     ({"chest pain"}, "Chest pain syndrome"),
     ({"shortness of breath"}, "Dyspnea"),
 ]
 
+AMBIGUITY_HYPOTHESES = {
+    frozenset({"fatigue", "headache"}): ["Tension headache", "Fatigue syndrome"],
+    frozenset({"fever", "fatigue", "muscle aches"}): ["Influenza-like illness", "Viral syndrome"],
+    frozenset({"abdominal pain", "nausea/vomiting"}): ["Gastroenteritis", "Nausea/vomiting syndrome"],
+    frozenset({"cough", "fatigue"}): ["Acute cough syndrome", "Viral syndrome"],
+    frozenset({"dizziness", "fatigue"}): ["Dizziness syndrome", "Fatigue syndrome"],
+    frozenset({"chest pain", "leg swelling"}): ["Chest pain syndrome", "Peripheral edema"],
+}
+
+VAGUE_DIAGNOSIS_TERMS = ("unspecified", "unknown", "general", "nos")
+
+
+def _refine_diagnosis(diagnosis: str, symptoms: set[str]) -> str:
+    lowered = diagnosis.lower()
+    if any(term in lowered for term in VAGUE_DIAGNOSIS_TERMS):
+        if {"fever", "fatigue", "muscle aches"}.issubset(symptoms):
+            return "Influenza-like illness"
+        if {"fever", "cough", "sore throat"}.issubset(symptoms):
+            return "Upper respiratory infection"
+        if {"urinary burning", "frequent urination"}.issubset(symptoms):
+            return "Dysuria"
+    return diagnosis
+
 
 def _deterministic_diagnoses(state: dict[str, Any]) -> dict[str, Any]:
     symptoms = set(state["intake_data"].get("symptoms", []))
+    intake_data = state.get("intake_data", {})
     diagnoses: list[str] = []
+
+    if intake_data.get("ambiguity_flag"):
+        ranked = AMBIGUITY_HYPOTHESES.get(frozenset(symptoms), [])
+        if ranked:
+            return {"diagnoses": ranked[:2]}
 
     for required_symptoms, diagnosis in DIAGNOSIS_RULES:
         if required_symptoms.issubset(symptoms) and diagnosis not in diagnoses:
-            diagnoses.append(diagnosis)
+            diagnoses.append(_refine_diagnosis(diagnosis, symptoms))
         if len(diagnoses) == 3:
             break
 

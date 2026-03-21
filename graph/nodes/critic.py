@@ -105,17 +105,22 @@ def _build_review(
     confidence: float,
     reason_codes: list[str],
     summary: str,
+    extra_scores: dict[str, float] | None = None,
 ) -> dict[str, Any]:
+    review = {
+        "diagnosis_consistency_score": _clamp(diagnosis_consistency_score),
+        "symptom_alignment_score": _clamp(symptom_alignment_score),
+        "icd_specificity_score": _clamp(icd_specificity_score),
+        "recommended_status": recommended_status,
+        "confidence": _clamp(confidence),
+        "reason_codes": _dedupe_reason_codes(reason_codes),
+        "summary": summary,
+    }
+    if extra_scores:
+        for key, value in extra_scores.items():
+            review[key] = _clamp(value)
     return {
-        "critic_review": {
-            "diagnosis_consistency_score": _clamp(diagnosis_consistency_score),
-            "symptom_alignment_score": _clamp(symptom_alignment_score),
-            "icd_specificity_score": _clamp(icd_specificity_score),
-            "recommended_status": recommended_status,
-            "confidence": _clamp(confidence),
-            "reason_codes": _dedupe_reason_codes(reason_codes),
-            "summary": summary,
-        }
+        "critic_review": review
     }
 
 
@@ -131,9 +136,15 @@ def _deterministic_review(state: dict[str, Any]) -> dict[str, Any]:
     triage = state.get("triage", {})
     intake_data = state.get("intake_data", {})
     icd_mappings = state.get("icd_mappings", [])
+    ambiguity_flag = bool(intake_data.get("ambiguity_flag"))
+    ambiguity_reasons = set(intake_data.get("ambiguity_reasons", []))
+    contradiction_flag = "conflicting_signals" in ambiguity_reasons
     diagnosis_score = 1.0
     symptom_score = 1.0
     icd_score = 1.0
+    completeness_score = 0.0
+    specificity_score = 0.0
+    coherence_score = 0.0
 
     if len(diagnoses) > 3:
         reason_codes.append("DIAGNOSIS_COUNT_EXCEEDS_LIMIT")
@@ -166,10 +177,77 @@ def _deterministic_review(state: dict[str, Any]) -> dict[str, Any]:
         severity = "fail"
 
     symptoms = set(intake_data.get("symptoms", []))
+    strong_patterns = {
+        frozenset({"fever", "cough", "fatigue"}),
+        frozenset({"chest pain", "shortness of breath"}),
+        frozenset({"fever", "sore throat"}),
+        frozenset({"urinary burning", "frequent urination"}),
+        frozenset({"joint pain", "morning stiffness"}),
+    }
+    ambiguous_patterns = {
+        frozenset({"fatigue", "headache"}),
+        frozenset({"fever", "fatigue", "muscle aches"}),
+        frozenset({"abdominal pain", "nausea/vomiting"}),
+        frozenset({"cough", "fatigue"}),
+        frozenset({"dizziness", "fatigue"}),
+    }
+    cluster_map = {
+        "respiratory": {"fever", "cough", "sore throat", "runny nose", "sneezing"},
+        "cardio": {"chest pain", "shortness of breath", "leg swelling"},
+        "urinary": {"urinary burning", "frequent urination"},
+        "musculoskeletal": {"joint pain", "morning stiffness", "back pain", "muscle aches"},
+        "neuro": {"headache", "dizziness", "fatigue"},
+        "gi": {"abdominal pain", "nausea/vomiting"},
+    }
+    active_clusters = {
+        name for name, members in cluster_map.items()
+        if symptoms.intersection(members)
+    }
+    structured_ambiguity = (
+        ambiguity_flag
+        and bool(diagnoses)
+        and len(diagnoses) <= 2
+        and bool(icd_mappings)
+        and all(mapping.get("status") in {"OK", "PARTIAL_MATCH"} for mapping in icd_mappings)
+    )
     if triage_level == "home_care" and ("chest pain" in symptoms or "shortness of breath" in symptoms):
         reason_codes.append("HOME_CARE_HIGH_PRIORITY_CONFLICT")
         symptom_score = 0.0
         severity = "fail"
+
+    if (
+        len(active_clusters) > 1
+        and frozenset(symptoms) not in strong_patterns
+        and frozenset(symptoms) not in ambiguous_patterns
+    ):
+        if structured_ambiguity:
+            reason_codes.append("MULTI_CLUSTER_CONFLICT_HANDLED")
+            diagnosis_score = min(diagnosis_score, 0.7)
+            symptom_score = min(symptom_score, 0.7)
+            severity = "revise"
+        else:
+            reason_codes.append("MULTI_CLUSTER_CONFLICT")
+            diagnosis_score = min(diagnosis_score, 0.2)
+            symptom_score = 0.0
+            severity = "fail"
+
+    if len(symptoms) <= 1 and triage_level != "urgent":
+        reason_codes.append("LOW_EVIDENCE_PRESENTATION")
+        diagnosis_score = min(diagnosis_score, 0.45)
+        symptom_score = min(symptom_score, 0.45)
+        severity = "fail"
+
+    if frozenset(symptoms) in ambiguous_patterns and severity == "pass":
+        reason_codes.append("AMBIGUOUS_SYMPTOM_PATTERN")
+        diagnosis_score = min(diagnosis_score, 0.7)
+        symptom_score = min(symptom_score, 0.7)
+        severity = "revise"
+
+    if any(diagnosis == "Symptom-based follow-up needed" for diagnosis in diagnoses):
+        reason_codes.append("GENERIC_DIAGNOSIS")
+        diagnosis_score = min(diagnosis_score, 0.45)
+        if severity != "fail":
+            severity = "revise"
 
     if triage_level == "escalate" and not reason_codes:
         reason_codes.append("INCOMPLETE_INTAKE_ESCALATION")
@@ -203,6 +281,53 @@ def _deterministic_review(state: dict[str, Any]) -> dict[str, Any]:
         severity = "fail"
         icd_score = 0.0
 
+    has_complete_intake = bool(symptoms) and bool(intake_data.get("duration")) and not intake_data.get("missing_fields")
+    is_strong_pattern = frozenset(symptoms) in strong_patterns
+    all_ok_mappings = bool(icd_mappings) and all(mapping.get("status") == "OK" for mapping in icd_mappings)
+    coherent_diagnoses = bool(diagnoses) and len(set(diagnoses)) == len(diagnoses)
+    single_cluster = len(active_clusters) <= 1 or is_strong_pattern
+
+    if has_complete_intake:
+        completeness_score = 0.6 if "LOW_EVIDENCE_PRESENTATION" in reason_codes else 1.0
+    if all_ok_mappings and diagnoses:
+        specificity_score = 1.0 if (is_strong_pattern or triage_level == "urgent") else 0.45
+    if coherent_diagnoses and all_ok_mappings and single_cluster:
+        coherence_score = 1.0 if severity == "pass" else 0.4
+
+    if structured_ambiguity:
+        diagnosis_score = max(diagnosis_score, 0.7)
+        symptom_score = max(symptom_score, 0.7)
+        completeness_score = 1.0
+        specificity_score = max(specificity_score, 0.45 if not all_ok_mappings else 1.0)
+        coherence_score = max(coherence_score, 1.0 if all_ok_mappings else 0.4)
+        if "LOW_EVIDENCE_PRESENTATION" not in reason_codes:
+            severity = "revise" if severity != "fail" or frozenset(symptoms) in ambiguous_patterns else severity
+        if "AMBIGUITY_STRUCTURED_HANDLING" not in reason_codes:
+            reason_codes.append("AMBIGUITY_STRUCTURED_HANDLING")
+
+    if contradiction_flag:
+        diagnosis_score = min(diagnosis_score, 1.0)
+        symptom_score = min(symptom_score, 1.0)
+        completeness_score = min(completeness_score, 1.0)
+        specificity_score = min(specificity_score, 0.45 if all_ok_mappings else specificity_score)
+        coherence_score = min(coherence_score, 0.4)
+        severity = "revise" if severity == "pass" else severity
+        if "STRUCTURAL_CONTRADICTION_CAP" not in reason_codes:
+            reason_codes.append("STRUCTURAL_CONTRADICTION_CAP")
+
+    if (
+        diagnosis_score >= 0.9
+        and symptom_score >= 0.9
+        and icd_score >= 0.9
+        and completeness_score >= 0.9
+        and specificity_score >= 0.9
+        and coherence_score >= 0.9
+        and not contradiction_flag
+    ):
+        severity = "pass"
+        if "CRITIC_REVIEW_CLEAR" not in reason_codes:
+            reason_codes = ["CRITIC_REVIEW_CLEAR"]
+
     if severity == "pass" and not reason_codes:
         reason_codes.append("CRITIC_REVIEW_CLEAR")
 
@@ -210,7 +335,9 @@ def _deterministic_review(state: dict[str, Any]) -> dict[str, Any]:
     if severity == "fail":
         confidence = min(confidence, 0.45)
     elif severity == "revise":
-        confidence = min(confidence, 0.69)
+        confidence = min(confidence, 0.62 if ambiguity_flag else 0.69)
+    if contradiction_flag:
+        confidence = min(confidence, 0.62)
 
     summary_map = {
         "pass": "Critic evidence supports pass.",
@@ -226,6 +353,11 @@ def _deterministic_review(state: dict[str, Any]) -> dict[str, Any]:
         confidence=confidence,
         reason_codes=reason_codes,
         summary=summary_map[status],
+        extra_scores={
+            "completeness_score": completeness_score,
+            "specificity_score": specificity_score,
+            "coherence_score": coherence_score,
+        },
     )
 
 

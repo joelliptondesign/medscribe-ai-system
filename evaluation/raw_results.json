@@ -1,0 +1,1836 @@
+{
+  "results": [
+    {
+      "case_id": "V1",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "pipeline_output": {
+        "final_status": "PASS",
+        "critic_scores": {
+          "diagnosis_consistency_score": 1.0,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "pass",
+          "confidence": 1.0,
+          "reason_codes": [
+            "CRITIC_REVIEW_CLEAR"
+          ],
+          "summary": "Critic evidence supports pass.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "female patient age 34 with symptoms: fever, cough, fatigue. Duration: 4 days. Notes: Gradual onset, no chronic conditions.",
+          "intake_data": {
+            "symptoms": [
+              "fever",
+              "cough",
+              "fatigue"
+            ],
+            "duration": "4 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "multiple_symptom_clusters"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Viral syndrome"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Viral syndrome",
+              "icd_code": "B34.9",
+              "icd_label": "Viral infection, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 1.0,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "pass",
+            "confidence": 1.0,
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_PASS"
+            ],
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ]
+          },
+          "final_output": {
+            "status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass."
+          },
+          "escalation_required": false,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "V2",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "pipeline_output": {
+        "final_status": "PASS",
+        "critic_scores": {
+          "diagnosis_consistency_score": 1.0,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "pass",
+          "confidence": 1.0,
+          "reason_codes": [
+            "CRITIC_REVIEW_CLEAR"
+          ],
+          "summary": "Critic evidence supports pass.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 52 with symptoms: chest pain, shortness of breath. Duration: 1 day. Notes: Symptoms worsen with exertion.",
+          "intake_data": {
+            "symptoms": [
+              "chest pain",
+              "shortness of breath"
+            ],
+            "duration": "1 day",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [
+              "worse"
+            ],
+            "missing_fields": [],
+            "missing_data_questions": [],
+            "ambiguity_flag": false,
+            "ambiguity_reasons": []
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "urgent",
+            "rationale": "Symptoms include a higher-priority cardiorespiratory complaint.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Chest pain syndrome",
+            "Dyspnea"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Chest pain syndrome",
+              "icd_code": "R07.9",
+              "icd_label": "Chest pain, unspecified",
+              "status": "OK"
+            },
+            {
+              "label": "Dyspnea",
+              "icd_code": "R06.00",
+              "icd_label": "Dyspnea, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 1.0,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "pass",
+            "confidence": 1.0,
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_PASS"
+            ],
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ]
+          },
+          "final_output": {
+            "status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass."
+          },
+          "escalation_required": false,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "V3",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "pipeline_output": {
+        "final_status": "PASS",
+        "critic_scores": {
+          "diagnosis_consistency_score": 1.0,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "pass",
+          "confidence": 1.0,
+          "reason_codes": [
+            "CRITIC_REVIEW_CLEAR"
+          ],
+          "summary": "Critic evidence supports pass.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 28 with symptoms: sore throat, fever. Duration: 2 days. Notes: No additional complications.",
+          "intake_data": {
+            "symptoms": [
+              "sore throat",
+              "fever"
+            ],
+            "duration": "2 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [],
+            "ambiguity_flag": false,
+            "ambiguity_reasons": []
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "home_care",
+            "rationale": "Symptoms fit a simple upper-respiratory demo pattern.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Pharyngitis"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Pharyngitis",
+              "icd_code": "J02.9",
+              "icd_label": "Acute pharyngitis, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 1.0,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "pass",
+            "confidence": 1.0,
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_PASS"
+            ],
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ]
+          },
+          "final_output": {
+            "status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass."
+          },
+          "escalation_required": false,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "V4",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "pipeline_output": {
+        "final_status": "PASS",
+        "critic_scores": {
+          "diagnosis_consistency_score": 1.0,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "pass",
+          "confidence": 1.0,
+          "reason_codes": [
+            "CRITIC_REVIEW_CLEAR"
+          ],
+          "summary": "Critic evidence supports pass.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "female patient age 45 with symptoms: burning urination, frequent urination. Duration: 3 days. Notes: No back pain reported.",
+          "intake_data": {
+            "symptoms": [
+              "urinary burning",
+              "frequent urination"
+            ],
+            "duration": "3 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [],
+            "ambiguity_flag": false,
+            "ambiguity_reasons": []
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Dysuria"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Dysuria",
+              "icd_code": "R30.0",
+              "icd_label": "Dysuria",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 1.0,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "pass",
+            "confidence": 1.0,
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_PASS"
+            ],
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ]
+          },
+          "final_output": {
+            "status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass."
+          },
+          "escalation_required": false,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "V5",
+      "scenario_type": "valid",
+      "expected_behavior": "PASS",
+      "pipeline_output": {
+        "final_status": "PASS",
+        "critic_scores": {
+          "diagnosis_consistency_score": 1.0,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "pass",
+          "confidence": 1.0,
+          "reason_codes": [
+            "CRITIC_REVIEW_CLEAR"
+          ],
+          "summary": "Critic evidence supports pass.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 60 with symptoms: joint pain, morning stiffness. Duration: 2 weeks. Notes: Symptoms improve with movement.",
+          "intake_data": {
+            "symptoms": [
+              "joint pain",
+              "morning stiffness"
+            ],
+            "duration": "2 weeks",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [],
+            "ambiguity_flag": false,
+            "ambiguity_reasons": []
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Arthralgia"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Arthralgia",
+              "icd_code": "M25.50",
+              "icd_label": "Pain in unspecified joint",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 1.0,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "pass",
+            "confidence": 1.0,
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_PASS"
+            ],
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ]
+          },
+          "final_output": {
+            "status": "PASS",
+            "escalation_required": false,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "CRITIC_REVIEW_CLEAR"
+            ],
+            "summary": "Critic evidence supports pass."
+          },
+          "escalation_required": false,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "A1",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "AMBIGUOUS_SYMPTOM_PATTERN",
+            "AMBIGUITY_STRUCTURED_HANDLING"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "female patient age 41 with symptoms: fatigue, headache. Duration: 3 days. Notes: No additional symptoms reported.",
+          "intake_data": {
+            "symptoms": [
+              "fatigue",
+              "headache"
+            ],
+            "duration": "3 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "ambiguous_pattern"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Tension headache",
+            "Fatigue syndrome"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Tension headache",
+              "icd_code": "G44.209",
+              "icd_label": "Tension-type headache, unspecified",
+              "status": "OK"
+            },
+            {
+              "label": "Fatigue syndrome",
+              "icd_code": "R53.83",
+              "icd_label": "Other fatigue",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "A2",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "AMBIGUOUS_SYMPTOM_PATTERN",
+            "AMBIGUITY_STRUCTURED_HANDLING"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 37 with symptoms: fever, fatigue, muscle aches. Duration: 2 days. Notes: No respiratory symptoms.",
+          "intake_data": {
+            "symptoms": [
+              "fever",
+              "fatigue",
+              "muscle aches"
+            ],
+            "duration": "2 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "ambiguous_pattern",
+              "multiple_symptom_clusters"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Influenza-like illness",
+            "Viral syndrome"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Influenza-like illness",
+              "icd_code": "J11.1",
+              "icd_label": "Influenza with other respiratory manifestations, virus not identified",
+              "status": "OK"
+            },
+            {
+              "label": "Viral syndrome",
+              "icd_code": "B34.9",
+              "icd_label": "Viral infection, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "A3",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "AMBIGUOUS_SYMPTOM_PATTERN",
+            "AMBIGUITY_STRUCTURED_HANDLING"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "female patient age 50 with symptoms: abdominal discomfort, nausea. Duration: 1 day. Notes: Symptoms are mild and intermittent.",
+          "intake_data": {
+            "symptoms": [
+              "abdominal pain",
+              "nausea/vomiting"
+            ],
+            "duration": "1 day",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "ambiguous_pattern"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Gastroenteritis",
+            "Nausea/vomiting syndrome"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Gastroenteritis",
+              "icd_code": "K52.9",
+              "icd_label": "Noninfective gastroenteritis and colitis, unspecified",
+              "status": "OK"
+            },
+            {
+              "label": "Nausea/vomiting syndrome",
+              "icd_code": "R11.2",
+              "icd_label": "Nausea with vomiting, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "A4",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "AMBIGUOUS_SYMPTOM_PATTERN",
+            "AMBIGUITY_STRUCTURED_HANDLING"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 29 with symptoms: cough, fatigue. Duration: 1 day. Notes: No fever present.",
+          "intake_data": {
+            "symptoms": [
+              "cough",
+              "fatigue"
+            ],
+            "duration": "1 day",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "ambiguous_pattern",
+              "multiple_symptom_clusters"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Acute cough syndrome",
+            "Viral syndrome"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Acute cough syndrome",
+              "icd_code": "R05.9",
+              "icd_label": "Cough, unspecified",
+              "status": "OK"
+            },
+            {
+              "label": "Viral syndrome",
+              "icd_code": "B34.9",
+              "icd_label": "Viral infection, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "A5",
+      "scenario_type": "ambiguous",
+      "expected_behavior": "REVISE",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "AMBIGUOUS_SYMPTOM_PATTERN",
+            "AMBIGUITY_STRUCTURED_HANDLING"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "female patient age 65 with symptoms: dizziness, fatigue. Duration: 5 days. Notes: No clear triggering factors.",
+          "intake_data": {
+            "symptoms": [
+              "dizziness",
+              "fatigue"
+            ],
+            "duration": "5 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "ambiguous_pattern"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Dizziness syndrome",
+            "Fatigue syndrome"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Dizziness syndrome",
+              "icd_code": "R42",
+              "icd_label": "Dizziness and giddiness",
+              "status": "OK"
+            },
+            {
+              "label": "Fatigue syndrome",
+              "icd_code": "R53.83",
+              "icd_label": "Other fatigue",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "AMBIGUOUS_SYMPTOM_PATTERN",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "I1",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "pipeline_output": {
+        "final_status": "FAIL",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.45,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 0.0,
+          "recommended_status": "fail",
+          "confidence": 0.45,
+          "reason_codes": [
+            "GENERIC_DIAGNOSIS",
+            "NO_ICD_MATCH_FOUND"
+          ],
+          "summary": "Critic evidence indicates failure.",
+          "completeness_score": 1.0,
+          "specificity_score": 0.0,
+          "coherence_score": 0.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 33 with symptoms: runny nose, sneezing. Duration: 2 days. Notes: No fever or systemic symptoms.",
+          "intake_data": {
+            "symptoms": [
+              "runny nose",
+              "sneezing"
+            ],
+            "duration": "2 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [],
+            "ambiguity_flag": false,
+            "ambiguity_reasons": []
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Symptom-based follow-up needed"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Symptom-based follow-up needed",
+              "icd_code": "",
+              "icd_label": "",
+              "status": "NO_MATCH_FOUND"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.45,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 0.0,
+            "recommended_status": "fail",
+            "confidence": 0.45,
+            "reason_codes": [
+              "GENERIC_DIAGNOSIS",
+              "NO_ICD_MATCH_FOUND"
+            ],
+            "summary": "Critic evidence indicates failure.",
+            "completeness_score": 1.0,
+            "specificity_score": 0.0,
+            "coherence_score": 0.0
+          },
+          "governance_result": {
+            "final_status": "FAIL",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_FAIL",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_FAIL",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_FAIL"
+            ],
+            "reason_codes": [
+              "GENERIC_DIAGNOSIS",
+              "NO_ICD_MATCH_FOUND",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_ICD_SPECIFICITY",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "FAIL",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "GENERIC_DIAGNOSIS",
+              "NO_ICD_MATCH_FOUND",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_ICD_SPECIFICITY",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "I2",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "pipeline_output": {
+        "final_status": "FAIL",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "fail",
+          "confidence": 0.45,
+          "reason_codes": [
+            "LOW_EVIDENCE_PRESENTATION",
+            "AMBIGUITY_STRUCTURED_HANDLING"
+          ],
+          "summary": "Critic evidence indicates failure.",
+          "completeness_score": 1.0,
+          "specificity_score": 1.0,
+          "coherence_score": 1.0
+        },
+        "raw_result": {
+          "raw_input": "female patient age 47 with symptoms: mild headache. Duration: 1 day. Notes: No additional symptoms.",
+          "intake_data": {
+            "symptoms": [
+              "headache"
+            ],
+            "duration": "1 day",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "low_evidence_input"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Tension headache"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Tension headache",
+              "icd_code": "G44.209",
+              "icd_label": "Tension-type headache, unspecified",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "fail",
+            "confidence": 0.45,
+            "reason_codes": [
+              "LOW_EVIDENCE_PRESENTATION",
+              "AMBIGUITY_STRUCTURED_HANDLING"
+            ],
+            "summary": "Critic evidence indicates failure.",
+            "completeness_score": 1.0,
+            "specificity_score": 1.0,
+            "coherence_score": 1.0
+          },
+          "governance_result": {
+            "final_status": "FAIL",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_FAIL"
+            ],
+            "reason_codes": [
+              "LOW_EVIDENCE_PRESENTATION",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "FAIL",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "LOW_EVIDENCE_PRESENTATION",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "I3",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 1.0,
+          "symptom_alignment_score": 1.0,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "AMBIGUITY_STRUCTURED_HANDLING",
+            "STRUCTURAL_CONTRADICTION_CAP"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 0.45,
+          "coherence_score": 0.4
+        },
+        "raw_result": {
+          "raw_input": "male patient age 55 with symptoms: chest pain, leg swelling. Duration: 3 days. Notes: Symptoms do not clearly align.",
+          "intake_data": {
+            "symptoms": [
+              "chest pain",
+              "leg swelling"
+            ],
+            "duration": "3 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "ambiguous_pattern",
+              "conflicting_signals"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "urgent",
+            "rationale": "Symptoms include a higher-priority cardiorespiratory complaint.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Chest pain syndrome",
+            "Peripheral edema"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Chest pain syndrome",
+              "icd_code": "R07.9",
+              "icd_label": "Chest pain, unspecified",
+              "status": "OK"
+            },
+            {
+              "label": "Peripheral edema",
+              "icd_code": "R60.0",
+              "icd_label": "Localized edema",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 1.0,
+            "symptom_alignment_score": 1.0,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "STRUCTURAL_CONTRADICTION_CAP"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 0.45,
+            "coherence_score": 0.4
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_PASS",
+              "RULE_SYMPTOM_ALIGNMENT_PASS",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "STRUCTURAL_CONTRADICTION_CAP",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "STRUCTURAL_CONTRADICTION_CAP",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "I4",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "pipeline_output": {
+        "final_status": "REVISE",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.7,
+          "symptom_alignment_score": 0.7,
+          "icd_specificity_score": 1.0,
+          "recommended_status": "revise",
+          "confidence": 0.62,
+          "reason_codes": [
+            "MULTI_CLUSTER_CONFLICT_HANDLED",
+            "AMBIGUITY_STRUCTURED_HANDLING",
+            "STRUCTURAL_CONTRADICTION_CAP"
+          ],
+          "summary": "Critic evidence suggests revision.",
+          "completeness_score": 1.0,
+          "specificity_score": 0.45,
+          "coherence_score": 0.4
+        },
+        "raw_result": {
+          "raw_input": "female patient age 39 with symptoms: fever, cough, burning urination. Duration: 4 days. Notes: Multiple unrelated symptom clusters.",
+          "intake_data": {
+            "symptoms": [
+              "fever",
+              "cough",
+              "urinary burning"
+            ],
+            "duration": "4 days",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "multiple_symptom_clusters",
+              "conflicting_signals"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Viral syndrome",
+            "Dysuria"
+          ],
+          "icd_mappings": [
+            {
+              "label": "Viral syndrome",
+              "icd_code": "B34.9",
+              "icd_label": "Viral infection, unspecified",
+              "status": "OK"
+            },
+            {
+              "label": "Dysuria",
+              "icd_code": "R30.0",
+              "icd_label": "Dysuria",
+              "status": "OK"
+            }
+          ],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.7,
+            "symptom_alignment_score": 0.7,
+            "icd_specificity_score": 1.0,
+            "recommended_status": "revise",
+            "confidence": 0.62,
+            "reason_codes": [
+              "MULTI_CLUSTER_CONFLICT_HANDLED",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "STRUCTURAL_CONTRADICTION_CAP"
+            ],
+            "summary": "Critic evidence suggests revision.",
+            "completeness_score": 1.0,
+            "specificity_score": 0.45,
+            "coherence_score": 0.4
+          },
+          "governance_result": {
+            "final_status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_REVISE",
+              "RULE_SYMPTOM_ALIGNMENT_REVISE",
+              "RULE_ICD_SPECIFICITY_PASS",
+              "RULE_CONFIDENCE_REVISE",
+              "RULE_CRITIC_RECOMMENDATION_REVISE"
+            ],
+            "reason_codes": [
+              "MULTI_CLUSTER_CONFLICT_HANDLED",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "STRUCTURAL_CONTRADICTION_CAP",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "REVISE",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "MULTI_CLUSTER_CONFLICT_HANDLED",
+              "AMBIGUITY_STRUCTURED_HANDLING",
+              "STRUCTURAL_CONTRADICTION_CAP",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    },
+    {
+      "case_id": "I5",
+      "scenario_type": "invalid",
+      "expected_behavior": "FAIL",
+      "pipeline_output": {
+        "final_status": "FAIL",
+        "critic_scores": {
+          "diagnosis_consistency_score": 0.45,
+          "symptom_alignment_score": 0.45,
+          "icd_specificity_score": 0.0,
+          "recommended_status": "fail",
+          "confidence": 0.3,
+          "reason_codes": [
+            "LOW_EVIDENCE_PRESENTATION",
+            "GENERIC_DIAGNOSIS",
+            "ICD_MAPPING_MISSING"
+          ],
+          "summary": "Critic evidence indicates failure.",
+          "completeness_score": 0.6,
+          "specificity_score": 0.0,
+          "coherence_score": 0.0
+        },
+        "raw_result": {
+          "raw_input": "male patient age 62 with symptoms: fatigue. Duration: 1 day. Notes: No supporting detail.",
+          "intake_data": {
+            "symptoms": [
+              "fatigue"
+            ],
+            "duration": "1 day",
+            "medications": [],
+            "allergies": [],
+            "comorbidities": [],
+            "severity_descriptors": [],
+            "missing_fields": [],
+            "missing_data_questions": [
+              "What additional context would help disambiguate the presentation?"
+            ],
+            "ambiguity_flag": true,
+            "ambiguity_reasons": [
+              "low_evidence_input"
+            ]
+          },
+          "completeness": {
+            "has_symptoms": true,
+            "has_duration": true,
+            "has_minimum_intake": true
+          },
+          "triage": {
+            "level": "routine",
+            "rationale": "Symptoms were recognized but do not meet urgent demo rules.",
+            "valid_levels": [
+              "escalate",
+              "home_care",
+              "routine",
+              "urgent"
+            ]
+          },
+          "diagnoses": [
+            "Symptom-based follow-up needed"
+          ],
+          "icd_mappings": [],
+          "critic_review": {
+            "diagnosis_consistency_score": 0.45,
+            "symptom_alignment_score": 0.45,
+            "icd_specificity_score": 0.0,
+            "recommended_status": "fail",
+            "confidence": 0.3,
+            "reason_codes": [
+              "LOW_EVIDENCE_PRESENTATION",
+              "GENERIC_DIAGNOSIS",
+              "ICD_MAPPING_MISSING"
+            ],
+            "summary": "Critic evidence indicates failure.",
+            "completeness_score": 0.6,
+            "specificity_score": 0.0,
+            "coherence_score": 0.0
+          },
+          "governance_result": {
+            "final_status": "FAIL",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "applied_rules": [
+              "RULE_DIAGNOSIS_CONSISTENCY_FAIL",
+              "RULE_SYMPTOM_ALIGNMENT_FAIL",
+              "RULE_ICD_SPECIFICITY_FAIL",
+              "RULE_CONFIDENCE_FAIL",
+              "RULE_CRITIC_RECOMMENDATION_FAIL"
+            ],
+            "reason_codes": [
+              "LOW_EVIDENCE_PRESENTATION",
+              "GENERIC_DIAGNOSIS",
+              "ICD_MAPPING_MISSING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_ICD_SPECIFICITY",
+              "LOW_CRITIC_CONFIDENCE"
+            ]
+          },
+          "final_output": {
+            "status": "FAIL",
+            "escalation_required": true,
+            "policy_version": "policy_v1",
+            "governance_version": "governance_v1",
+            "reason_codes": [
+              "LOW_EVIDENCE_PRESENTATION",
+              "GENERIC_DIAGNOSIS",
+              "ICD_MAPPING_MISSING",
+              "LOW_DIAGNOSIS_CONSISTENCY",
+              "LOW_SYMPTOM_ALIGNMENT",
+              "LOW_ICD_SPECIFICITY",
+              "LOW_CRITIC_CONFIDENCE"
+            ],
+            "summary": "Escalation required due to policy thresholds."
+          },
+          "escalation_required": true,
+          "errors": [],
+          "node_diagnostics": []
+        }
+      }
+    }
+  ]
+}
