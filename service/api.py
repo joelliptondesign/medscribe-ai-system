@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 
-from service import run_manager, storage
-from service.schemas import EvaluateRequest, EvaluateResponse
+from service import retrieval, run_manager, storage
+from service.schemas import EvaluateRequest, EvaluateResponse, SearchRequest, SearchResponse, ToolRequest
+from service.tools import call_tool
 
 
 router = APIRouter()
@@ -68,3 +69,21 @@ def compare_runs(run_id_1: str, run_id_2: str) -> dict:
         "decision_diff": run_1.get("decision") != run_2.get("decision"),
         "score_diff": _build_score_diff(run_1.get("scores", {}), run_2.get("scores", {})),
     }
+
+
+@router.post("/search", response_model=SearchResponse)
+def search_runs(request: SearchRequest) -> SearchResponse:
+    try:
+        results = retrieval.search(request.query, request.top_k)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return SearchResponse(results=results)
+
+
+@router.post("/tool")
+def call_service_tool(request: ToolRequest) -> dict:
+    try:
+        result = call_tool(request.tool_name, request.payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return {"result": result}

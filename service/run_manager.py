@@ -9,9 +9,10 @@ from uuid import uuid4
 
 from dotenv import load_dotenv
 
-from graph.nodes import critic, diagnosis_engine, governance_policy, icd_mapper, intake_parser, triage_engine
+from graph.nodes import governance_policy, triage_engine
 from graph.state import initial_state, load_schema
 from service import storage
+from service.tools import call_tool
 
 
 TRACE = [
@@ -49,21 +50,21 @@ def execute(input_text: str) -> dict[str, Any]:
     pipeline_start = time.perf_counter()
 
     stage_start = time.perf_counter()
-    _merge_state(state, intake_parser.run(state))
+    _merge_state(state, call_tool("parse_input", state))
     parse_ms = _elapsed_ms(stage_start, time.perf_counter())
 
     _merge_state(state, triage_engine.run(state))
 
     stage_start = time.perf_counter()
-    _merge_state(state, diagnosis_engine.run(state))
+    _merge_state(state, call_tool("generate_diagnosis", state))
     diagnosis_ms = _elapsed_ms(stage_start, time.perf_counter())
 
     stage_start = time.perf_counter()
-    _merge_state(state, icd_mapper.run(state))
+    _merge_state(state, call_tool("map_icd", state))
     mapping_ms = _elapsed_ms(stage_start, time.perf_counter())
 
     stage_start = time.perf_counter()
-    _merge_state(state, critic.run(state))
+    _merge_state(state, call_tool("score_case", state))
     scoring_ms = _elapsed_ms(stage_start, time.perf_counter())
 
     _merge_state(state, governance_policy.run(state))

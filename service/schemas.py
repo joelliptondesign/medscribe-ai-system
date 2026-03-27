@@ -18,3 +18,22 @@ class EvaluateResponse(BaseModel):
     summary: dict[str, Any] | None
     timing: dict[str, int]
     trace: list[str]
+
+
+class SearchRequest(BaseModel):
+    query: str
+    top_k: int
+
+
+class SearchResult(BaseModel):
+    run_id: str
+    score: float
+
+
+class SearchResponse(BaseModel):
+    results: list[SearchResult]
+
+
+class ToolRequest(BaseModel):
+    tool_name: str
+    payload: dict[str, Any]
