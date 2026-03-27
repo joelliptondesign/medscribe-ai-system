@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from uuid import uuid4
+
 from fastapi import APIRouter, HTTPException
 
 from service import retrieval, run_manager, storage
@@ -27,18 +29,15 @@ def _build_score_diff(scores_1: dict, scores_2: dict) -> dict:
 
 @router.post("/evaluate", response_model=EvaluateResponse)
 def evaluate(request: EvaluateRequest) -> EvaluateResponse:
-    try:
-        result = run_manager.execute(request.input_text)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if not isinstance(request.input_text, str) or not request.input_text.strip():
+        raise HTTPException(status_code=400, detail="input_text must be a non-empty string")
 
+    run_id = str(uuid4())
+    storage.create_run_shell(run_id, request.input_text.strip())
+    run_manager.start_async_run(run_id, request.input_text)
     return EvaluateResponse(
-        run_id=result["run_id"],
-        decision=result["decision"],
-        scores=result["scores"],
-        summary=result.get("summary"),
-        timing=result["timing"],
-        trace=result["trace"],
+        run_id=run_id,
+        status="pending",
     )
 
 
@@ -48,6 +47,17 @@ def get_run(run_id: str) -> dict:
     if record is None:
         raise HTTPException(status_code=404, detail="run not found")
     return record
+
+
+@router.get("/run/{run_id}/status")
+def get_run_status(run_id: str) -> dict:
+    record = storage.get_run(run_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="run not found")
+    return {
+        "run_id": run_id,
+        "status": record.get("status", "unknown"),
+    }
 
 
 @router.get("/runs")

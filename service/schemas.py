@@ -13,11 +13,7 @@ class EvaluateRequest(BaseModel):
 
 class EvaluateResponse(BaseModel):
     run_id: str
-    decision: str
-    scores: dict[str, Any]
-    summary: dict[str, Any] | None
-    timing: dict[str, int]
-    trace: list[str]
+    status: str
 
 
 class SearchRequest(BaseModel):

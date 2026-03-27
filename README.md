@@ -121,16 +121,20 @@ Input:
 Returns:
 {
   "run_id": "...",
-  "decision": "PASS",
-  "scores": {...},
-  "timing": {...},
-  "trace": [...]
+  "status": "pending"
 }
 
 ---
 
 ### GET /run/{run_id}
 Returns full stored artifact.
+
+Run artifacts now carry job lifecycle state:
+- `pending`
+- `running`
+- `completed`
+- `degraded` when hybrid execution fell back on one or more nodes
+- `failed` when execution stops mid-pipeline
 
 ---
 
@@ -186,6 +190,42 @@ To run the API service:
 uvicorn service.main:app --reload
 
 Docs: http://localhost:8000/docs
+
+## Local Run Verification
+
+Install dependencies:
+
+`.venv/bin/pip install -r requirements.txt`
+
+Start the service:
+
+`.venv/bin/python -m uvicorn service.main:app --host 127.0.0.1 --port 8000 --reload`
+
+Verify root:
+
+`curl http://127.0.0.1:8000/`
+
+Verify OpenAPI:
+
+`curl http://127.0.0.1:8000/openapi.json`
+
+Submit an evaluation:
+
+`curl -X POST http://127.0.0.1:8000/evaluate -H "Content-Type: application/json" -d '{"input_text":"I have had fever, cough, and sore throat for two days."}'`
+
+Run one-shot lifecycle validation:
+
+`./.venv/bin/python -m pytest tests/test_run_lifecycle.py -q`
+
+Degraded semantics:
+
+- `status=degraded`, `fallback_used=true`, and `degraded_mode=true` mean hybrid mode was active and at least one node fell back to deterministic behavior.
+- Stored artifacts include `node_diagnostics`, `fallback_nodes`, `fallback_reasons`, `metadata.execution_mode`, and `metadata.hybrid_attempted`.
+
+Failed-run semantics:
+
+- `status=failed` preserves the partial artifact reached before the exception.
+- `failed_stage` and `error` identify where execution stopped.
 
 ---
 
