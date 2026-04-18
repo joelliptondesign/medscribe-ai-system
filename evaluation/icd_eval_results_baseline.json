@@ -1,0 +1,2491 @@
+{
+  "total_cases": 24,
+  "total_runs": 72,
+  "schema_validity_rate": 0.041666666666666664,
+  "field_completeness": 1.0,
+  "mapping_accuracy": 0.0,
+  "output_variance": {
+    "varied_case_count": 0,
+    "varied_case_rate": 0.0
+  },
+  "failure_taxonomy": {
+    "SCHEMA_INVALID": 0,
+    "FIELD_MISSING": 0,
+    "FIELD_INVALID": 69,
+    "SEMANTIC_MISMATCH": 3,
+    "EMPTY_OUTPUT": 0
+  },
+  "case_results": [
+    {
+      "input": {
+        "diagnoses": [
+          "Hypertension"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Hypertension",
+            "icd_code": "I10",
+            "icd_label": "Essential (primary) hypertension",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "I10"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "I10"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "I10"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Type 2 diabetes mellitus"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Type 2 diabetes mellitus",
+            "icd_code": "E11.9",
+            "icd_label": "Type 2 diabetes mellitus without complications",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Type 2 diabetes mellitus\",\"icd_code\":\"E11\",\"icd_label\":\"Type 2 diabetes mellitus\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Type 2 diabetes mellitus",
+                "icd_code": "E11",
+                "icd_label": "Type 2 diabetes mellitus",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E11.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Type 2 diabetes mellitus\",\"icd_code\":\"E11\",\"icd_label\":\"Type 2 diabetes mellitus\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Type 2 diabetes mellitus",
+                "icd_code": "E11",
+                "icd_label": "Type 2 diabetes mellitus",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E11.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Type 2 diabetes mellitus\",\"icd_code\":\"E11\",\"icd_label\":\"Type 2 diabetes mellitus\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Type 2 diabetes mellitus",
+                "icd_code": "E11",
+                "icd_label": "Type 2 diabetes mellitus",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E11.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Acute sinusitis"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Acute sinusitis",
+            "icd_code": "J01.90",
+            "icd_label": "Acute sinusitis, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute sinusitis\",\"icd_code\":\"J01.90\",\"icd_label\":\"Acute sinusitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute sinusitis",
+                "icd_code": "J01.90",
+                "icd_label": "Acute sinusitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J01.90"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute sinusitis\",\"icd_code\":\"J01.90\",\"icd_label\":\"Acute sinusitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute sinusitis",
+                "icd_code": "J01.90",
+                "icd_label": "Acute sinusitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J01.90"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute sinusitis\",\"icd_code\":\"J01.90\",\"icd_label\":\"Acute sinusitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute sinusitis",
+                "icd_code": "J01.90",
+                "icd_label": "Acute sinusitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J01.90"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Acute bronchitis"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Acute bronchitis",
+            "icd_code": "J20.9",
+            "icd_label": "Acute bronchitis, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute bronchitis\",\"icd_code\":\"J20.9\",\"icd_label\":\"Acute bronchitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute bronchitis",
+                "icd_code": "J20.9",
+                "icd_label": "Acute bronchitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J20.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute bronchitis\",\"icd_code\":\"J20.9\",\"icd_label\":\"Acute bronchitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute bronchitis",
+                "icd_code": "J20.9",
+                "icd_label": "Acute bronchitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J20.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute bronchitis\",\"icd_code\":\"J20.9\",\"icd_label\":\"Acute bronchitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute bronchitis",
+                "icd_code": "J20.9",
+                "icd_label": "Acute bronchitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J20.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Constipation"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Constipation",
+            "icd_code": "K59.00",
+            "icd_label": "Constipation, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Constipation\",\"icd_code\":\"K59.00\",\"icd_label\":\"Constipation, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Constipation",
+                "icd_code": "K59.00",
+                "icd_label": "Constipation, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "K59.00"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Constipation\",\"icd_code\":\"K59.00\",\"icd_label\":\"Constipation, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Constipation",
+                "icd_code": "K59.00",
+                "icd_label": "Constipation, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "K59.00"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Constipation\",\"icd_code\":\"K59.00\",\"icd_label\":\"Constipation, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Constipation",
+                "icd_code": "K59.00",
+                "icd_label": "Constipation, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "K59.00"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Insomnia"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Insomnia",
+            "icd_code": "G47.00",
+            "icd_label": "Insomnia, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Insomnia\",\"icd_code\":\"G47.00\",\"icd_label\":\"Insomnia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Insomnia",
+                "icd_code": "G47.00",
+                "icd_label": "Insomnia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "G47.00"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Insomnia\",\"icd_code\":\"G47.00\",\"icd_label\":\"Insomnia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Insomnia",
+                "icd_code": "G47.00",
+                "icd_label": "Insomnia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "G47.00"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Insomnia\",\"icd_code\":\"G47.00\",\"icd_label\":\"Insomnia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Insomnia",
+                "icd_code": "G47.00",
+                "icd_label": "Insomnia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "G47.00"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Anxiety"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Anxiety",
+            "icd_code": "F41.9",
+            "icd_label": "Anxiety disorder, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Anxiety\",\"icd_code\":\"F41.9\",\"icd_label\":\"Anxiety disorder, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Anxiety",
+                "icd_code": "F41.9",
+                "icd_label": "Anxiety disorder, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "F41.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Anxiety\",\"icd_code\":\"F41.9\",\"icd_label\":\"Anxiety disorder, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Anxiety",
+                "icd_code": "F41.9",
+                "icd_label": "Anxiety disorder, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "F41.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Anxiety\",\"icd_code\":\"F41.9\",\"icd_label\":\"Anxiety disorder, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Anxiety",
+                "icd_code": "F41.9",
+                "icd_label": "Anxiety disorder, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "F41.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Hyperlipidemia"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Hyperlipidemia",
+            "icd_code": "E78.5",
+            "icd_label": "Hyperlipidemia, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hyperlipidemia\",\"icd_code\":\"E78.5\",\"icd_label\":\"Hyperlipidemia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hyperlipidemia",
+                "icd_code": "E78.5",
+                "icd_label": "Hyperlipidemia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E78.5"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hyperlipidemia\",\"icd_code\":\"E78.5\",\"icd_label\":\"Hyperlipidemia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hyperlipidemia",
+                "icd_code": "E78.5",
+                "icd_label": "Hyperlipidemia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E78.5"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hyperlipidemia\",\"icd_code\":\"E78.5\",\"icd_label\":\"Hyperlipidemia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hyperlipidemia",
+                "icd_code": "E78.5",
+                "icd_label": "Hyperlipidemia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E78.5"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Allergic rhinitis"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Allergic rhinitis",
+            "icd_code": "J30.9",
+            "icd_label": "Allergic rhinitis, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Allergic rhinitis\",\"icd_code\":\"J30.9\",\"icd_label\":\"Allergic rhinitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Allergic rhinitis",
+                "icd_code": "J30.9",
+                "icd_label": "Allergic rhinitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J30.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Allergic rhinitis\",\"icd_code\":\"J30.9\",\"icd_label\":\"Allergic rhinitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Allergic rhinitis",
+                "icd_code": "J30.9",
+                "icd_label": "Allergic rhinitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J30.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Allergic rhinitis\",\"icd_code\":\"J30.9\",\"icd_label\":\"Allergic rhinitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Allergic rhinitis",
+                "icd_code": "J30.9",
+                "icd_label": "Allergic rhinitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J30.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Gastroesophageal reflux disease"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Gastroesophageal reflux disease",
+            "icd_code": "K21.9",
+            "icd_label": "Gastro-esophageal reflux disease without esophagitis",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Gastroesophageal reflux disease\",\"icd_code\":\"K21.9\",\"icd_label\":\"Gastroesophageal reflux disease, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Gastroesophageal reflux disease",
+                "icd_code": "K21.9",
+                "icd_label": "Gastroesophageal reflux disease, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "K21.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Gastroesophageal reflux disease\",\"icd_code\":\"K21.9\",\"icd_label\":\"Gastroesophageal reflux disease, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Gastroesophageal reflux disease",
+                "icd_code": "K21.9",
+                "icd_label": "Gastroesophageal reflux disease, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "K21.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Gastroesophageal reflux disease\",\"icd_code\":\"K21.9\",\"icd_label\":\"Gastroesophageal reflux disease, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Gastroesophageal reflux disease",
+                "icd_code": "K21.9",
+                "icd_label": "Gastroesophageal reflux disease, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "K21.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Conjunctivitis"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Conjunctivitis",
+            "icd_code": "H10.9",
+            "icd_label": "Conjunctivitis, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Conjunctivitis\",\"icd_code\":\"H10.9\",\"icd_label\":\"Conjunctivitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Conjunctivitis",
+                "icd_code": "H10.9",
+                "icd_label": "Conjunctivitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "H10.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Conjunctivitis\",\"icd_code\":\"H10.9\",\"icd_label\":\"Conjunctivitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Conjunctivitis",
+                "icd_code": "H10.9",
+                "icd_label": "Conjunctivitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "H10.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Conjunctivitis\",\"icd_code\":\"H10.9\",\"icd_label\":\"Conjunctivitis, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Conjunctivitis",
+                "icd_code": "H10.9",
+                "icd_label": "Conjunctivitis, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "H10.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Dehydration"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Dehydration",
+            "icd_code": "E86.0",
+            "icd_label": "Dehydration",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Dehydration\",\"icd_code\":\"E86.0\",\"icd_label\":\"Dehydration\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Dehydration",
+                "icd_code": "E86.0",
+                "icd_label": "Dehydration",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E86.0"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Dehydration\",\"icd_code\":\"E86.0\",\"icd_label\":\"Dehydration\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Dehydration",
+                "icd_code": "E86.0",
+                "icd_label": "Dehydration",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E86.0"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Dehydration\",\"icd_code\":\"E86.0\",\"icd_label\":\"Dehydration\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Dehydration",
+                "icd_code": "E86.0",
+                "icd_label": "Dehydration",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E86.0"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Hypertension",
+          "Hyperlipidemia"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Hypertension",
+            "icd_code": "I10",
+            "icd_label": "Essential (primary) hypertension",
+            "status": "OK"
+          },
+          {
+            "label": "Hyperlipidemia",
+            "icd_code": "E78.5",
+            "icd_label": "Hyperlipidemia, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"},{\"label\":\"Hyperlipidemia\",\"icd_code\":\"E78.5\",\"icd_label\":\"Hyperlipidemia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              },
+              {
+                "label": "Hyperlipidemia",
+                "icd_code": "E78.5",
+                "icd_label": "Hyperlipidemia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E78.5",
+            "I10"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"},{\"label\":\"Hyperlipidemia\",\"icd_code\":\"E78.5\",\"icd_label\":\"Hyperlipidemia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              },
+              {
+                "label": "Hyperlipidemia",
+                "icd_code": "E78.5",
+                "icd_label": "Hyperlipidemia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E78.5",
+            "I10"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"},{\"label\":\"Hyperlipidemia\",\"icd_code\":\"E78.5\",\"icd_label\":\"Hyperlipidemia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              },
+              {
+                "label": "Hyperlipidemia",
+                "icd_code": "E78.5",
+                "icd_label": "Hyperlipidemia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "E78.5",
+            "I10"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Type 2 diabetes mellitus",
+          "Insomnia"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Type 2 diabetes mellitus",
+            "icd_code": "E11.9",
+            "icd_label": "Type 2 diabetes mellitus without complications",
+            "status": "OK"
+          },
+          {
+            "label": "Insomnia",
+            "icd_code": "G47.00",
+            "icd_label": "Insomnia, unspecified",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Type 2 diabetes mellitus\",\"icd_code\":\"E11\",\"icd_label\":\"Type 2 diabetes mellitus\",\"status\":\"valid\"},{\"label\":\"Insomnia\",\"icd_code\":\"G47.00\",\"icd_label\":\"Insomnia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Type 2 diabetes mellitus",
+                "icd_code": "E11",
+                "icd_label": "Type 2 diabetes mellitus",
+                "status": "valid"
+              },
+              {
+                "label": "Insomnia",
+                "icd_code": "G47.00",
+                "icd_label": "Insomnia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "G47.00",
+            "E11.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Type 2 diabetes mellitus\",\"icd_code\":\"E11\",\"icd_label\":\"Type 2 diabetes mellitus\",\"status\":\"valid\"},{\"label\":\"Insomnia\",\"icd_code\":\"G47.00\",\"icd_label\":\"Insomnia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Type 2 diabetes mellitus",
+                "icd_code": "E11",
+                "icd_label": "Type 2 diabetes mellitus",
+                "status": "valid"
+              },
+              {
+                "label": "Insomnia",
+                "icd_code": "G47.00",
+                "icd_label": "Insomnia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "G47.00",
+            "E11.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Type 2 diabetes mellitus\",\"icd_code\":\"E11\",\"icd_label\":\"Type 2 diabetes mellitus\",\"status\":\"valid\"},{\"label\":\"Insomnia\",\"icd_code\":\"G47.00\",\"icd_label\":\"Insomnia, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Type 2 diabetes mellitus",
+                "icd_code": "E11",
+                "icd_label": "Type 2 diabetes mellitus",
+                "status": "valid"
+              },
+              {
+                "label": "Insomnia",
+                "icd_code": "G47.00",
+                "icd_label": "Insomnia, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "G47.00",
+            "E11.9"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Acute sinusitis",
+          "Conjunctivitis",
+          "Dehydration"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Acute sinusitis",
+            "icd_code": "J01.90",
+            "icd_label": "Acute sinusitis, unspecified",
+            "status": "OK"
+          },
+          {
+            "label": "Conjunctivitis",
+            "icd_code": "H10.9",
+            "icd_label": "Conjunctivitis, unspecified",
+            "status": "OK"
+          },
+          {
+            "label": "Dehydration",
+            "icd_code": "E86.0",
+            "icd_label": "Dehydration",
+            "status": "OK"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute sinusitis\",\"icd_code\":\"J01.90\",\"icd_label\":\"Acute sinusitis, unspecified\",\"status\":\"valid\"},{\"label\":\"Conjunctivitis\",\"icd_code\":\"H10.9\",\"icd_label\":\"Conjunctivitis, unspecified\",\"status\":\"valid\"},{\"label\":\"Dehydration\",\"icd_code\":\"E86.0\",\"icd_label\":\"Dehydration, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute sinusitis",
+                "icd_code": "J01.90",
+                "icd_label": "Acute sinusitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "Conjunctivitis",
+                "icd_code": "H10.9",
+                "icd_label": "Conjunctivitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "Dehydration",
+                "icd_code": "E86.0",
+                "icd_label": "Dehydration, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J01.90",
+            "H10.9",
+            "E86.0"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute sinusitis\",\"icd_code\":\"J01.90\",\"icd_label\":\"Acute sinusitis, unspecified\",\"status\":\"valid\"},{\"label\":\"Conjunctivitis\",\"icd_code\":\"H10.9\",\"icd_label\":\"Conjunctivitis, unspecified\",\"status\":\"valid\"},{\"label\":\"Dehydration\",\"icd_code\":\"E86.0\",\"icd_label\":\"Dehydration, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute sinusitis",
+                "icd_code": "J01.90",
+                "icd_label": "Acute sinusitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "Conjunctivitis",
+                "icd_code": "H10.9",
+                "icd_label": "Conjunctivitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "Dehydration",
+                "icd_code": "E86.0",
+                "icd_label": "Dehydration, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J01.90",
+            "H10.9",
+            "E86.0"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Acute sinusitis\",\"icd_code\":\"J01.90\",\"icd_label\":\"Acute sinusitis, unspecified\",\"status\":\"valid\"},{\"label\":\"Conjunctivitis\",\"icd_code\":\"H10.9\",\"icd_label\":\"Conjunctivitis, unspecified\",\"status\":\"valid\"},{\"label\":\"Dehydration\",\"icd_code\":\"E86.0\",\"icd_label\":\"Dehydration, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Acute sinusitis",
+                "icd_code": "J01.90",
+                "icd_label": "Acute sinusitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "Conjunctivitis",
+                "icd_code": "H10.9",
+                "icd_label": "Conjunctivitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "Dehydration",
+                "icd_code": "E86.0",
+                "icd_label": "Dehydration, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "J01.90",
+            "H10.9",
+            "E86.0"
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "URI"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "URI",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "REVIEW"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"URI\",\"icd_code\":\"J06.9\",\"icd_label\":\"Unspecified acute upper respiratory infection\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "URI",
+                "icd_code": "J06.9",
+                "icd_label": "Unspecified acute upper respiratory infection",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"URI\",\"icd_code\":\"J06.9\",\"icd_label\":\"Unspecified acute upper respiratory infection\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "URI",
+                "icd_code": "J06.9",
+                "icd_label": "Unspecified acute upper respiratory infection",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"URI\",\"icd_code\":\"J06.9\",\"icd_label\":\"Unspecified acute upper respiratory infection\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "URI",
+                "icd_code": "J06.9",
+                "icd_label": "Unspecified acute upper respiratory infection",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "HTN"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "HTN",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "REVIEW"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "rash?"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "rash?",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "REVIEW"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"rash\",\"icd_code\":\"R21\",\"icd_label\":\"Rash and other nonspecific skin eruption\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "rash",
+                "icd_code": "R21",
+                "icd_label": "Rash and other nonspecific skin eruption",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Rash\",\"icd_code\":\"R21\",\"icd_label\":\"Rash and other nonspecific skin eruption\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Rash",
+                "icd_code": "R21",
+                "icd_label": "Rash and other nonspecific skin eruption",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Rash\",\"icd_code\":\"R21\",\"icd_label\":\"Rash and other nonspecific skin eruption\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Rash",
+                "icd_code": "R21",
+                "icd_label": "Rash and other nonspecific skin eruption",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "infection"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "infection",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "REVIEW"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"infection\",\"icd_code\":\"A00-B99\",\"icd_label\":\"Certain infectious and parasitic diseases\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "infection",
+                "icd_code": "A00-B99",
+                "icd_label": "Certain infectious and parasitic diseases",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Infection, unspecified\",\"icd_code\":\"A49.9\",\"icd_label\":\"Bacterial infection, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Infection, unspecified",
+                "icd_code": "A49.9",
+                "icd_label": "Bacterial infection, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Infection, unspecified\",\"icd_code\":\"A49.9\",\"icd_label\":\"Bacterial infection, unspecified\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Infection, unspecified",
+                "icd_code": "A49.9",
+                "icd_label": "Bacterial infection, unspecified",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "N/A"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "N/A",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "ERROR"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"N/A\",\"icd_code\":\"\",\"icd_label\":\"\",\"status\":\"not applicable\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "N/A",
+                "icd_code": "",
+                "icd_label": "",
+                "status": "not applicable"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"N/A\",\"icd_code\":\"\",\"icd_label\":\"\",\"status\":\"not applicable\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "N/A",
+                "icd_code": "",
+                "icd_label": "",
+                "status": "not applicable"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"N/A\",\"icd_code\":\"\",\"icd_label\":\"\",\"status\":\"not applicable\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "N/A",
+                "icd_code": "",
+                "icd_label": "",
+                "status": "not applicable"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "123abc"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "123abc",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "ERROR"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[]}",
+          "parsed_output": {
+            "mappings": []
+          },
+          "normalized_output": {
+            "mappings": []
+          },
+          "schema_valid": true,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "SEMANTIC_MISMATCH"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[]}",
+          "parsed_output": {
+            "mappings": []
+          },
+          "normalized_output": {
+            "mappings": []
+          },
+          "schema_valid": true,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "SEMANTIC_MISMATCH"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[]}",
+          "parsed_output": {
+            "mappings": []
+          },
+          "normalized_output": {
+            "mappings": []
+          },
+          "schema_valid": true,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "SEMANTIC_MISMATCH"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "{\"mappings\":[]}"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "follow-up only"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "follow-up only",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "ERROR"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Follow-up only\",\"icd_code\":\"\",\"icd_label\":\"Follow-up examination\",\"status\":\"not_applicable\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Follow-up only",
+                "icd_code": "",
+                "icd_label": "Follow-up examination",
+                "status": "not_applicable"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Follow-up only\",\"icd_code\":\"Z09\",\"icd_label\":\"Encounter for follow-up examination after completed treatment for conditions other than malignant neoplasm\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Follow-up only",
+                "icd_code": "Z09",
+                "icd_label": "Encounter for follow-up examination after completed treatment for conditions other than malignant neoplasm",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Follow-up only\",\"icd_code\":\"Z09\",\"icd_label\":\"Encounter for follow-up examination after completed treatment for conditions other than malignant neoplasm\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Follow-up only",
+                "icd_code": "Z09",
+                "icd_label": "Encounter for follow-up examination after completed treatment for conditions other than malignant neoplasm",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Hypertension",
+          "URI",
+          "N/A"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Hypertension",
+            "icd_code": "I10",
+            "icd_label": "Essential (primary) hypertension",
+            "status": "OK"
+          },
+          {
+            "label": "URI",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "REVIEW"
+          },
+          {
+            "label": "N/A",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "ERROR"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"},{\"label\":\"URI\",\"icd_code\":\"J06.9\",\"icd_label\":\"Unspecified acute upper respiratory infection\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              },
+              {
+                "label": "URI",
+                "icd_code": "J06.9",
+                "icd_label": "Unspecified acute upper respiratory infection",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "I10",
+            "",
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"},{\"label\":\"URI\",\"icd_code\":\"J06.9\",\"icd_label\":\"Unspecified acute upper respiratory infection\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              },
+              {
+                "label": "URI",
+                "icd_code": "J06.9",
+                "icd_label": "Unspecified acute upper respiratory infection",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "I10",
+            "",
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Hypertension\",\"icd_code\":\"I10\",\"icd_label\":\"Essential (primary) hypertension\",\"status\":\"valid\"},{\"label\":\"URI\",\"icd_code\":\"J06.9\",\"icd_label\":\"Unspecified acute upper respiratory infection\",\"status\":\"valid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Hypertension",
+                "icd_code": "I10",
+                "icd_label": "Essential (primary) hypertension",
+                "status": "valid"
+              },
+              {
+                "label": "URI",
+                "icd_code": "J06.9",
+                "icd_label": "Unspecified acute upper respiratory infection",
+                "status": "valid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "I10",
+            "",
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    },
+    {
+      "input": {
+        "diagnoses": [
+          "Allergic rhinitis",
+          "rash?",
+          "123abc"
+        ]
+      },
+      "expected_output": {
+        "mappings": [
+          {
+            "label": "Allergic rhinitis",
+            "icd_code": "J30.9",
+            "icd_label": "Allergic rhinitis, unspecified",
+            "status": "OK"
+          },
+          {
+            "label": "rash?",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "REVIEW"
+          },
+          {
+            "label": "123abc",
+            "icd_code": "",
+            "icd_label": "",
+            "status": "ERROR"
+          }
+        ]
+      },
+      "runs": [
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Allergic rhinitis\",\"icd_code\":\"J30.9\",\"icd_label\":\"Allergic rhinitis, unspecified\",\"status\":\"valid\"},{\"label\":\"rash?\",\"icd_code\":\"R21\",\"icd_label\":\"Rash and other nonspecific skin eruption\",\"status\":\"valid\"},{\"label\":\"123abc\",\"icd_code\":\"\",\"icd_label\":\"\",\"status\":\"invalid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Allergic rhinitis",
+                "icd_code": "J30.9",
+                "icd_label": "Allergic rhinitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "rash?",
+                "icd_code": "R21",
+                "icd_label": "Rash and other nonspecific skin eruption",
+                "status": "valid"
+              },
+              {
+                "label": "123abc",
+                "icd_code": "",
+                "icd_label": "",
+                "status": "invalid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "",
+            "J30.9",
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Allergic rhinitis\",\"icd_code\":\"J30.9\",\"icd_label\":\"Allergic rhinitis, unspecified\",\"status\":\"valid\"},{\"label\":\"rash?\",\"icd_code\":\"R21\",\"icd_label\":\"Rash and other nonspecific skin eruption\",\"status\":\"valid\"},{\"label\":\"123abc\",\"icd_code\":\"\",\"icd_label\":\"\",\"status\":\"invalid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Allergic rhinitis",
+                "icd_code": "J30.9",
+                "icd_label": "Allergic rhinitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "rash?",
+                "icd_code": "R21",
+                "icd_label": "Rash and other nonspecific skin eruption",
+                "status": "valid"
+              },
+              {
+                "label": "123abc",
+                "icd_code": "",
+                "icd_label": "",
+                "status": "invalid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "",
+            "J30.9",
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        },
+        {
+          "raw_text": "{\"mappings\":[{\"label\":\"Allergic rhinitis\",\"icd_code\":\"J30.9\",\"icd_label\":\"Allergic rhinitis, unspecified\",\"status\":\"valid\"},{\"label\":\"rash?\",\"icd_code\":\"R21\",\"icd_label\":\"Rash and other nonspecific skin eruption\",\"status\":\"valid\"},{\"label\":\"123abc\",\"icd_code\":\"\",\"icd_label\":\"\",\"status\":\"invalid\"}]}",
+          "parsed_output": {
+            "mappings": [
+              {
+                "label": "Allergic rhinitis",
+                "icd_code": "J30.9",
+                "icd_label": "Allergic rhinitis, unspecified",
+                "status": "valid"
+              },
+              {
+                "label": "rash?",
+                "icd_code": "R21",
+                "icd_label": "Rash and other nonspecific skin eruption",
+                "status": "valid"
+              },
+              {
+                "label": "123abc",
+                "icd_code": "",
+                "icd_label": "",
+                "status": "invalid"
+              }
+            ]
+          },
+          "normalized_output": null,
+          "schema_valid": false,
+          "field_completeness": 1.0,
+          "mapping_accuracy": 0.0,
+          "actual_icd_codes": [],
+          "expected_icd_codes": [
+            "",
+            "J30.9",
+            ""
+          ],
+          "failure_types": [
+            "FIELD_INVALID"
+          ]
+        }
+      ],
+      "variance_detected": false,
+      "distinct_normalized_outputs": [
+        "INVALID:FIELD_INVALID"
+      ]
+    }
+  ]
+}

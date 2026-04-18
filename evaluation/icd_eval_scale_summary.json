@@ -1,0 +1,29 @@
+{
+  "baseline": {
+    "schema_validity": 0.058333333333333334,
+    "completeness": 1.0,
+    "accuracy": 0.0,
+    "error_rate": 1.0,
+    "avg_latency": 1.2152743127997383,
+    "p95_latency": 2.05225758299639,
+    "throughput": 0.8227988003100443
+  },
+  "fine_tuned": {
+    "schema_validity": 1.0,
+    "completeness": 1.0,
+    "accuracy": 0.6166666666666667,
+    "error_rate": 0.38333333333333336,
+    "avg_latency": 1.0977897673089805,
+    "p95_latency": 2.599576207998325,
+    "throughput": 0.9108489865048589
+  },
+  "governed": {
+    "schema_validity": 1.0,
+    "completeness": 1.0,
+    "accuracy": 0.325,
+    "error_rate": 0.675,
+    "avg_latency": 0.4091324794336591,
+    "p95_latency": 0.49556666699936613,
+    "throughput": 2.4438734818345855
+  }
+}

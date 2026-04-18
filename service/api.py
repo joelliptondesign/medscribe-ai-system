@@ -5,7 +5,9 @@ from __future__ import annotations
 from uuid import uuid4
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 
+from service.input_validation import validate_input
 from service import retrieval, run_manager, storage
 from service.schemas import EvaluateRequest, EvaluateResponse, SearchRequest, SearchResponse, ToolRequest
 from service.tools import call_tool
@@ -31,6 +33,16 @@ def _build_score_diff(scores_1: dict, scores_2: dict) -> dict:
 def evaluate(request: EvaluateRequest) -> EvaluateResponse:
     if not isinstance(request.input_text, str) or not request.input_text.strip():
         raise HTTPException(status_code=400, detail="input_text must be a non-empty string")
+
+    validation = validate_input(request.input_text)
+    if not validation["is_safe"]:
+        return JSONResponse(
+            status_code=400,
+            content={
+                "error": "Input contains potentially sensitive information",
+                "status": "rejected",
+            },
+        )
 
     run_id = str(uuid4())
     storage.create_run_shell(run_id, request.input_text.strip())

@@ -1,90 +1,149 @@
-# MedScribe — Stateful AI Execution & Evaluation System
+# Reliable AI Systems: Fine-Tuning, Evaluation, and Governance
 
-## Overview
+MedScribe is a Python system for making LLM behavior measurable and controllable in a structured workflow. It combines a fixed execution pipeline, persisted run artifacts, offline evaluation, iterative fine-tuning, and a deterministic governance layer. The current repo artifacts show a progression from broken baseline outputs to 95.83% mapping accuracy with fine-tuned v2 on the Phase 1B dataset, while the governed layer reached 100.00% policy compliance and 100.00% decision stability on the latest comparison run.
 
-AI systems are increasingly used in workflows where the cost of being wrong is high.
+## Why This Project Matters
 
-But most systems still rely on a single model response.
-That response can change between runs, ignore constraints, or produce outputs that look correct but aren't.
+Raw LLM outputs are not enough when a system needs consistent behavior.
 
-This creates a gap between what AI can generate and what a system can reliably act on.
+Reliable AI needs structure, evaluation, and control. This repo shows that loop in practice: measure failures, refine the dataset, fine-tune again, and compare the outcome against a governed execution path.
 
-## Problem
+## Controlled Experiment: Reliability Improvements
 
-In high-stakes environments, it's not enough for AI to be helpful — it needs to be consistent and controllable.
+| System | Schema Validity | Mapping Accuracy | Decision Stability | Policy Compliance |
+| --- | --- | --- | --- | --- |
+| Baseline | 4.17% | 0.00% | — | — |
+| Fine-Tuned (v1) | 100.00% | 83.33% | — | — |
+| Fine-Tuned (v2) | 100.00% | 95.83% | — | — |
+| Governed | — | — | 100.00% | 100.00% |
 
-Common failure modes:
+Values come from `evaluation/icd_eval_v2_comparison.json` and the persisted evaluation summaries in `evaluation/`.
 
-- outputs vary for the same input
-- constraints are applied inconsistently
-- there's no clear record of how a result was produced
-- it's difficult to compare behavior across runs
+## Example: Before vs After
 
-These aren't model problems alone. They're system design problems.
+Baseline output on the sample comparison set returned non-standard status values. For `Pharyngitis`:
 
-## Approach
+```json
+{"mappings":[{"label":"Pharyngitis","icd_code":"J02.9","icd_label":"Acute pharyngitis, unspecified","status":"active"}]}
+```
 
-MedScribe explores how to address this by introducing structure around the model.
+Fine-tuned v2 on the same input returned valid JSON in the required format:
 
-The system simulates a clinical-style workflow to make decision quality and failure modes easier to evaluate.
+```json
+{"mappings":[{"label":"Pharyngitis","icd_code":"J02.9","icd_label":"Acute pharyngitis, unspecified","status":"OK"}]}
+```
 
-Instead of relying on a single response, the input moves through a defined pipeline:
+Governed outcome on the latest Phase 1B comparison run: policy compliance was `1.00`, decision stability was `1.00`, escalation rate was `1.00`, and override rate was `0.00`.
 
-- intake and parsing
-- triage and diagnosis
-- structured mapping
-- scoring and evaluation
-- final outcome enforcement
+## Iterative Improvement Loop
 
-The model is used within the pipeline, not as the final authority.
+The baseline system failed first at structure. Fine-tuned v1 fixed that and reached 100.00% schema validity, but evaluation still exposed semantic mismatches in otherwise valid JSON.
 
-## What This Enables
+The v2 dataset kept the original training set and added 30 targeted examples focused on exact ICD selection, mixed-status outputs, and cases that should remain `REVIEW` instead of becoming overconfident `OK`.
 
-Adding structure changes how the system behaves:
+That second pass moved Phase 1B accuracy from 83.33% to 95.83% while preserving 100.00% schema validity.
 
-- outputs are consistent across repeated runs
-- invalid results are filtered before they surface
-- each run produces a complete, inspectable record
-- system behavior can be compared across cases and over time
+## What This Demonstrates
 
-This makes it possible to evaluate the system itself, not just individual outputs.
+- Structured output enforcement
+- Evaluation-driven development
+- Iterative model improvement
+- Governance / decision control
+- Reproducible system design
 
-## Scope
+## Technical Proof Surface
 
-This project is not intended to be a clinical product.
+A reviewer can verify the results directly from the repo artifacts:
 
-The clinical setting is used to represent a high-stakes environment where incorrect outputs are easy to recognize.
+- `evaluation/icd_eval_summary.json`
+- `evaluation/full_system_comparison.json`
+- `evaluation/icd_eval_v2_comparison.json`
+- `evaluation/icd_eval_scale_summary.json`
+- `fine_tuning/sample_outputs.json`
+- `fine_tuning/sample_outputs_v2.json`
+- `fine_tuning/fine_tune_job.json`
+- `fine_tuning/fine_tune_job_v2.json`
+- `evaluation/icd_eval_results_governed.json`
 
-The focus is on system design:
-how to control, inspect, and evaluate AI behavior in a structured way.
+## Tech Stack
 
-The sections below describe how the system is implemented.
+- Python
+- OpenAI fine-tuning + inference
+- LangGraph
+- FastAPI
+- JSON / JSONL artifact storage
+- Custom evaluation framework
 
-## Summary
+## System Overview
 
-MedScribe is a stateful, API-driven AI system that executes, persists, and analyzes structured runs with full lifecycle visibility. It executes requests asynchronously, records lifecycle state and execution artifacts, and exposes stored runs for inspection, comparison, and retrieval. The repository also includes an offline evaluation pipeline that produces scored run artifacts and a read-only aggregation utility for persisted evaluation runs.
+The runtime pipeline is:
 
-Each run is treated as a persistent artifact, enabling inspection, comparison, and retrieval without re-execution.
+`Input -> Intake Parser -> Triage Engine -> Diagnosis Engine -> ICD Mapping -> Critic -> Governance Policy`
 
-## What This System Does
+The repo contains two operating surfaces:
 
-Pipeline:
+- Service runtime: asynchronous execution, persisted run records, retrieval, comparison, and search
+- Offline evaluation: dataset-driven execution, scoring, fine-tuning comparisons, and governed comparisons
 
-Input → Intake Parser → Triage Engine → Diagnosis Engine → ICD Mapping → Critic → Governance Policy → Persisted Run
-
-Implemented outputs:
+Key outputs include:
 
 - structured intake data
-- triage decision
-- diagnosis list
+- triage decisions
+- diagnosis lists
 - ICD mappings
-- critic scores and recommendation
-- governance-enforced final status
-- persisted run artifact
+- critic scores and recommendations
+- governance-enforced final decisions
+- persisted run and evaluation artifacts
 
-## Example Run
+## Architecture
 
-Below is a simplified example of a completed run artifact:
+Primary service boundary:
+
+- `service/main.py`: FastAPI app entry point
+- `service/api.py`: request handlers
+- `service/run_manager.py`: execution orchestration
+- `service/storage.py`: runtime artifact persistence
+- `service/retrieval.py`: stored-run search and retrieval
+
+Pipeline implementation:
+
+- `graph/state.py`: shared state
+- `graph/graph_builder.py`: graph definition
+- `graph/nodes/intake_parser.py`
+- `graph/nodes/triage_engine.py`
+- `graph/nodes/diagnosis_engine.py`
+- `graph/nodes/icd_mapper.py`
+- `graph/nodes/critic.py`
+- `graph/nodes/governance_policy.py`
+
+Evaluation and proof artifacts:
+
+- `evaluation/eval_runner.py`
+- `evaluation/score_runner.py`
+- `evaluation/`
+- `fine_tuning/`
+- `runs/`
+
+## API
+
+Main endpoints:
+
+- `POST /evaluate`
+- `GET /run/{run_id}`
+- `GET /run/{run_id}/status`
+- `GET /runs`
+- `GET /compare`
+- `POST /search`
+- `POST /tool`
+
+Supported tool calls:
+
+- `parse_input`
+- `generate_diagnosis`
+- `map_icd`
+- `score_case`
+
+## Example Run Artifact
 
 ```json
 {
@@ -122,248 +181,6 @@ Below is a simplified example of a completed run artifact:
 }
 ```
 
-Actual run artifacts include additional fields such as execution traces, fallback diagnostics, and error metadata.
-
-## Core System Properties
-
-- Stateful execution with lifecycle states: `pending`, `running`, `completed`, `degraded`, `failed`
-- Deterministic enforcement in the governance policy layer
-- Persistent append-only run storage in `data/runs.jsonl`
-- Retrieval of stored runs without recomputation through `GET /run/{run_id}`
-- Run comparison through `GET /compare`
-- Search over persisted runs through `POST /search`
-
-## Evaluation & Analysis
-
-- Offline batch execution from `evaluation/dataset.json` through `evaluation/eval_runner.py`
-- Scoring of batch results through `evaluation/score_runner.py`
-- Persisted evaluation run artifacts in `runs/{run_id}/scored_results.json`
-- Read-only aggregation for persisted evaluation runs through `service/run_aggregator.py`
-- CLI inspection of aggregated evaluation summaries through `scripts/test_run_aggregator.py`
-
-## Observability
-
-- Execution trace recorded per service run
-- Stage-level latency tracking for parse, diagnosis, mapping, scoring, and total runtime
-- Node-level fallback diagnostics for hybrid execution mode
-- Stored failure metadata including `failed_stage` and `error`
-
-## API
-
-### `POST /evaluate`
-
-Request:
-
-```json
-{
-  "input_text": "I have had fever, cough, and sore throat for two days."
-}
-```
-
-Response:
-
-```json
-{
-  "run_id": "uuid",
-  "status": "pending"
-}
-```
-
-Behavior:
-
-- creates a pending run record
-- starts asynchronous execution
-
-### `GET /run/{run_id}`
-
-Returns the stored run artifact for the requested run ID.
-
-Example fields in the response:
-
-```json
-{
-  "run_id": "uuid",
-  "timestamp": "2026-03-27T00:00:00Z",
-  "input": "I have fever and cough.",
-  "status": "completed",
-  "parsed_input": {},
-  "diagnosis": {
-    "diagnoses": [],
-    "triage": {}
-  },
-  "icd_mapping": {
-    "mappings": []
-  },
-  "scores": {},
-  "decision": "PASS",
-  "summary": {},
-  "timing": {},
-  "trace": [],
-  "node_diagnostics": [],
-  "fallback_nodes": [],
-  "fallback_reasons": {},
-  "metadata": {},
-  "retry_count": 0,
-  "failed_stage": null,
-  "fallback_used": false,
-  "degraded_mode": false,
-  "error": null
-}
-```
-
-Run lifecycle states:
-
-- `pending`
-- `running`
-- `completed`
-- `degraded`
-- `failed`
-
-### `GET /run/{run_id}/status`
-
-Response:
-
-```json
-{
-  "run_id": "uuid",
-  "status": "completed"
-}
-```
-
-### `GET /runs`
-
-Returns a list of stored runs with summary fields:
-
-```json
-[
-  {
-    "run_id": "uuid",
-    "timestamp": "2026-03-27T00:00:00Z",
-    "status": "completed"
-  }
-]
-```
-
-### `GET /compare`
-
-Query parameters:
-
-- `run_id_1`
-- `run_id_2`
-
-Response:
-
-```json
-{
-  "run_id_1": "run-a",
-  "run_id_2": "run-b",
-  "decision_diff": true,
-  "score_diff": {
-    "confidence": {
-      "run_1": 0.85,
-      "run_2": 0.62
-    }
-  }
-}
-```
-
-### `POST /search`
-
-Request:
-
-```json
-{
-  "query": "fever cough",
-  "top_k": 5
-}
-```
-
-Response:
-
-```json
-{
-  "results": [
-    {
-      "run_id": "uuid",
-      "score": 0.91
-    }
-  ]
-}
-```
-
-### `POST /tool`
-
-Request:
-
-```json
-{
-  "tool_name": "parse_input",
-  "payload": {
-    "raw_input": "I have a headache."
-  }
-}
-```
-
-Response:
-
-```json
-{
-  "result": {}
-}
-```
-
-Supported tool names:
-
-- `parse_input`
-- `generate_diagnosis`
-- `map_icd`
-- `score_case`
-
-## Architecture
-
-Primary service boundary:
-
-- FastAPI entry point in `service/main.py`
-- Route layer in `service/api.py`
-- Execution orchestration in `service/run_manager.py`
-- Append-only storage in `service/storage.py`
-- Retrieval search in `service/retrieval.py`
-- Node dispatch utilities in `service/tools.py`
-
-Pipeline implementation:
-
-- state initialization in `graph/state.py`
-- graph definition in `graph/graph_builder.py`
-- intake parsing in `graph/nodes/intake_parser.py`
-- triage assignment in `graph/nodes/triage_engine.py`
-- diagnosis generation in `graph/nodes/diagnosis_engine.py`
-- ICD mapping in `graph/nodes/icd_mapper.py`
-- critic scoring in `graph/nodes/critic.py`
-- governance enforcement in `graph/nodes/governance_policy.py`
-
-Evaluation boundary:
-
-- batch execution in `evaluation/eval_runner.py`
-- scored result generation and run artifact persistence in `evaluation/score_runner.py`
-- evaluation run aggregation in `service/run_aggregator.py`
-
-Artifact models:
-
-- service runtime artifacts: `data/runs.jsonl`
-- evaluation run artifacts: `runs/{run_id}/scored_results.json`
-
-## Tech Stack
-
-- Python
-- FastAPI
-- Pydantic
-- LangGraph
-- LangChain OpenAI
-- FAISS
-- NumPy
-- python-dotenv
-- JSON / JSONL file storage
-
 ## Running the System
 
 ```bash
@@ -389,10 +206,63 @@ python evaluation/score_runner.py
 python scripts/test_run_aggregator.py --run_id <RUN_ID>
 ```
 
-## Design Principles
+## Security & Safety Considerations
 
-- stateful execution with explicit lifecycle tracking
-- append-only storage for persisted service runs
-- inspectable stored artifacts
-- explicit boundaries between service runtime and offline evaluation
-- deterministic policy enforcement after critic scoring
+- This system uses synthetic, non-PHI data.
+- It is not intended for clinical or production PHI usage.
+- It is designed for reliability, evaluation, and system control experimentation.
+
+### Input Validation
+
+A lightweight input validation layer rejects common sensitive identifiers at the API boundary. The current checks cover email addresses, phone numbers, SSN-like patterns, and date-of-birth formats.
+
+Verified behavior:
+
+- unsafe inputs -> HTTP 400 rejected, no pipeline execution, no run created
+- safe inputs -> normal execution path, run created
+
+- Unsafe Input: `Contact me at john@example.com` -> rejected (400)
+- Safe Input: `I have a headache and mild fever` -> accepted, run created
+
+This behavior was manually verified using controlled test inputs.
+
+### Production Considerations
+
+- PHI detection / redaction not implemented
+- Encryption and access control not implemented
+- Adversarial input hardening not implemented
+- Intended as a controlled system demonstration, not a production deployment
+
+## Threat Model
+
+### Trust Boundaries
+
+- User input -> untrusted
+- LLM output -> untrusted until evaluated
+- Persisted artifacts -> sensitive
+
+### Primary Risks
+
+- Accidental PHI input
+- Malformed or adversarial input
+- Secret leakage
+- Misuse of model outputs
+
+### Current Controls
+
+- Structured schema enforcement
+- Critic scoring layer
+- Governance enforcement layer
+- Deterministic output constraints
+- Persisted artifacts for auditability
+
+### Known Gaps
+
+- No PHI redaction layer
+- No encryption or access control
+- No adversarial input protection
+- Governance is deterministic but not policy-rich
+
+### Safety Note
+
+Basic input validation is included for demonstration purposes and does not replace production-grade safeguards.

@@ -1,0 +1,28 @@
+{
+  "baseline": {
+    "schema_validity": 0.041666666666666664,
+    "completeness": 1.0,
+    "accuracy": 0.0,
+    "variance_rate": 0.0,
+    "error_breakdown": {
+      "SCHEMA_INVALID": 0,
+      "FIELD_MISSING": 0,
+      "FIELD_INVALID": 69,
+      "SEMANTIC_MISMATCH": 3,
+      "EMPTY_OUTPUT": 0
+    }
+  },
+  "fine_tuned": {
+    "schema_validity": 1.0,
+    "completeness": 1.0,
+    "accuracy": 0.8194444444444444,
+    "variance_rate": 0.041666666666666664,
+    "error_breakdown": {
+      "SCHEMA_INVALID": 0,
+      "FIELD_MISSING": 0,
+      "FIELD_INVALID": 0,
+      "SEMANTIC_MISMATCH": 13,
+      "EMPTY_OUTPUT": 0
+    }
+  }
+}

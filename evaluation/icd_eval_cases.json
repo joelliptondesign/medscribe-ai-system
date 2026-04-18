@@ -1,0 +1,410 @@
+[
+  {
+    "input": {
+      "diagnoses": ["Hypertension"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Hypertension",
+          "icd_code": "I10",
+          "icd_label": "Essential (primary) hypertension",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Type 2 diabetes mellitus"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Type 2 diabetes mellitus",
+          "icd_code": "E11.9",
+          "icd_label": "Type 2 diabetes mellitus without complications",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Acute sinusitis"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Acute sinusitis",
+          "icd_code": "J01.90",
+          "icd_label": "Acute sinusitis, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Acute bronchitis"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Acute bronchitis",
+          "icd_code": "J20.9",
+          "icd_label": "Acute bronchitis, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Constipation"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Constipation",
+          "icd_code": "K59.00",
+          "icd_label": "Constipation, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Insomnia"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Insomnia",
+          "icd_code": "G47.00",
+          "icd_label": "Insomnia, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Anxiety"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Anxiety",
+          "icd_code": "F41.9",
+          "icd_label": "Anxiety disorder, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Hyperlipidemia"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Hyperlipidemia",
+          "icd_code": "E78.5",
+          "icd_label": "Hyperlipidemia, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Allergic rhinitis"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Allergic rhinitis",
+          "icd_code": "J30.9",
+          "icd_label": "Allergic rhinitis, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Gastroesophageal reflux disease"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Gastroesophageal reflux disease",
+          "icd_code": "K21.9",
+          "icd_label": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Conjunctivitis"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Conjunctivitis",
+          "icd_code": "H10.9",
+          "icd_label": "Conjunctivitis, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Dehydration"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Dehydration",
+          "icd_code": "E86.0",
+          "icd_label": "Dehydration",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Hypertension", "Hyperlipidemia"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Hypertension",
+          "icd_code": "I10",
+          "icd_label": "Essential (primary) hypertension",
+          "status": "OK"
+        },
+        {
+          "label": "Hyperlipidemia",
+          "icd_code": "E78.5",
+          "icd_label": "Hyperlipidemia, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Type 2 diabetes mellitus", "Insomnia"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Type 2 diabetes mellitus",
+          "icd_code": "E11.9",
+          "icd_label": "Type 2 diabetes mellitus without complications",
+          "status": "OK"
+        },
+        {
+          "label": "Insomnia",
+          "icd_code": "G47.00",
+          "icd_label": "Insomnia, unspecified",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Acute sinusitis", "Conjunctivitis", "Dehydration"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Acute sinusitis",
+          "icd_code": "J01.90",
+          "icd_label": "Acute sinusitis, unspecified",
+          "status": "OK"
+        },
+        {
+          "label": "Conjunctivitis",
+          "icd_code": "H10.9",
+          "icd_label": "Conjunctivitis, unspecified",
+          "status": "OK"
+        },
+        {
+          "label": "Dehydration",
+          "icd_code": "E86.0",
+          "icd_label": "Dehydration",
+          "status": "OK"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["URI"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "URI",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "REVIEW"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["HTN"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "HTN",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "REVIEW"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["rash?"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "rash?",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "REVIEW"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["infection"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "infection",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "REVIEW"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["N/A"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "N/A",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "ERROR"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["123abc"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "123abc",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "ERROR"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["follow-up only"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "follow-up only",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "ERROR"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Hypertension", "URI", "N/A"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Hypertension",
+          "icd_code": "I10",
+          "icd_label": "Essential (primary) hypertension",
+          "status": "OK"
+        },
+        {
+          "label": "URI",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "REVIEW"
+        },
+        {
+          "label": "N/A",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "ERROR"
+        }
+      ]
+    }
+  },
+  {
+    "input": {
+      "diagnoses": ["Allergic rhinitis", "rash?", "123abc"]
+    },
+    "expected_output": {
+      "mappings": [
+        {
+          "label": "Allergic rhinitis",
+          "icd_code": "J30.9",
+          "icd_label": "Allergic rhinitis, unspecified",
+          "status": "OK"
+        },
+        {
+          "label": "rash?",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "REVIEW"
+        },
+        {
+          "label": "123abc",
+          "icd_code": "",
+          "icd_label": "",
+          "status": "ERROR"
+        }
+      ]
+    }
+  }
+]
