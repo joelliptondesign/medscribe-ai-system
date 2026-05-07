@@ -3,4 +3,10 @@
 __pycache__/
 .DS_Store
 telemetry/
+telemetry/executor_heartbeat.jsonl
 _archive_dev/telemetry/
+
+# Internal operational reconnaissance artifacts
+docs/After Action Report (AAR)*
+docs/LANGSMITH_PHASE*.md
+evaluation/synthetic_incidents/run_summary_*.json

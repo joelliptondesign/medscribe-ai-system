@@ -1,30 +1,15 @@
 Public repository file inventory
 
+REPO_TREE.txt
 .env.example
 .gitignore
 FREEZE_MANIFEST.json
 README.md
-REPO_TREE.txt
 SHA256SUMS.txt
 data/icd_lookup.json
 data/runs.jsonl
-docs/After Action Report (AAR) — OPORD MedScribe Observability Evaluation UI Reconnaissance.md
-docs/LANGSMITH_PHASE1_RECON_20260507T005043Z.md
-docs/LANGSMITH_PHASE2_SYNTHETIC_INCIDENTS_20260507T144105Z.md
-docs/LANGSMITH_PHASE3_CRITIC_FALSE_POSITIVE_INVESTIGATION_20260507T204324Z.md
-docs/LANGSMITH_PHASE3_CRITIC_FALSE_POSITIVE_REPORTING_20260507T205757Z.md
-docs/LANGSMITH_PHASE3_MALFORMED_PAYLOAD_INVESTIGATION_20260507T195642Z.md
-docs/LANGSMITH_PHASE3_MALFORMED_REPORTING_20260507T200237Z.md
-docs/LANGSMITH_PHASE3_OVERCONFIDENCE_INVESTIGATION_20260507T200758Z.md
-docs/LANGSMITH_PHASE3_OVERCONFIDENCE_REPORTING_20260507T201647Z.md
-docs/LANGSMITH_PHASE3_POLICY_DIVERGENCE_INVESTIGATION_20260507T213551Z.md
-docs/LANGSMITH_PHASE3_POLICY_SIMULATION_20260507T183915Z.md
-docs/LANGSMITH_PHASE3_RCA_GOVERNANCE_INVESTIGATION_20260507T163524Z.md
-docs/LANGSMITH_PHASE3_RCA_SEMANTIC_20260507T161808Z.md
-docs/LANGSMITH_PHASE3_RCA_TOKEN_COST_20260507T155757Z.md
-docs/LANGSMITH_PHASE3_REPORTING_CLARIFICATION_20260507T182926Z.md
-docs/LANGSMITH_PHASE3_TRACEABILITY_20260507T182100Z.md
 docs/architecture.md
+docs/case_studies/rca_icd_specificity_evaluator.md
 docs/data_contracts.md
 evaluation/_legacy/aggregate_runner.py
 evaluation/dataset.json
@@ -49,16 +34,6 @@ evaluation/score_runner.py
 evaluation/scored_results.json
 evaluation/synthetic_incidents/incidents.json
 evaluation/synthetic_incidents/last_run_summary.json
-evaluation/synthetic_incidents/run_summary_20260507T143946Z.json
-evaluation/synthetic_incidents/run_summary_20260507T160634Z.json
-evaluation/synthetic_incidents/run_summary_20260507T160955Z.json
-evaluation/synthetic_incidents/run_summary_20260507T161850Z.json
-evaluation/synthetic_incidents/run_summary_20260507T181913Z.json
-evaluation/synthetic_incidents/run_summary_20260507T182746Z.json
-evaluation/synthetic_incidents/run_summary_20260507T183727Z.json
-evaluation/synthetic_incidents/run_summary_20260507T200104Z.json
-evaluation/synthetic_incidents/run_summary_20260507T201527Z.json
-evaluation/synthetic_incidents/run_summary_20260507T205630Z.json
 examples/README.md
 examples/governed_eval_example.json
 fine_tuning/fine_tune_job.json
@@ -102,7 +77,6 @@ service/run_manager.py
 service/schemas.py
 service/storage.py
 service/tools.py
-telemetry/executor_heartbeat.jsonl
 tests/test_edge_cases.py
 tests/test_execution_mode.py
 tests/test_hybrid_mode_opt_in.py

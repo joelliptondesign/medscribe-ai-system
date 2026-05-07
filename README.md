@@ -185,7 +185,7 @@ A reviewer can verify the core reliability results from repo artifacts:
 - `fine_tuning/fine_tune_job_v2.json`
 - `evaluation/synthetic_incidents/last_run_summary.json`
 
-Key reconnaissance and RCA artifacts are under `docs/`, including the final After Action Report for the observability and evaluation mission.
+Selected public RCA case studies are under `docs/case_studies/`. The curated ICD specificity evaluator case study shows how trace evidence, critic signals, governance output, and synthetic incident reporting were used to correct an evaluator mismatch without changing runtime behavior.
 
 ## Tech Stack
 
