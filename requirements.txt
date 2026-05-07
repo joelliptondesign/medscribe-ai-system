@@ -4,5 +4,6 @@ uvicorn
 langgraph
 langchain
 langchain-openai
+langsmith==0.4.37
 pydantic
 python-dotenv

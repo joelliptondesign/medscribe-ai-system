@@ -1,0 +1,71 @@
+{
+  "dataset_name": "medscribe_synthetic_incidents_phase2",
+  "dataset_version": "2026-05-07",
+  "contains_phi": false,
+  "notes": "Synthetic, non-PHI incident cases for tracing and evaluation workflow validation.",
+  "incidents": [
+    {
+      "incident_id": "MS-SYN-001",
+      "incident_class": "schema_valid_semantic_failure",
+      "input_text": "Synthetic demo case: adult reports fever, cough, sore throat, and fatigue for two days, but also says the main concern is worsening shortness of breath after walking across the room.",
+      "expected_behavior": "Runtime completes and trace should make it clear whether semantic emphasis moved from respiratory infection symptoms to shortness-of-breath risk.",
+      "expected_failure_mode": "Schema-valid output may still miss the clinically important semantic emphasis.",
+      "evaluation_notes": "Use trace outputs to inspect intake symptoms, triage rationale, diagnosis labels, and governance reason codes.",
+      "tags": ["synthetic-incident", "schema-valid-semantic-failure", "phase2"]
+    },
+    {
+      "incident_id": "MS-SYN-002",
+      "incident_class": "incorrect_icd_specificity",
+      "input_text": "Synthetic demo case: adult has burning urination and frequent urination for three days without fever, flank pain, or pregnancy-related context.",
+      "expected_behavior": "Runtime completes and ICD mapper output should be inspectable for specificity of urinary diagnosis mapping.",
+      "expected_failure_mode": "A broad or partial ICD mapping would be an incorrect specificity clue.",
+      "evaluation_notes": "Inspect ICD mapper output labels, codes, and status fields in the hosted span output.",
+      "tags": ["synthetic-incident", "incorrect-icd-specificity", "phase2"]
+    },
+    {
+      "incident_id": "MS-SYN-003",
+      "incident_class": "governance_override",
+      "input_text": "Synthetic demo case: adult reports sudden severe chest pain with shortness of breath today, while also describing it as probably mild indigestion.",
+      "expected_behavior": "Runtime completes and governance should be inspectable for escalation or override relative to lower-risk language.",
+      "expected_failure_mode": "Governance may override optimistic or low-risk intermediate outputs based on policy thresholds.",
+      "evaluation_notes": "Inspect critic scores, governance_result, escalation_required, and reason_codes.",
+      "tags": ["synthetic-incident", "governance-override", "phase2"]
+    },
+    {
+      "incident_id": "MS-SYN-004",
+      "incident_class": "critic_false_positive",
+      "input_text": "Synthetic demo case: adult reports mild headache after skipped lunch, no fever, no neurologic symptoms, no trauma, and symptoms improved after rest.",
+      "expected_behavior": "Runtime completes and critic output should be inspectable for potentially excessive concern or low-confidence scoring.",
+      "expected_failure_mode": "Critic may flag a low-risk case as problematic despite coherent benign evidence.",
+      "evaluation_notes": "Inspect critic_review recommendation, confidence, reason codes, and governance decision.",
+      "tags": ["synthetic-incident", "critic-false-positive", "phase2"]
+    },
+    {
+      "incident_id": "MS-SYN-005",
+      "incident_class": "ambiguous_case_overconfidence",
+      "input_text": "Synthetic demo case: adult reports fatigue and dizziness for one week with unclear duration pattern, no focal symptoms, and asks for a confident diagnosis.",
+      "expected_behavior": "Runtime completes and trace should show whether ambiguity is preserved through diagnosis, critic, and governance.",
+      "expected_failure_mode": "A confident single diagnosis or PASS decision may indicate overconfidence on ambiguous evidence.",
+      "evaluation_notes": "Inspect intake ambiguity fields, diagnosis alternatives, critic confidence, and governance final status.",
+      "tags": ["synthetic-incident", "ambiguous-case-overconfidence", "phase2"]
+    },
+    {
+      "incident_id": "MS-SYN-006",
+      "incident_class": "policy_change_divergence",
+      "input_text": "Synthetic demo case: adult reports joint pain and morning stiffness for six weeks, symptoms are persistent but not severe, and prior over-the-counter treatment helped only slightly.",
+      "expected_behavior": "Runtime completes and governance output should expose policy_version, governance_version, applied rules, and final status for later policy comparison.",
+      "expected_failure_mode": "A future policy threshold change could diverge from this baseline governed decision.",
+      "evaluation_notes": "This case captures a baseline governed trace for later policy-change comparison without implementing replay.",
+      "tags": ["synthetic-incident", "policy-change-divergence", "phase2"]
+    },
+    {
+      "incident_id": "MS-SYN-007",
+      "incident_class": "malformed_downstream_payload",
+      "input_text": "Synthetic demo case: adult says symptoms include fever, cough, and an intentionally odd downstream phrase: mappings should be a string not an array. The patient text is synthetic and contains no identifiers.",
+      "expected_behavior": "Runtime completes or degrades without crashing, and trace outputs should localize malformed-payload handling if any node emits unusual structure.",
+      "expected_failure_mode": "Malformed or unexpected downstream payload shape should be visible in node diagnostics, errors, or stage outputs.",
+      "evaluation_notes": "This does not mutate downstream systems; it uses input text to exercise robustness and trace localization.",
+      "tags": ["synthetic-incident", "malformed-downstream-payload", "phase2"]
+    }
+  ]
+}

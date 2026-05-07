@@ -1,0 +1,135 @@
+{
+  "dataset_name": "medscribe_synthetic_incidents_phase2",
+  "dataset_version": "2026-05-07",
+  "started_at": "2026-05-07T20:15:27Z",
+  "completed_at": "2026-05-07T20:16:22Z",
+  "langsmith_project": "medscribe-phase1-runtime",
+  "incident_count": 7,
+  "passed_high_level": 6,
+  "failed_high_level": 1,
+  "summaries": [
+    {
+      "incident_id": "MS-SYN-001",
+      "incident_class": "schema_valid_semantic_failure",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:MULTIPLE_SYMPTOM_CLUSTERS,PARTIAL_MATCH_ICD_CODES,AMBIGUITY_IN_PRESENTATION,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-002",
+      "incident_class": "incorrect_icd_specificity",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:INSUFFICIENT_SYMPTOM_INFORMATION,AMBIGUITY_IN_INTAKE_DATA,NO_ICD_MATCH_FOUND,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": false,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-003",
+      "incident_class": "governance_override",
+      "runtime_status": "completed",
+      "governed_decision": "REVISE_ESCALATED",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:DIAGNOSIS_CONFLICT,ICD_CODE_MISALIGNMENT,MISSING_DURATION,LOW_DIAGNOSIS_CONSISTENCY,LOW_ICD_SPECIFICITY",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6,
+      "triage_level": "urgent",
+      "urgent_triage_detected": true,
+      "governance_ignored_triage": false,
+      "experimental_escalated_review": true,
+      "documentation_or_coding_failure": true,
+      "governance_failure_reason": "coding_or_documentation_specificity",
+      "governance_vs_triage_divergence": true,
+      "operational_interpretation": "Urgent triage was detected, while final governance failure is explained by coding/documentation specificity signals rather than direct triage urgency."
+    },
+    {
+      "incident_id": "MS-SYN-004",
+      "incident_class": "critic_false_positive",
+      "runtime_status": "completed",
+      "governed_decision": "REVISE",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:AMBIGUITY_IN_DATA,PARTIAL_MATCH_ICD,MISSING_DURATION,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-005",
+      "incident_class": "ambiguous_case_overconfidence",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:INSUFFICIENT_SYMPTOM_DATA,HIGH_AMBIGUITY_FLAG,NO_DIAGNOSES_FOUND,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6,
+      "ambiguity_detected": true,
+      "ambiguity_reasons": [
+        "low_evidence_input"
+      ],
+      "diagnosis_count": 0,
+      "critic_confidence": 0.0,
+      "critic_recommended_status": "fail",
+      "single_diagnosis_on_ambiguous_input": false,
+      "insufficient_evidence_detected": true,
+      "low_confidence_detected": true,
+      "overconfidence_observed": false,
+      "ambiguity_preserved": true,
+      "incident_behavior_classification": "ambiguity_preservation",
+      "operational_interpretation": "Ambiguity was detected and preserved through low-confidence critic scoring and a non-pass governance outcome."
+    },
+    {
+      "incident_id": "MS-SYN-006",
+      "incident_class": "policy_change_divergence",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:MISSING_SYMPTOMS,LOW_EVIDENCE_INPUT,NO_ICD_MATCH,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-007",
+      "incident_class": "malformed_downstream_payload",
+      "runtime_status": "completed",
+      "governed_decision": "REVISE_ESCALATED",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:MISSING_DURATION,PARTIAL_ICD_MATCH,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT,LOW_ICD_SPECIFICITY",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6,
+      "malformed_instruction_detected": true,
+      "malformed_payload_observed": false,
+      "incident_behavior_classification": "malformed_instruction_resilience",
+      "expected_shape": {
+        "diagnosis.diagnoses": "list",
+        "icd_mapping.mappings": "list"
+      },
+      "observed_output_shape": {
+        "diagnosis.diagnoses": "list",
+        "icd_mapping.mappings": "list"
+      },
+      "shape_validation_result": "valid_structured_outputs",
+      "malformed_payload_stage": "none",
+      "structured_outputs_valid": true,
+      "fallback_triggered_by_malformed_payload": false,
+      "operational_interpretation": "Malformed instruction language was present in the synthetic input, but downstream structured outputs remained valid and no malformed payload propagated."
+    }
+  ],
+  "langsmith_visibility": {
+    "queried": true,
+    "project": "medscribe-phase1-runtime",
+    "recent_synthetic_incident_root_count": 9,
+    "traces_appeared": true,
+    "incident_tags_metadata_expected": true,
+    "stage_outputs_visible_in_latest_trace": false
+  }
+}

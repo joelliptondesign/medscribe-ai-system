@@ -6,6 +6,7 @@ import os
 
 
 VALID_EXECUTION_MODES = {"deterministic", "hybrid"}
+DEFAULT_LANGCHAIN_PROJECT = "medscribe-phase1-runtime"
 
 
 def get_execution_mode() -> str:
@@ -23,3 +24,13 @@ def get_model_name() -> str:
     if not model:
         raise ValueError("Invalid MEDSCRIBE_MODEL: value must be a non-empty string")
     return model
+
+
+def get_langsmith_metadata() -> dict[str, str | bool]:
+    tracing_enabled = os.getenv("LANGCHAIN_TRACING_V2", "").strip().lower() in {"1", "true", "yes"}
+    return {
+        "langchain_tracing_v2": tracing_enabled,
+        "langchain_project": os.getenv("LANGCHAIN_PROJECT", DEFAULT_LANGCHAIN_PROJECT).strip(),
+        "langchain_endpoint_configured": bool(os.getenv("LANGCHAIN_ENDPOINT", "").strip()),
+        "langchain_api_key_configured": bool(os.getenv("LANGCHAIN_API_KEY", "").strip()),
+    }

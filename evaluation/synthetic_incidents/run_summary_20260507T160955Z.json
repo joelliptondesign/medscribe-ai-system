@@ -1,0 +1,97 @@
+{
+  "dataset_name": "medscribe_synthetic_incidents_phase2",
+  "dataset_version": "2026-05-07",
+  "started_at": "2026-05-07T16:09:55Z",
+  "completed_at": "2026-05-07T16:11:08Z",
+  "langsmith_project": "medscribe-phase1-runtime",
+  "incident_count": 7,
+  "passed_high_level": 7,
+  "failed_high_level": 0,
+  "summaries": [
+    {
+      "incident_id": "MS-SYN-001",
+      "incident_class": "schema_valid_semantic_failure",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:MULTIPLE_SYMPTOM_CLUSTERS,PARTIAL_MATCH_ICD_CODES,UNCLEAR_DIAGNOSIS,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-002",
+      "incident_class": "incorrect_icd_specificity",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:INSUFFICIENT_SYMPTOM_INFORMATION,AMBIGUITY_IN_INTAKE_DATA,NO_ICD_MATCH_FOUND,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-003",
+      "incident_class": "governance_override",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:DIAGNOSIS_CONFLICT,ICD_CODE_MISALIGNMENT,MISSING_DURATION,LOW_DIAGNOSIS_CONSISTENCY,LOW_ICD_SPECIFICITY",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-004",
+      "incident_class": "critic_false_positive",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:AMBIGUITY_FLAG,MISSING_FIELDS,PARTIAL_MATCH,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-005",
+      "incident_class": "ambiguous_case_overconfidence",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:INSUFFICIENT_SYMPTOM_INFORMATION,HIGH_AMBIGUITY_FLAG,NO_DIAGNOSES_PROVIDED,NO_ICD_MATCH_FOUND,LOW_DIAGNOSIS_CONSISTENCY",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-006",
+      "incident_class": "policy_change_divergence",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:MISSING_SYMPTOMS,NO_ICD_MATCH,LOW_EVIDENCE,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    },
+    {
+      "incident_id": "MS-SYN-007",
+      "incident_class": "malformed_downstream_payload",
+      "runtime_status": "completed",
+      "governed_decision": "FAIL",
+      "fallback_used": false,
+      "fallback_nodes": [],
+      "failure_localization_clue": "reason_codes:MISSING_DURATION,PARTIAL_MATCH_ICD,MULTIPLE_DIAGNOSES,LOW_DIAGNOSIS_CONSISTENCY,LOW_SYMPTOM_ALIGNMENT",
+      "high_level_expected_match": true,
+      "trace_stage_count": 6
+    }
+  ],
+  "langsmith_visibility": {
+    "queried": true,
+    "project": "medscribe-phase1-runtime",
+    "recent_synthetic_incident_root_count": 9,
+    "traces_appeared": true,
+    "incident_tags_metadata_expected": true,
+    "stage_outputs_visible_in_latest_trace": true
+  }
+}

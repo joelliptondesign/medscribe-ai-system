@@ -51,7 +51,11 @@ def invoke_json(node_name: str, prompt_text: str, payload: dict[str, Any], diagn
                         f"Input payload: {json.dumps(payload, ensure_ascii=True)}"
                     )
                 ),
-            ]
+            ],
+            config={
+                "tags": ["medscribe", f"stage:{node_name}", "hybrid-llm"],
+                "metadata": {"node_name": node_name, "model": get_model_name()},
+            },
         )
     except Exception as exc:
         if diagnostic is not None:

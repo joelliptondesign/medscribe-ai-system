@@ -10,9 +10,10 @@ from uuid import uuid4
 
 from dotenv import load_dotenv
 
-from graph.config import get_execution_mode
+from graph.config import get_execution_mode, get_langsmith_metadata
 from graph.nodes import governance_policy, triage_engine
 from graph.state import initial_state, load_schema
+from graph.tracing import trace_span
 from service import storage
 from service.tools import call_tool
 
@@ -180,6 +181,7 @@ def _build_record(
             "model_version": "unknown",
             "execution_mode": execution_mode,
             "hybrid_attempted": execution_mode == "hybrid",
+            "langsmith": get_langsmith_metadata(),
         },
         "status": status,
         "retry_count": retry_count,
@@ -237,6 +239,35 @@ def execute(
     timestamp: str | None = None,
     persist: bool = True,
 ) -> dict[str, Any]:
+    load_dotenv()
+    with trace_span(
+        "medscribe.governed_run",
+        inputs={"input_text": input_text},
+        metadata={
+            "run_id": run_id or "generated_on_execute",
+            "pipeline_version": "v1",
+            "persist": persist,
+            "trace_stages": TRACE,
+        },
+        tags=["medscribe", "governed-runtime"],
+    ) as span:
+        result = _execute_pipeline(
+            input_text,
+            run_id=run_id,
+            timestamp=timestamp,
+            persist=persist,
+        )
+        span.set_outputs(result)
+        return result
+
+
+def _execute_pipeline(
+    input_text: str,
+    *,
+    run_id: str | None = None,
+    timestamp: str | None = None,
+    persist: bool = True,
+) -> dict[str, Any]:
     if not isinstance(input_text, str) or not input_text.strip():
         raise ValueError("input_text must be a non-empty string")
 
@@ -262,7 +293,15 @@ def execute(
 
     try:
         stage_start = time.perf_counter()
-        _merge_state(state, call_tool("parse_input", state))
+        with trace_span(
+            "medscribe.intake_parser",
+            inputs={"raw_input": normalized_input},
+            metadata={"stage": "intake_parser", "run_id": run_id, "execution_mode": execution_mode},
+            tags=["medscribe", "stage:intake_parser"],
+        ) as span:
+            update = call_tool("parse_input", state)
+            span.set_outputs(update)
+            _merge_state(state, update)
         parse_ms = _elapsed_ms(stage_start, time.perf_counter())
     except Exception as exc:
         error = str(exc)
@@ -288,8 +327,24 @@ def execute(
 
     try:
         stage_start = time.perf_counter()
-        _merge_state(state, triage_engine.run(state))
-        _merge_state(state, call_tool("generate_diagnosis", state))
+        with trace_span(
+            "medscribe.triage_engine",
+            inputs={"intake_data": state.get("intake_data", {})},
+            metadata={"stage": "triage_engine", "run_id": run_id, "execution_mode": execution_mode},
+            tags=["medscribe", "stage:triage_engine"],
+        ) as span:
+            update = triage_engine.run(state)
+            span.set_outputs(update)
+            _merge_state(state, update)
+        with trace_span(
+            "medscribe.diagnosis_engine",
+            inputs={"intake_data": state.get("intake_data", {}), "triage": state.get("triage", {})},
+            metadata={"stage": "diagnosis_engine", "run_id": run_id, "execution_mode": execution_mode},
+            tags=["medscribe", "stage:diagnosis_engine"],
+        ) as span:
+            update = call_tool("generate_diagnosis", state)
+            span.set_outputs(update)
+            _merge_state(state, update)
         diagnosis_ms = _elapsed_ms(stage_start, time.perf_counter())
     except Exception as exc:
         error = str(exc)
@@ -315,7 +370,15 @@ def execute(
 
     try:
         stage_start = time.perf_counter()
-        _merge_state(state, call_tool("map_icd", state))
+        with trace_span(
+            "medscribe.icd_mapper",
+            inputs={"diagnoses": state.get("diagnoses", [])},
+            metadata={"stage": "icd_mapper", "run_id": run_id, "execution_mode": execution_mode},
+            tags=["medscribe", "stage:icd_mapper"],
+        ) as span:
+            update = call_tool("map_icd", state)
+            span.set_outputs(update)
+            _merge_state(state, update)
         mapping_ms = _elapsed_ms(stage_start, time.perf_counter())
     except Exception as exc:
         error = str(exc)
@@ -341,7 +404,15 @@ def execute(
 
     try:
         stage_start = time.perf_counter()
-        _merge_state(state, call_tool("score_case", state))
+        with trace_span(
+            "medscribe.critic",
+            inputs={"icd_mappings": state.get("icd_mappings", [])},
+            metadata={"stage": "critic", "run_id": run_id, "execution_mode": execution_mode},
+            tags=["medscribe", "stage:critic"],
+        ) as span:
+            update = call_tool("score_case", state)
+            span.set_outputs(update)
+            _merge_state(state, update)
         scoring_ms = _elapsed_ms(stage_start, time.perf_counter())
     except Exception as exc:
         error = str(exc)
@@ -366,7 +437,42 @@ def execute(
         raise
 
     try:
-        _merge_state(state, governance_policy.run(state))
+        with trace_span(
+            "medscribe.governance_policy",
+            inputs={"critic_review": state.get("critic_review", {})},
+            metadata={
+                "stage": "governance_policy",
+                "run_id": run_id,
+                "execution_mode": execution_mode,
+                "governance_inputs_used": [
+                    "critic_review.diagnosis_consistency_score",
+                    "critic_review.symptom_alignment_score",
+                    "critic_review.icd_specificity_score",
+                    "critic_review.confidence",
+                    "critic_review.recommended_status",
+                    "critic_review.reason_codes",
+                ],
+                "governance_inputs_ignored": [
+                    "intake_data.symptoms",
+                    "intake_data.severity_descriptors",
+                    "intake_data.duration",
+                    "triage.level",
+                    "triage.rationale",
+                    "diagnoses",
+                    "icd_mappings",
+                ],
+                "upstream_context_summary": {
+                    "triage_level": state.get("triage", {}).get("level"),
+                    "symptom_count": len(state.get("intake_data", {}).get("symptoms", [])),
+                    "diagnosis_count": len(state.get("diagnoses", [])),
+                    "icd_mapping_count": len(state.get("icd_mappings", [])),
+                },
+            },
+            tags=["medscribe", "stage:governance_policy"],
+        ) as span:
+            update = governance_policy.run(state)
+            span.set_outputs(update)
+            _merge_state(state, update)
     except Exception as exc:
         error = str(exc)
         failed_stage = "governance_policy"
