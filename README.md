@@ -1,127 +1,146 @@
-# MedScribe: Governed AI System Reliability Workflows
+# MedScribe: Production-Style AI Reliability Engineering
 
-MedScribe is a reliability-focused AI systems engineering project that makes LLM behavior measurable, inspectable, and governed inside a structured execution pipeline. It combines a multi-stage LLM workflow, persisted run artifacts, offline evaluation, fine-tuning comparisons, LangSmith observability, synthetic incident testing, trace-driven RCA, and deterministic governance controls.
+MedScribe is a practical AI systems engineering project for building, observing, evaluating, and governing a multi-stage LLM workflow. It is intentionally framed around operational reliability rather than model novelty: trace-driven debugging, structured evaluation, governance controls, synthetic incidents, regression analysis, and the tradeoffs between regenerated reruns and controlled comparison.
 
-The project is built around a practical AI engineering question: how do you turn raw model outputs into measurable system behavior that can be evaluated, debugged, compared, and governed?
+The system uses synthetic, non-PHI medical-style inputs to exercise realistic AI operations workflows. It is not a clinical product and does not claim production clinical readiness.
 
-Current verified artifacts show:
+## Project Overview
 
-- Fine-tuned v2 ICD mapping reached 95.83% mapping accuracy on the Phase 1B comparison dataset.
-- Fine-tuned v1 and v2 preserved 100.00% schema validity.
-- The governed layer reached 100.00% policy compliance and 100.00% decision stability on the latest persisted governed comparison run.
-- Hybrid synthetic incident runs produced hosted LangSmith traces with nested runs, stage outputs, child model spans, token usage, cost visibility, and realistic latency.
+MedScribe turns unstructured intake text into a governed, auditable workflow:
 
-Values come from `evaluation/icd_eval_v2_comparison.json`, `evaluation/icd_eval_results_governed.json`, and the persisted evaluation summaries under `evaluation/`.
+```text
+Input
+  -> Intake Parser
+  -> Triage Engine
+  -> Diagnosis Engine
+  -> ICD Mapper
+  -> Critic
+  -> Governance Policy
+  -> Persisted Artifacts + LangSmith Traces
+```
 
-MedScribe uses synthetic, non-PHI data. It is not a production clinical system.
+The repository demonstrates:
+
+- FastAPI service runtime with persisted run artifacts
+- LangGraph orchestration for staged execution
+- hybrid LLM execution with opt-in LangSmith tracing
+- deterministic governance over model-backed stages
+- evaluation harnesses for schema validity, ICD mapping, policy compliance, and decision stability
+- synthetic incident testing for operational failure modes
+- trace-driven RCA reports and public case-study artifacts
+- regeneration-only workflow studies covering observability, runtime stabilization, regression, spillover, and policy intervention
 
 ## Why This Project Matters
 
-Modern AI systems need more than prompt quality. They need operational reliability workflows:
+Production AI systems fail in ways that do not show up in a single happy-path demo. They need operational workflows that can answer:
 
-- measurable behavior across runs
-- structured outputs and validation boundaries
-- evaluator-driven iteration
-- traceable multi-stage execution
-- governed final decisions
-- RCA workflows when behavior diverges
-- comparison discipline when model-backed stages vary
+- Did the model return valid structured output?
+- Which stage changed the payload?
+- Did token usage explain latency?
+- Did governance change because policy changed, or because upstream model output drifted?
+- Did aggregate evaluator metrics hide internal decision movement?
+- Did a local fix spill over into adjacent incident classes?
 
-MedScribe demonstrates those capabilities in a compact, auditable Python system.
+MedScribe demonstrates those questions with implementation depth: traceable runtime stages, persisted evidence, evaluation summaries, synthetic incidents, governance attribution, and regression-oriented documentation.
 
-## Controlled Experiment: Reliability Improvements
+## Controlled Experiment / Reliability Metrics
 
-| System | Schema Validity | Mapping Accuracy | Decision Stability | Policy Compliance |
-| --- | --- | --- | --- | --- |
-| Baseline | 4.17% | 0.00% | - | - |
-| Fine-Tuned (v1) | 100.00% | 83.33% | - | - |
-| Fine-Tuned (v2) | 100.00% | 95.83% | - | - |
-| Governed | - | - | 100.00% | 100.00% |
+Verified metrics are preserved from repository artifacts under `evaluation/`.
 
-The baseline failed first at structure. Fine-tuned v1 fixed schema validity but still exposed semantic mismatches. Fine-tuned v2 added targeted examples for exact ICD selection, mixed-status outputs, and cases that should remain reviewable instead of overconfident.
+| System | Schema Validity | Mapping Accuracy | Decision Stability | Policy Compliance | Source |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Baseline | 4.17% | 0.00% | - | - | `evaluation/icd_eval_summary.json` |
+| Fine-Tuned v1 | 100.00% | 83.33% | - | - | `evaluation/icd_eval_summary.json` |
+| Fine-Tuned v2 | 100.00% | 95.83% | - | - | `evaluation/icd_eval_v2_comparison.json` |
+| Governed | - | - | 100.00% | 100.00% | `evaluation/icd_eval_results_governed.json` |
+
+Fine-tuning is included as one reliability experiment, not the central thesis. The broader project focuses on what happens after a model produces output: validation, scoring, governance, traceability, regression testing, and operational RCA.
 
 ## System Overview
 
-Runtime pipeline:
-
-```text
-Input -> Intake Parser -> Triage Engine -> Diagnosis Engine -> ICD Mapper -> Critic -> Governance Policy
-```
-
-The pipeline produces:
+The pipeline produces and persists:
 
 - structured intake data
-- triage decisions
+- triage decision and rationale
 - diagnosis candidates
 - ICD mappings
-- critic scores and recommendations
-- governance-enforced final decisions
-- persisted run and evaluation artifacts
+- critic metrics and recommendation
+- deterministic governance result
+- run lifecycle status
+- comparison and evaluation artifacts
+- trace metadata and stage outputs when hybrid tracing is enabled
 
-The repo contains two main operating surfaces:
+Two execution modes are supported:
 
-- Service runtime: asynchronous execution, persisted run records, retrieval, comparison, and search.
-- Offline evaluation: dataset-driven execution, scoring, fine-tuning comparison, governed comparison, and synthetic incident testing.
+- deterministic mode for local development and predictable test execution
+- hybrid mode for model-backed stages, token/cost accounting, and hosted trace inspection
 
-## Operational Reliability Workflows
+## Operational Reliability Workflow
 
-MedScribe includes reliability workflows that mirror production AI engineering practices:
+The repository models a mature intervention sequence used in AI operations:
 
-- Synthetic incident testing: known failure modes are exercised through controlled non-PHI cases.
-- Trace-driven RCA: hosted traces and local artifacts are used to localize failures across stages.
-- Evaluator refinement: coarse summary checks are expanded into behavior-specific reporting fields.
-- Governance attribution: final decisions expose direct rule inputs, ignored upstream signals, fail drivers, and rule evaluations.
-- Policy simulation: bounded policy changes are compared against baseline governed behavior.
-- Before/after comparison workflows: incident summaries and trace outputs are used to compare behavior after targeted changes.
-- Hybrid vs deterministic execution observations: deterministic runs provide fast local behavior; hybrid runs expose model spans, token/cost accounting, and live-model variability.
+| Stage | Goal | Typical Actions | Operational Risks |
+| --- | --- | --- | --- |
+| Stage 1: Observability | Make behavior inspectable | Add trace metadata, stage timing, critic/governance snapshots, output-shape summaries | More fields can be over-interpreted as causality |
+| Stage 2: Runtime Stabilization | Reduce verbosity, token/cost spread, and output noise | Tighten prompts, set output caps, add model metadata | Semantic drift, prompt-token overhead, reduced debugging detail |
+| Stage 2.5: Regression & Spillover | Detect movement outside the target incident | Run full synthetic pack, compare decisions, reason codes, latency, token/cost | Stable aggregate metrics can hide internal drift |
+| Stage 3: Policy/Governance Intervention | Change downstream interpretation boundary | Adjust a narrow governance rule or threshold | Spillover, reviewer workload shifts, false-positive/false-negative movement |
 
-These workflows are intentionally operational. They focus on whether system behavior can be measured, explained, and compared.
+This workflow is evidence-first: observe, stabilize, regress, then intervene semantically only after blast-radius inspection.
 
-## Observability And RCA
+## Observability and RCA
 
-MedScribe integrates LangSmith tracing around the governed runtime and synthetic incident runner.
+MedScribe integrates LangSmith around the governed runtime and synthetic incident runner.
 
 Observed trace surfaces include:
 
 - synthetic incident root runs
 - nested governed runtime runs
 - stage spans for intake, triage, diagnosis, ICD mapping, critic, and governance
-- `ChatOpenAI` child model spans in hybrid mode
+- `ChatOpenAI` child spans in hybrid mode
 - stage inputs and outputs
-- runtime metadata and incident tags
-- token, cost, and latency visibility in hybrid runs
+- incident metadata and run IDs
+- token, cost, and latency data
 - governance attribution metadata
 
-The RCA workflow uses traces to answer operational questions:
+RCA workflows use these traces to inspect:
 
-- Did the runtime complete or fall back?
-- Which stage changed the structured payload?
-- Did the model return valid structured output?
-- Did critic scoring match the evidence?
-- Which governance rule drove the final status?
-- Did reporting semantics match runtime behavior?
-- Did an apparent comparison difference come from policy logic or upstream drift?
+- fallback and degraded execution paths
+- structured-output validity
+- stage-level payload drift
+- critic metric changes
+- governance rule evaluations
+- token/cost versus latency relationships
+- policy metadata versus policy-causal attribution
 
 ## Synthetic Incident Testing
 
-The synthetic incident pack exercises reliability and debugging behaviors, not production clinical coverage.
+Synthetic incidents are non-PHI operational test cases. They are designed to exercise reliability and debugging behavior, not clinical coverage.
 
-Current incident classes include:
+| Incident | Operational Theme | Key Finding |
+| --- | --- | --- |
+| `MS-SYN-001` | Schema-valid semantic failure | Valid JSON can still miss the clinically important emphasis. |
+| `MS-SYN-002` | ICD specificity and latency/token anomaly | Same-token triage spans showed materially different latency; later runtime changes complicated historical reproduction. |
+| `MS-SYN-003` | Governance override | Urgent triage and coding/documentation failure can diverge. |
+| `MS-SYN-004` | Critic false positive | Representation loss can amplify caution downstream. |
+| `MS-SYN-005` | Ambiguity / overconfidence | Ambiguous evidence should remain reviewable rather than overconfident. |
+| `MS-SYN-006` | Policy-change divergence | Regenerated reruns made policy attribution visible but not causally isolated. |
+| `MS-SYN-007` | Malformed downstream payload resilience | Malformed instruction language did not propagate as malformed structured output in inspected runs. |
 
-- Schema-valid semantic failure: JSON shape can be valid while semantics remain wrong.
-- ICD specificity mismatch: coding specificity can drive critic and governance outcomes.
-- Governance override: urgent triage can coexist with documentation or coding failure.
-- Critic false-positive: low-risk narrative context can be weakened by structured representation loss and downstream broadening.
-- Ambiguity / overconfidence: ambiguous evidence should not become an unqualified confident diagnosis.
-- Policy-change divergence: policy metadata is visible, but causal comparison requires frozen upstream replay.
-- Malformed-instruction resilience: malformed instruction text did not propagate as malformed downstream structure in inspected runs.
-- Token/cost visibility workflows: deterministic synthetic runs lacked model accounting; hybrid runs exposed model spans, tokens, cost, and realistic latency.
+The synthetic pack supports trace-driven RCA, regression checks, spillover analysis, and operational comparison after runtime or governance changes.
 
-The latest synthetic summary includes behavior-specific reporting fields for several incidents, such as ambiguity preservation, representation-loss caution amplification, malformed payload observation, and governance-vs-triage divergence.
+## Evaluation and Governance
 
-## Governed Decision Pipeline
+Evaluation surfaces include:
 
-Governance is deterministic and rule-based. It consumes critic metrics and recommendations, then applies policy thresholds from `governance/policy_rules.json`.
+- ICD mapping comparison
+- schema validity scoring
+- governed pipeline comparison
+- synthetic incident high-level matching
+- behavior-specific synthetic reporting
+- smoke and lifecycle tests
+
+Governance is deterministic and rule-based. It consumes critic metrics and recommendations, then applies thresholds from `governance/policy_rules.json`.
 
 The governance layer records:
 
@@ -132,73 +151,59 @@ The governance layer records:
 - escalation requirement
 - reason codes
 - inputs used
-- upstream signals ignored as direct governance inputs
+- upstream inputs ignored as direct governance inputs
 - fail drivers
 - rule evaluations
 - upstream context summary
 
-This makes final decisions inspectable without changing the underlying model output.
+This makes final decisions inspectable without treating raw model output as the final authority.
 
-## What This Demonstrates For Production AI Systems
+## Replay & Regeneration Findings
 
-MedScribe demonstrates core AI systems engineering capabilities:
+Phase 4 explored regeneration-only debugging across policy-divergence and latency/token incidents.
 
-- AI reliability engineering: behavior is measured through datasets, summaries, and trace artifacts.
-- Evaluation-loop design: failures produce targeted examples, comparisons, and reporting improvements.
-- Trace-driven debugging: multi-stage behavior can be inspected from raw input through governance.
-- Governed decision pipelines: model outputs are not accepted as final decisions without critic and policy layers.
-- Measurable AI behavior: schema validity, mapping accuracy, stability, compliance, and incident summaries are persisted.
-- Operational introspection: traces expose stage outputs, model spans, metadata, diagnostics, and governance attribution.
-- Structured-output validation: node normalizers enforce expected output shapes and fallback paths.
-- Debugging multi-stage AI systems: RCA artifacts show how upstream representation loss can affect downstream scoring.
-- Observability-aware development: instrumentation and reporting were improved without changing runtime semantics.
-- Production-style RCA workflows: investigations separate symptoms, code paths, trace evidence, hypotheses, fix surfaces, and validation strategy.
+Operational findings:
 
-## Example: Before vs After Fine-Tuning
+- Regenerated reruns are useful for live operational realism.
+- Isolated reruns reduce pack-level noise but do not create replay.
+- Observability improves inspection speed but does not prove causality.
+- Runtime stabilization can reduce verbosity while shifting semantic distributions.
+- Regression runs must inspect incident-level decisions, not only aggregate pass/fail counts.
+- Policy intervention can improve a target incident while spilling over to adjacent incident classes.
+- Historical latency incidents are difficult to reinterpret after runtime and governance mutations.
 
-Baseline output on the sample comparison set returned non-standard status values. For `Pharyngitis`:
+Replay/comparison limits observed:
 
-```json
-{"mappings":[{"label":"Pharyngitis","icd_code":"J02.9","icd_label":"Acute pharyngitis, unspecified","status":"active"}]}
-```
+- upstream state was not frozen
+- critic metrics and reason-code wording drifted across regenerated runs
+- same-token latency variation persisted without a trustworthy causal explanation
+- stable aggregate metrics hid internal governance movement
+- current reruns reflected the current runtime, not necessarily the historical runtime
 
-Fine-tuned v2 on the same input returned valid JSON in the required format:
+Artifact-assisted workflows previously improved clarity by holding upstream artifacts constant. Regeneration-only workflows were better for current-state realism, weaker for controlled causal comparison.
 
-```json
-{"mappings":[{"label":"Pharyngitis","icd_code":"J02.9","icd_label":"Acute pharyngitis, unspecified","status":"OK"}]}
-```
+## Production-Style Engineering Practices
 
-Governed outcome on the latest Phase 1B comparison run: policy compliance was `1.00`, decision stability was `1.00`, escalation rate was `1.00`, and override rate was `0.00`.
+This repository demonstrates production-relevant engineering practices:
 
-## Technical Proof Surface
+- asynchronous FastAPI runtime
+- LangGraph staged orchestration
+- schema-oriented node contracts
+- fallback diagnostics
+- persisted run records
+- retrieval, comparison, and search surfaces
+- deterministic governance layer
+- opt-in hybrid model execution
+- LangSmith trace instrumentation
+- evaluation datasets and scored artifacts
+- synthetic incident pack
+- regression and spillover reports
+- public RCA case studies
+- test coverage for edge cases, execution modes, hybrid opt-in, and run lifecycle
 
-A reviewer can verify the core reliability results from repo artifacts:
+The project is intentionally bounded: it demonstrates reliability workflows with synthetic data rather than claiming production healthcare deployment.
 
-- `evaluation/icd_eval_summary.json`
-- `evaluation/full_system_comparison.json`
-- `evaluation/icd_eval_v2_comparison.json`
-- `evaluation/icd_eval_scale_summary.json`
-- `evaluation/icd_eval_results_governed.json`
-- `fine_tuning/sample_outputs.json`
-- `fine_tuning/sample_outputs_v2.json`
-- `fine_tuning/fine_tune_job.json`
-- `fine_tuning/fine_tune_job_v2.json`
-- `evaluation/synthetic_incidents/last_run_summary.json`
-
-Selected public RCA case studies are under `docs/case_studies/`. The curated ICD specificity evaluator case study shows how trace evidence, critic signals, governance output, and synthetic incident reporting were used to correct an evaluator mismatch without changing runtime behavior.
-
-## Tech Stack
-
-- Python
-- FastAPI
-- LangGraph
-- LangSmith tracing
-- OpenAI fine-tuning and inference
-- JSON / JSONL artifact storage
-- Custom evaluation framework
-- Deterministic governance policy layer
-
-## Architecture
+## Technical Architecture
 
 Primary service boundary:
 
@@ -207,31 +212,29 @@ Primary service boundary:
 - `service/run_manager.py`: execution orchestration
 - `service/storage.py`: runtime artifact persistence
 - `service/retrieval.py`: stored-run search and retrieval
+- `service/tools.py`: tool-call surface
 
 Pipeline implementation:
 
-- `graph/state.py`: shared state
-- `graph/graph_builder.py`: graph definition
-- `graph/nodes/intake_parser.py`
-- `graph/nodes/triage_engine.py`
-- `graph/nodes/diagnosis_engine.py`
-- `graph/nodes/icd_mapper.py`
-- `graph/nodes/critic.py`
-- `graph/nodes/governance_policy.py`
-- `graph/tracing.py`: fail-open trace wrapper and output capture
+- `graph/graph_builder.py`: LangGraph pipeline definition
+- `graph/state.py`: shared workflow state
+- `graph/config.py`: execution mode and model configuration
 - `graph/llm_client.py`: hybrid LLM invocation surface
+- `graph/tracing.py`: fail-open trace wrapper and output capture
+- `graph/nodes/`: intake, triage, diagnosis, ICD mapping, critic, governance
 
-Evaluation and proof artifacts:
+Evaluation and evidence:
 
 - `evaluation/eval_runner.py`
 - `evaluation/score_runner.py`
+- `evaluation/run_icd_eval.py`
+- `evaluation/run_governed_pipeline.py`
 - `evaluation/run_synthetic_incidents.py`
-- `evaluation/`
-- `fine_tuning/`
+- `evaluation/synthetic_incidents/`
+- `docs/case_studies/`
 - `runs/`
-- `docs/`
 
-## API
+## API Surface
 
 Main endpoints:
 
@@ -250,62 +253,31 @@ Supported tool calls:
 - `map_icd`
 - `score_case`
 
-## Example Run Artifact
+Example request:
 
-```json
-{
-  "run_id": "example-run",
-  "status": "completed",
-  "input": "Patient reports fever and sore throat.",
-  "diagnosis": {
-    "diagnoses": ["Pharyngitis"],
-    "triage": {
-      "level": "home_care",
-      "rationale": "Symptoms fit a simple upper-respiratory pattern."
-    }
-  },
-  "icd_mapping": {
-    "mappings": [
-      {
-        "label": "Pharyngitis",
-        "icd_code": "J02.9",
-        "icd_label": "Acute pharyngitis, unspecified",
-        "status": "OK"
-      }
-    ]
-  },
-  "scores": {
-    "diagnosis_consistency_score": 1.0,
-    "symptom_alignment_score": 1.0,
-    "icd_specificity_score": 1.0,
-    "recommended_status": "pass",
-    "confidence": 1.0
-  },
-  "decision": "PASS",
-  "timing": {
-    "total_ms": 1280
-  }
-}
+```bash
+curl -X POST http://127.0.0.1:8000/evaluate \
+  -H "Content-Type: application/json" \
+  -d '{"input_text":"I have had fever, cough, and sore throat for two days."}'
 ```
 
 ## Running The System
+
+Install and start the API:
 
 ```bash
 pip install -r requirements.txt
 uvicorn service.main:app --reload
 ```
 
-Optional local verification:
+Basic local checks:
 
 ```bash
 curl http://127.0.0.1:8000/
 curl http://127.0.0.1:8000/openapi.json
-curl -X POST http://127.0.0.1:8000/evaluate \
-  -H "Content-Type: application/json" \
-  -d '{"input_text":"I have had fever, cough, and sore throat for two days."}'
 ```
 
-Offline evaluation flow:
+Offline evaluation:
 
 ```bash
 python evaluation/eval_runner.py
@@ -325,51 +297,36 @@ Hybrid traced synthetic run, when credentials are configured:
 MEDSCRIBE_EXECUTION_MODE=hybrid LANGCHAIN_TRACING_V2=true python evaluation/run_synthetic_incidents.py
 ```
 
-## Security And Safety Considerations
+Selected verification:
 
-- This system uses synthetic, non-PHI data.
-- It is not intended for clinical use or production PHI workflows.
-- It is designed for reliability, evaluation, governance, and observability experimentation.
+```bash
+python tests/test_execution_mode.py
+python tests/test_hybrid_mode_opt_in.py
+python tests/test_run_lifecycle.py
+```
 
-### Input Validation
+## Safety and Scope
 
-A lightweight input validation layer rejects common sensitive identifiers at the API boundary. The current checks cover email addresses, phone numbers, SSN-like patterns, and date-of-birth formats.
+MedScribe is a synthetic reliability engineering project.
 
-Verified behavior:
+Scope boundaries:
 
-- unsafe inputs -> HTTP 400 rejected, no pipeline execution, no run created
-- safe inputs -> normal execution path, run created
-
-Examples:
-
-- Unsafe input: `Contact me at john@example.com` -> rejected with 400
-- Safe input: `I have a headache and mild fever` -> accepted, run created
-
-### Threat Model
-
-Trust boundaries:
-
-- User input -> untrusted
-- LLM output -> untrusted until parsed, normalized, evaluated, and governed
-- Persisted artifacts -> sensitive
-
-Primary risks:
-
-- accidental PHI input
-- malformed or adversarial input
-- secret leakage
-- misuse of model outputs
-- over-trust in model-generated clinical text
+- synthetic, non-PHI data only
+- not intended for clinical use
+- not a production PHI workflow
+- not a substitute for clinical review
+- not a production security or access-control implementation
 
 Current controls:
 
 - structured schema enforcement
 - node-specific normalization
+- fallback diagnostics
 - critic scoring layer
 - deterministic governance layer
 - input validation demo layer
 - persisted artifacts for auditability
-- LangSmith trace output sanitization
+- trace instrumentation and metadata
 
 Known gaps:
 
@@ -378,4 +335,4 @@ Known gaps:
 - no adversarial security hardening
 - no deterministic replay harness for causal policy comparison
 
-Basic input validation is included for demonstration purposes and does not replace production-grade safeguards.
+The project is best read as a compact proof of operational AI engineering discipline: make behavior observable, evaluate it with artifacts, govern it deterministically, test incidents synthetically, and document uncertainty when regenerated workflows cannot provide causal proof.

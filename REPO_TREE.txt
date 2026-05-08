@@ -1,10 +1,10 @@
 Public repository file inventory
 
-REPO_TREE.txt
 .env.example
 .gitignore
 FREEZE_MANIFEST.json
 README.md
+REPO_TREE.txt
 SHA256SUMS.txt
 data/icd_lookup.json
 data/runs.jsonl
