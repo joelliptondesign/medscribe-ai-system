@@ -402,6 +402,77 @@ def _critic_false_positive_reporting(case: dict[str, Any], record: dict[str, Any
     }
 
 
+def _canonical_reason_family(reason_code: str) -> str:
+    code = reason_code.upper()
+    if "SYMPTOM" in code or "EVIDENCE" in code or "INSUFFICIENT" in code or "AMBIGUITY" in code:
+        return "input_evidence_or_symptom_gap"
+    if "DIAGNOS" in code:
+        return "diagnosis_gap"
+    if "ICD" in code:
+        return "icd_mapping_gap"
+    if "CONFIDENCE" in code:
+        return "critic_confidence_gap"
+    return "other"
+
+
+def _policy_divergence_reporting(record: dict[str, Any]) -> dict[str, Any]:
+    parsed = record.get("parsed_input", {})
+    diagnosis = record.get("diagnosis", {})
+    scores = record.get("scores", {})
+    summary = record.get("summary", {})
+    observability = record.get("operational_observability", {})
+    timing = record.get("timing", {})
+    reason_codes = [str(code) for code in summary.get("reason_codes", [])]
+    critic_reason_codes = [str(code) for code in scores.get("reason_codes", [])]
+    canonical_families = sorted({_canonical_reason_family(code) for code in reason_codes})
+    triage = diagnosis.get("triage", {})
+    return {
+        "policy_version": summary.get("policy_version"),
+        "governance_version": summary.get("governance_version"),
+        "critic_metric_snapshot": {
+            "diagnosis_consistency_score": scores.get("diagnosis_consistency_score"),
+            "symptom_alignment_score": scores.get("symptom_alignment_score"),
+            "icd_specificity_score": scores.get("icd_specificity_score"),
+            "confidence": scores.get("confidence"),
+            "recommended_status": scores.get("recommended_status"),
+        },
+        "critic_reason_codes": critic_reason_codes,
+        "governance_reason_codes": reason_codes,
+        "canonical_reason_families": canonical_families,
+        "canonical_reason_family_count": len(canonical_families),
+        "comparison_annotation": {
+            "comparison_profile": "regenerated_live_hybrid",
+            "stabilization_profile": "comparison_normalized_reporting_v1",
+            "temperature_profile": "runtime_default_temperature_zero",
+            "replay_used": False,
+            "frozen_upstream_state_used": False,
+        },
+        "reasoning_verbosity": observability.get(
+            "reasoning_verbosity",
+            {
+                "triage_rationale_words": len(str(triage.get("rationale", "")).split()),
+                "critic_summary_words": len(str(scores.get("summary", "")).split()),
+                "critic_reason_code_count": len(critic_reason_codes),
+                "governance_reason_code_count": len(reason_codes),
+            },
+        ),
+        "stage_timing_ms": observability.get("stage_timing_ms", timing),
+        "output_shape_snapshot": observability.get(
+            "output_shape_snapshot",
+            {
+                "symptom_count": len(parsed.get("symptoms", [])),
+                "diagnosis_count": len(diagnosis.get("diagnoses", [])),
+                "icd_mapping_count": len(record.get("icd_mapping", {}).get("mappings", [])),
+                "critic_reason_code_count": len(critic_reason_codes),
+            },
+        ),
+        "policy_attribution_caution": (
+            "Regenerated upstream and critic outputs are not frozen; policy metadata is visible "
+            "but policy causality is not isolated."
+        ),
+    }
+
+
 def _summarize_record(case: dict[str, Any], record: dict[str, Any] | None, error: str | None) -> dict[str, Any]:
     if record is None:
         return {
@@ -433,6 +504,8 @@ def _summarize_record(case: dict[str, Any], record: dict[str, Any] | None, error
         summary.update(_critic_false_positive_reporting(case, record))
     if case["incident_class"] == "ambiguous_case_overconfidence":
         summary.update(_ambiguous_overconfidence_reporting(record))
+    if case["incident_class"] == "policy_change_divergence":
+        summary.update(_policy_divergence_reporting(record))
     return summary
 
 

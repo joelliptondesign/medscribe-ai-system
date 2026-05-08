@@ -77,6 +77,55 @@ def _build_summary(state: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _text_word_count(value: Any) -> int:
+    if not isinstance(value, str):
+        return 0
+    return len(value.split())
+
+
+def _operational_observability_snapshot(
+    state: dict[str, Any],
+    timing: dict[str, int],
+) -> dict[str, Any]:
+    intake_data = state.get("intake_data", {})
+    triage = state.get("triage", {})
+    diagnoses = state.get("diagnoses", [])
+    icd_mappings = state.get("icd_mappings", [])
+    critic_review = state.get("critic_review", {})
+    governance_result = state.get("governance_result", {})
+    return {
+        "observability_version": "regen_stabilization_v1",
+        "comparison_profile": "regenerated_live_hybrid",
+        "stage_timing_ms": timing,
+        "reasoning_verbosity": {
+            "triage_rationale_words": _text_word_count(triage.get("rationale")),
+            "critic_summary_words": _text_word_count(critic_review.get("summary")),
+            "critic_reason_code_count": len(critic_review.get("reason_codes", [])),
+            "governance_reason_code_count": len(governance_result.get("reason_codes", [])),
+        },
+        "critic_metric_snapshot": {
+            "diagnosis_consistency_score": critic_review.get("diagnosis_consistency_score"),
+            "symptom_alignment_score": critic_review.get("symptom_alignment_score"),
+            "icd_specificity_score": critic_review.get("icd_specificity_score"),
+            "confidence": critic_review.get("confidence"),
+            "recommended_status": critic_review.get("recommended_status"),
+        },
+        "governance_snapshot": {
+            "final_status": governance_result.get("final_status"),
+            "policy_version": governance_result.get("policy_version"),
+            "governance_version": governance_result.get("governance_version"),
+            "applied_rule_count": len(governance_result.get("applied_rules", [])),
+            "reason_code_count": len(governance_result.get("reason_codes", [])),
+        },
+        "output_shape_snapshot": {
+            "symptom_count": len(intake_data.get("symptoms", [])),
+            "diagnosis_count": len(diagnoses),
+            "icd_mapping_count": len(icd_mappings),
+            "critic_reason_code_count": len(critic_review.get("reason_codes", [])),
+        },
+    }
+
+
 def _fallback_used(state: dict[str, Any]) -> bool:
     node_diagnostics = state.get("node_diagnostics")
     if not isinstance(node_diagnostics, list):
@@ -156,6 +205,7 @@ def _build_record(
     total_ms: int | None,
 ) -> dict[str, Any]:
     node_diagnostics = _diagnostic_snapshot(state)
+    timing = _timing_snapshot(parse_ms, diagnosis_ms, mapping_ms, scoring_ms, total_ms)
     return {
         "run_id": run_id,
         "timestamp": timestamp,
@@ -171,7 +221,8 @@ def _build_record(
         "scores": state.get("critic_review", {}),
         "decision": state.get("governance_result", {}).get("final_status", "FAIL"),
         "summary": _build_summary(state),
-        "timing": _timing_snapshot(parse_ms, diagnosis_ms, mapping_ms, scoring_ms, total_ms),
+        "timing": timing,
+        "operational_observability": _operational_observability_snapshot(state, timing),
         "trace": list(TRACE),
         "node_diagnostics": node_diagnostics,
         "fallback_nodes": _fallback_nodes(node_diagnostics),
@@ -248,6 +299,8 @@ def execute(
             "pipeline_version": "v1",
             "persist": persist,
             "trace_stages": TRACE,
+            "operational_observability_version": "regen_stabilization_v1",
+            "comparison_profile": "regenerated_live_hybrid",
         },
         tags=["medscribe", "governed-runtime"],
     ) as span:
