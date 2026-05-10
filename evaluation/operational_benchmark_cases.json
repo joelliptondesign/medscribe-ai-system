@@ -1,0 +1,182 @@
+[
+  {
+    "case_id": "OPS-RCM-001",
+    "title": "Routine Clean Claim Review",
+    "input_text": "Synthetic RCM note: outpatient follow-up claim for established patient. Diagnosis documentation is present, ICD code is specific, payer requested routine coding review only. No missing signature, no appeal deadline, and estimated recovery value is 185.00 USD.",
+    "operational_theme": "routine review",
+    "expected_high_level_behavior": "Complete the governed review, preserve routine handling, and avoid escalation unless policy thresholds require it.",
+    "expected_governance_status": "PASS",
+    "expected_routing_category": "routine_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "recovery_value_usd": 185,
+      "priority": "standard"
+    }
+  },
+  {
+    "case_id": "OPS-RCM-002",
+    "title": "Recoverable Missing Visit Note",
+    "input_text": "Synthetic RCM note: denial reason is missing office visit documentation. The encounter date, provider name, and diagnosis are known, but the visit note attachment is absent. Estimated recovery value is 420.00 USD.",
+    "operational_theme": "recoverable documentation gaps",
+    "expected_high_level_behavior": "Identify the documentation gap as recoverable and route for documentation completion rather than write-off.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "documentation_follow_up",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "missing_artifact": "visit_note",
+      "recovery_value_usd": 420
+    }
+  },
+  {
+    "case_id": "OPS-RCM-003",
+    "title": "Resubmit Candidate With Corrected Member ID",
+    "input_text": "Synthetic RCM note: payer rejected the claim for invalid member identifier. Registration team confirmed a corrected member ID is available. Service coding and documentation are otherwise complete. Estimated recovery value is 96.50 USD.",
+    "operational_theme": "resubmit candidates",
+    "expected_high_level_behavior": "Classify as a resubmission candidate because the operational defect is correctable without appeal narrative.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "resubmit_candidate",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "correction_available": true,
+      "recovery_value_usd": 96.5
+    }
+  },
+  {
+    "case_id": "OPS-RCM-004",
+    "title": "Appeal Candidate Medical Necessity",
+    "input_text": "Synthetic RCM note: payer denied for medical necessity. Chart includes conservative treatment history, diagnosis linkage, and provider rationale. Appeal deadline is in 18 days. Estimated recovery value is 1180.00 USD.",
+    "operational_theme": "appeal candidates",
+    "expected_high_level_behavior": "Recognize appeal potential and preserve deadline-sensitive routing with evidence summary.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "appeal_candidate",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "appeal_deadline_days": 18,
+      "recovery_value_usd": 1180
+    }
+  },
+  {
+    "case_id": "OPS-RCM-005",
+    "title": "Low Value Timely Filing Write-Off",
+    "input_text": "Synthetic RCM note: claim denied for timely filing. Filing deadline passed 210 days ago, payer has no documented exception path, and recovery value is 14.25 USD.",
+    "operational_theme": "write-off candidates",
+    "expected_high_level_behavior": "Identify low-value nonrecoverable characteristics and avoid unnecessary appeal escalation.",
+    "expected_governance_status": "PASS",
+    "expected_routing_category": "write_off_candidate",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "deadline_expired_days": 210,
+      "recovery_value_usd": 14.25
+    }
+  },
+  {
+    "case_id": "OPS-RCM-006",
+    "title": "Ambiguous Denial Evidence",
+    "input_text": "Synthetic RCM note: denial code indicates documentation issue, but the payer message alternates between missing authorization and missing operative note. The claim packet shows authorization reference but no operative note attachment list.",
+    "operational_theme": "ambiguous evidence",
+    "expected_high_level_behavior": "Preserve ambiguity, avoid overconfident final routing, and request evidence clarification.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "evidence_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "conflicting_denial_reasons": true,
+      "documentation_confidence": "medium"
+    }
+  },
+  {
+    "case_id": "OPS-RCM-007",
+    "title": "Escalation Edge Case Near Deadline",
+    "input_text": "Synthetic RCM note: high-dollar inpatient denial has appeal deadline tomorrow. Medical necessity documentation exists, but the authorization record is incomplete. Estimated recovery value is 7900.00 USD.",
+    "operational_theme": "escalation edge cases",
+    "expected_high_level_behavior": "Treat deadline and value as escalation-sensitive while preserving the authorization documentation gap.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "escalated_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "appeal_deadline_days": 1,
+      "recovery_value_usd": 7900
+    }
+  },
+  {
+    "case_id": "OPS-RCM-008",
+    "title": "Low Recovery Value Documentation Gap",
+    "input_text": "Synthetic RCM note: denial requests a corrected progress note signature. The missing signature can be obtained, but estimated recovery value is 22.00 USD and staff effort is moderate.",
+    "operational_theme": "low/high recovery value",
+    "expected_high_level_behavior": "Surface the recoverable gap and low-value tradeoff without converting it into urgent escalation.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "low_value_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "recovery_value_usd": 22,
+      "staff_effort": "moderate"
+    }
+  },
+  {
+    "case_id": "OPS-RCM-009",
+    "title": "High Recovery Value Underpayment",
+    "input_text": "Synthetic RCM note: paid claim appears underpaid against contracted rate. Allowed amount is far below expected fee schedule. Coding and documentation appear complete. Estimated additional recovery is 2450.00 USD.",
+    "operational_theme": "low/high recovery value",
+    "expected_high_level_behavior": "Route as high-value contract or underpayment review rather than clinical documentation failure.",
+    "expected_governance_status": "PASS",
+    "expected_routing_category": "underpayment_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "recovery_value_usd": 2450,
+      "contract_review_needed": true
+    }
+  },
+  {
+    "case_id": "OPS-RCM-010",
+    "title": "ICD Laterality Specificity Issue",
+    "input_text": "Synthetic RCM note: denial cites nonspecific diagnosis code. Documentation states right knee sprain, subsequent encounter, but submitted ICD did not include laterality or encounter specificity.",
+    "operational_theme": "ICD specificity issues",
+    "expected_high_level_behavior": "Identify ICD specificity issue and route for coding correction or resubmission when supported by documentation.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coding_specificity_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "icd_issue": "laterality_and_encounter",
+      "documentation_supports_specificity": true
+    }
+  },
+  {
+    "case_id": "OPS-RCM-011",
+    "title": "Modifier Missing From Procedure Claim",
+    "input_text": "Synthetic RCM note: payer denied bundled procedure line. Documentation indicates distinct procedural service on the same day, but modifier support was not submitted with the claim.",
+    "operational_theme": "modifier issues",
+    "expected_high_level_behavior": "Recognize modifier-related operational issue and avoid unrelated diagnosis escalation.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "modifier_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "modifier_issue": true,
+      "same_day_service": true
+    }
+  },
+  {
+    "case_id": "OPS-RCM-012",
+    "title": "Low Documentation Confidence Appeal Risk",
+    "input_text": "Synthetic RCM note: appeal is requested, but available chart text only says patient returned for care. No diagnosis linkage, symptom duration, or treatment rationale is present. Estimated recovery value is 640.00 USD.",
+    "operational_theme": "low documentation confidence",
+    "expected_high_level_behavior": "Mark low documentation confidence, avoid strong appeal recommendation, and route for evidence completion or reviewer judgment.",
+    "expected_governance_status": "FAIL",
+    "expected_routing_category": "insufficient_documentation_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "documentation_confidence": "low",
+      "recovery_value_usd": 640
+    }
+  }
+]

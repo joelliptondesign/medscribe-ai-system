@@ -5,6 +5,7 @@ __pycache__/
 telemetry/
 telemetry/executor_heartbeat.jsonl
 _archive_dev/telemetry/
+.local_sitrecs/
 
 # Internal operational reconnaissance artifacts
 docs/After Action Report (AAR)*

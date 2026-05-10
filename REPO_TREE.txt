@@ -8,6 +8,8 @@ REPO_TREE.txt
 SHA256SUMS.txt
 data/icd_lookup.json
 data/runs.jsonl
+docs/CHANGE_CLASSIFICATION_20260508_RUNTIME_EXPERIMENTS.md
+docs/LANGSMITH_DATASET_EXPERIMENT_POC.md
 docs/architecture.md
 docs/case_studies/rca_icd_specificity_evaluator.md
 docs/data_contracts.md
@@ -26,6 +28,8 @@ evaluation/icd_eval_scale_cases.json
 evaluation/icd_eval_scale_summary.json
 evaluation/icd_eval_summary.json
 evaluation/icd_eval_v2_comparison.json
+evaluation/langsmith_experiment_runner.py
+evaluation/operational_benchmark_cases.json
 evaluation/raw_results.json
 evaluation/run_governed_pipeline.py
 evaluation/run_icd_eval.py
