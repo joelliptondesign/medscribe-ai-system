@@ -1,182 +1,256 @@
 [
   {
-    "case_id": "OPS-RCM-001",
-    "title": "Routine Clean Claim Review",
-    "input_text": "Synthetic RCM note: outpatient follow-up claim for established patient. Diagnosis documentation is present, ICD code is specific, payer requested routine coding review only. No missing signature, no appeal deadline, and estimated recovery value is 185.00 USD.",
-    "operational_theme": "routine review",
-    "expected_high_level_behavior": "Complete the governed review, preserve routine handling, and avoid escalation unless policy thresholds require it.",
-    "expected_governance_status": "PASS",
-    "expected_routing_category": "routine_review",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "recovery_value_usd": 185,
-      "priority": "standard"
-    }
-  },
-  {
-    "case_id": "OPS-RCM-002",
-    "title": "Recoverable Missing Visit Note",
-    "input_text": "Synthetic RCM note: denial reason is missing office visit documentation. The encounter date, provider name, and diagnosis are known, but the visit note attachment is absent. Estimated recovery value is 420.00 USD.",
-    "operational_theme": "recoverable documentation gaps",
-    "expected_high_level_behavior": "Identify the documentation gap as recoverable and route for documentation completion rather than write-off.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "documentation_follow_up",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "missing_artifact": "visit_note",
-      "recovery_value_usd": 420
-    }
-  },
-  {
-    "case_id": "OPS-RCM-003",
-    "title": "Resubmit Candidate With Corrected Member ID",
-    "input_text": "Synthetic RCM note: payer rejected the claim for invalid member identifier. Registration team confirmed a corrected member ID is available. Service coding and documentation are otherwise complete. Estimated recovery value is 96.50 USD.",
-    "operational_theme": "resubmit candidates",
-    "expected_high_level_behavior": "Classify as a resubmission candidate because the operational defect is correctable without appeal narrative.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "resubmit_candidate",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "correction_available": true,
-      "recovery_value_usd": 96.5
-    }
-  },
-  {
-    "case_id": "OPS-RCM-004",
-    "title": "Appeal Candidate Medical Necessity",
-    "input_text": "Synthetic RCM note: payer denied for medical necessity. Chart includes conservative treatment history, diagnosis linkage, and provider rationale. Appeal deadline is in 18 days. Estimated recovery value is 1180.00 USD.",
-    "operational_theme": "appeal candidates",
-    "expected_high_level_behavior": "Recognize appeal potential and preserve deadline-sensitive routing with evidence summary.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "appeal_candidate",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "appeal_deadline_days": 18,
-      "recovery_value_usd": 1180
-    }
-  },
-  {
-    "case_id": "OPS-RCM-005",
-    "title": "Low Value Timely Filing Write-Off",
-    "input_text": "Synthetic RCM note: claim denied for timely filing. Filing deadline passed 210 days ago, payer has no documented exception path, and recovery value is 14.25 USD.",
-    "operational_theme": "write-off candidates",
-    "expected_high_level_behavior": "Identify low-value nonrecoverable characteristics and avoid unnecessary appeal escalation.",
-    "expected_governance_status": "PASS",
-    "expected_routing_category": "write_off_candidate",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "deadline_expired_days": 210,
-      "recovery_value_usd": 14.25
-    }
-  },
-  {
-    "case_id": "OPS-RCM-006",
-    "title": "Ambiguous Denial Evidence",
-    "input_text": "Synthetic RCM note: denial code indicates documentation issue, but the payer message alternates between missing authorization and missing operative note. The claim packet shows authorization reference but no operative note attachment list.",
-    "operational_theme": "ambiguous evidence",
-    "expected_high_level_behavior": "Preserve ambiguity, avoid overconfident final routing, and request evidence clarification.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "evidence_review",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "conflicting_denial_reasons": true,
-      "documentation_confidence": "medium"
-    }
-  },
-  {
-    "case_id": "OPS-RCM-007",
-    "title": "Escalation Edge Case Near Deadline",
-    "input_text": "Synthetic RCM note: high-dollar inpatient denial has appeal deadline tomorrow. Medical necessity documentation exists, but the authorization record is incomplete. Estimated recovery value is 7900.00 USD.",
-    "operational_theme": "escalation edge cases",
-    "expected_high_level_behavior": "Treat deadline and value as escalation-sensitive while preserving the authorization documentation gap.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "escalated_review",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "appeal_deadline_days": 1,
-      "recovery_value_usd": 7900
-    }
-  },
-  {
-    "case_id": "OPS-RCM-008",
-    "title": "Low Recovery Value Documentation Gap",
-    "input_text": "Synthetic RCM note: denial requests a corrected progress note signature. The missing signature can be obtained, but estimated recovery value is 22.00 USD and staff effort is moderate.",
-    "operational_theme": "low/high recovery value",
-    "expected_high_level_behavior": "Surface the recoverable gap and low-value tradeoff without converting it into urgent escalation.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "low_value_review",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "recovery_value_usd": 22,
-      "staff_effort": "moderate"
-    }
-  },
-  {
-    "case_id": "OPS-RCM-009",
-    "title": "High Recovery Value Underpayment",
-    "input_text": "Synthetic RCM note: paid claim appears underpaid against contracted rate. Allowed amount is far below expected fee schedule. Coding and documentation appear complete. Estimated additional recovery is 2450.00 USD.",
-    "operational_theme": "low/high recovery value",
-    "expected_high_level_behavior": "Route as high-value contract or underpayment review rather than clinical documentation failure.",
-    "expected_governance_status": "PASS",
-    "expected_routing_category": "underpayment_review",
-    "metadata": {
-      "synthetic": true,
-      "phi": false,
-      "recovery_value_usd": 2450,
-      "contract_review_needed": true
-    }
-  },
-  {
-    "case_id": "OPS-RCM-010",
-    "title": "ICD Laterality Specificity Issue",
-    "input_text": "Synthetic RCM note: denial cites nonspecific diagnosis code. Documentation states right knee sprain, subsequent encounter, but submitted ICD did not include laterality or encounter specificity.",
-    "operational_theme": "ICD specificity issues",
-    "expected_high_level_behavior": "Identify ICD specificity issue and route for coding correction or resubmission when supported by documentation.",
+    "case_id": "OPS-CDI-001",
+    "title": "Supported Laterality Coding Correction",
+    "input_text": "Synthetic CDI coding-support note: chart documents right knee sprain, subsequent encounter, with consistent assessment and plan. The submitted ICD code omitted laterality and encounter specificity. No payer outcome, reimbursement impact, or physician action is requested.",
+    "operational_theme": "insufficient ICD specificity",
+    "expected_high_level_behavior": "Identify the supported ICD specificity gap and route for coding correction review without over-escalating the case.",
     "expected_governance_status": "REVISE",
     "expected_routing_category": "coding_specificity_review",
     "metadata": {
       "synthetic": true,
       "phi": false,
       "icd_issue": "laterality_and_encounter",
-      "documentation_supports_specificity": true
+      "documentation_supports_specificity": true,
+      "boundary_case": true
     }
   },
   {
-    "case_id": "OPS-RCM-011",
-    "title": "Modifier Missing From Procedure Claim",
-    "input_text": "Synthetic RCM note: payer denied bundled procedure line. Documentation indicates distinct procedural service on the same day, but modifier support was not submitted with the claim.",
-    "operational_theme": "modifier issues",
-    "expected_high_level_behavior": "Recognize modifier-related operational issue and avoid unrelated diagnosis escalation.",
-    "expected_governance_status": "REVISE",
-    "expected_routing_category": "modifier_review",
+    "case_id": "OPS-CDI-002",
+    "title": "Unsupported Specificity Request",
+    "input_text": "Synthetic CDI coding-support note: coding queue asks whether acute systolic heart failure can be selected. The note only states heart failure history and medication refill; no acuity, type, exacerbation, exam findings, or provider assessment support the requested specificity.",
+    "operational_theme": "unsupported specificity",
+    "expected_high_level_behavior": "Avoid assigning unsupported specificity, preserve reviewability, and route for documentation insufficiency or reviewer judgment.",
+    "expected_governance_status": "FAIL",
+    "expected_routing_category": "insufficient_documentation_review",
     "metadata": {
       "synthetic": true,
       "phi": false,
-      "modifier_issue": true,
-      "same_day_service": true
+      "documentation_supports_specificity": false,
+      "documentation_confidence": "low",
+      "unsafe_pass_risk": true
     }
   },
   {
-    "case_id": "OPS-RCM-012",
-    "title": "Low Documentation Confidence Appeal Risk",
-    "input_text": "Synthetic RCM note: appeal is requested, but available chart text only says patient returned for care. No diagnosis linkage, symptom duration, or treatment rationale is present. Estimated recovery value is 640.00 USD.",
-    "operational_theme": "low documentation confidence",
-    "expected_high_level_behavior": "Mark low documentation confidence, avoid strong appeal recommendation, and route for evidence completion or reviewer judgment.",
+    "case_id": "OPS-CDI-003",
+    "title": "Borderline Sepsis Documentation",
+    "input_text": "Synthetic CDI coding-support note: encounter mentions suspected sepsis in the emergency department, fever, and broad-spectrum antibiotics. Later progress note lists localized cellulitis only; discharge summary does not confirm sepsis. Query asks whether sepsis coding is sufficiently supported.",
+    "operational_theme": "borderline documentation sufficiency",
+    "expected_high_level_behavior": "Handle the conflicting and borderline evidence conservatively, avoid PASS behavior, and route for specialist or CDI review.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "specialist_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "conflicting_documentation": true,
+      "specialist_review_expected": true,
+      "documentation_confidence": "medium"
+    }
+  },
+  {
+    "case_id": "OPS-CDI-004",
+    "title": "Recoverable Missing Lab Linkage",
+    "input_text": "Synthetic CDI coding-support note: anemia code specificity is requested. Provider documents anemia and treatment plan; lab trend is referenced but not included in the packet. No etiology or acuity is documented in the available text.",
+    "operational_theme": "recoverable documentation gaps",
+    "expected_high_level_behavior": "Identify a recoverable documentation gap and route for evidence completion before final coding specificity.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "documentation_follow_up",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "missing_artifact": "lab_trend",
+      "documentation_confidence": "medium",
+      "recoverable_gap": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-005",
+    "title": "Low Evidence Symptom-Only Note",
+    "input_text": "Synthetic CDI coding-support note: intake text says patient returned for follow-up and still feels unwell. No diagnoses, symptom duration, exam findings, treatment rationale, or ICD mapping support are present. Coding support asks for diagnosis specificity.",
+    "operational_theme": "low-evidence boundary cases",
+    "expected_high_level_behavior": "Mark the case as low evidence, avoid unsafe PASS behavior, and route for documentation insufficiency review.",
     "expected_governance_status": "FAIL",
     "expected_routing_category": "insufficient_documentation_review",
     "metadata": {
       "synthetic": true,
       "phi": false,
       "documentation_confidence": "low",
-      "recovery_value_usd": 640
+      "low_evidence_boundary": true,
+      "unsafe_pass_risk": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-006",
+    "title": "Conflicting Laterality Documentation",
+    "input_text": "Synthetic CDI coding-support note: assessment states left shoulder strain, procedure note states right shoulder injection, and coding worksheet proposes right shoulder pain. The available note does not reconcile laterality.",
+    "operational_theme": "conflicting documentation",
+    "expected_high_level_behavior": "Preserve the laterality conflict, avoid selecting a definitive code, and route to coder or CDI review.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coder_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "conflicting_documentation": true,
+      "icd_issue": "laterality_conflict",
+      "coder_review_expected": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-007",
+    "title": "Conservative Revise for Partial Specificity",
+    "input_text": "Synthetic CDI coding-support note: documentation supports pneumonia but does not identify organism, acuity, or causal linkage. Coding request asks whether a more specific pneumonia code should be used.",
+    "operational_theme": "conservative revise routing",
+    "expected_high_level_behavior": "Keep the supported generic diagnosis visible, avoid unsupported organism specificity, and route for conservative revise review.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coding_specificity_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "documentation_supports_generic_code": true,
+      "documentation_supports_specificity": false,
+      "boundary_case": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-008",
+    "title": "Low Confidence Coding Support",
+    "input_text": "Synthetic CDI coding-support note: coder proposes chronic kidney disease stage 3b. The note lists CKD, one estimated GFR value near the 3a to 3b boundary, and no trend or provider-stated stage. Query asks whether the proposed specificity is safe before review.",
+    "operational_theme": "low-confidence coding support",
+    "expected_high_level_behavior": "Treat the coding support as low confidence, preserve the boundary issue, and route for reviewer judgment before specificity is accepted.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coder_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "documentation_confidence": "low",
+      "boundary_case": true,
+      "coder_review_expected": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-009",
+    "title": "Clean Supported Specificity",
+    "input_text": "Synthetic CDI coding-support note: documentation consistently states type 2 diabetes mellitus with mild nonproliferative diabetic retinopathy without macular edema. The assessment, plan, and ophthalmology reference align with the proposed specificity.",
+    "operational_theme": "documentation sufficiency",
+    "expected_high_level_behavior": "Allow routine coding-support completion when specificity is clearly supported by consistent documentation.",
+    "expected_governance_status": "PASS",
+    "expected_routing_category": "routine_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "documentation_supports_specificity": true,
+      "documentation_confidence": "high"
+    }
+  },
+  {
+    "case_id": "OPS-CDI-010",
+    "title": "Specialist Review for Stroke Specificity",
+    "input_text": "Synthetic CDI coding-support note: neurology note references possible lacunar infarct, radiology impression says chronic small vessel ischemic change, and discharge diagnosis says dizziness. Coding request asks whether acute cerebral infarction specificity is supported.",
+    "operational_theme": "specialist-review-worthy ambiguity",
+    "expected_high_level_behavior": "Preserve specialist-review-worthy ambiguity, avoid unsupported acute stroke specificity, and route conservatively.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "specialist_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "specialist_review_expected": true,
+      "conflicting_documentation": true,
+      "unsafe_pass_risk": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-011",
+    "title": "Over-Cautious Escalation Candidate",
+    "input_text": "Synthetic CDI coding-support note: provider clearly documents acute otitis media, left ear, initial encounter. The coding request asks whether laterality specificity is supported. No conflicting text or missing artifact is present.",
+    "operational_theme": "over-cautious escalation candidates",
+    "expected_high_level_behavior": "Avoid unnecessary escalation when documentation supports the requested specificity and route as routine or supported coding review.",
+    "expected_governance_status": "PASS",
+    "expected_routing_category": "routine_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "documentation_supports_specificity": true,
+      "over_cautious_escalation_candidate": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-012",
+    "title": "Coder Review for Procedure Modifier Ambiguity",
+    "input_text": "Synthetic CDI coding-support note: same-day procedure documentation suggests distinct service, but the note does not clearly separate time, site, or clinical rationale. Coding support asks whether modifier use is sufficiently documented.",
+    "operational_theme": "coder-review-worthy cases",
+    "expected_high_level_behavior": "Identify coder-review-worthy modifier ambiguity and avoid definitive modifier support before review.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coder_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "modifier_issue": true,
+      "coder_review_expected": true,
+      "documentation_confidence": "medium"
+    }
+  },
+  {
+    "case_id": "OPS-CDI-013",
+    "title": "Recoverable Discharge Summary Gap",
+    "input_text": "Synthetic CDI coding-support note: progress notes repeatedly document acute respiratory failure with oxygen support, but the discharge summary problem list omits respiratory failure. Coding request asks whether final coding can proceed from the available packet.",
+    "operational_theme": "recoverable documentation gaps",
+    "expected_high_level_behavior": "Surface the discharge-summary gap as recoverable and route for documentation reconciliation rather than final PASS.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "documentation_follow_up",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "missing_artifact": "discharge_summary_confirmation",
+      "recoverable_gap": true,
+      "specialist_review_expected": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-014",
+    "title": "Ambiguous Principal Diagnosis Selection",
+    "input_text": "Synthetic CDI coding-support note: admission assessment lists dehydration and acute kidney injury; discharge summary lists weakness and poor intake. Documentation does not clearly identify which condition drove inpatient care. Coding request asks for principal diagnosis support.",
+    "operational_theme": "documentation ambiguity",
+    "expected_high_level_behavior": "Preserve principal-diagnosis ambiguity and route for CDI or coder review instead of choosing a principal diagnosis.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coder_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "conflicting_documentation": true,
+      "coder_review_expected": true,
+      "boundary_case": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-015",
+    "title": "Insufficient Acuity for Malnutrition",
+    "input_text": "Synthetic CDI coding-support note: nutrition screen mentions weight loss risk and diet counseling. Provider note does not document malnutrition, severity, clinical indicators, or treatment plan. Coding request asks whether severe malnutrition specificity can be used.",
+    "operational_theme": "unsupported specificity",
+    "expected_high_level_behavior": "Reject unsupported severe specificity, identify documentation insufficiency, and keep the case reviewable.",
+    "expected_governance_status": "FAIL",
+    "expected_routing_category": "insufficient_documentation_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "documentation_supports_specificity": false,
+      "documentation_confidence": "low",
+      "unsafe_pass_risk": true
+    }
+  },
+  {
+    "case_id": "OPS-CDI-016",
+    "title": "Adjacent Case Spillover Check",
+    "input_text": "Synthetic CDI coding-support note: documentation states uncomplicated urinary tract infection, organism not specified, treated with oral antibiotics. Coding request asks whether organism-specific coding should be added. No systemic infection documentation is present.",
+    "operational_theme": "adjacent-case spillover indicators",
+    "expected_high_level_behavior": "Keep the supported uncomplicated diagnosis separate from adjacent severe infection concepts and route for conservative coding review if specificity is unsupported.",
+    "expected_governance_status": "REVISE",
+    "expected_routing_category": "coding_specificity_review",
+    "metadata": {
+      "synthetic": true,
+      "phi": false,
+      "adjacent_case_spillover_watch": true,
+      "documentation_supports_generic_code": true,
+      "documentation_supports_specificity": false
     }
   }
 ]
