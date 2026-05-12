@@ -1,87 +1,138 @@
 Public repository file inventory
 
-.env.example
-.gitignore
-FREEZE_MANIFEST.json
-README.md
-REPO_TREE.txt
-SHA256SUMS.txt
-data/icd_lookup.json
-data/runs.jsonl
-docs/CHANGE_CLASSIFICATION_20260508_RUNTIME_EXPERIMENTS.md
-docs/LANGSMITH_DATASET_EXPERIMENT_POC.md
-docs/architecture.md
-docs/case_studies/rca_icd_specificity_evaluator.md
-docs/data_contracts.md
-evaluation/_legacy/aggregate_runner.py
-evaluation/dataset.json
-evaluation/eval_runner.py
-evaluation/examples/fail_example.json
-evaluation/examples/pass_example.json
-evaluation/examples/revise_example.json
-evaluation/full_system_comparison.json
-evaluation/icd_eval_cases.json
-evaluation/icd_eval_results_baseline.json
-evaluation/icd_eval_results_finetuned.json
-evaluation/icd_eval_results_governed.json
-evaluation/icd_eval_scale_cases.json
-evaluation/icd_eval_scale_summary.json
-evaluation/icd_eval_summary.json
-evaluation/icd_eval_v2_comparison.json
-evaluation/langsmith_experiment_runner.py
-evaluation/operational_benchmark_cases.json
-evaluation/raw_results.json
-evaluation/run_governed_pipeline.py
-evaluation/run_icd_eval.py
-evaluation/run_synthetic_incidents.py
-evaluation/score_runner.py
-evaluation/scored_results.json
-evaluation/synthetic_incidents/incidents.json
-evaluation/synthetic_incidents/last_run_summary.json
-examples/README.md
-examples/governed_eval_example.json
-fine_tuning/fine_tune_job.json
-fine_tuning/fine_tune_job_v2.json
-fine_tuning/icd_mapping_dataset.jsonl
-fine_tuning/icd_mapping_dataset_v2.jsonl
-fine_tuning/sample_outputs.json
-fine_tuning/sample_outputs_v2.json
-governance/policy_rules.json
-graph/config.py
-graph/diagnostics.py
-graph/graph_builder.py
-graph/llm_client.py
-graph/nodes/__init__.py
-graph/nodes/critic.py
-graph/nodes/diagnosis_engine.py
-graph/nodes/governance_policy.py
-graph/nodes/icd_mapper.py
-graph/nodes/intake_parser.py
-graph/nodes/triage_engine.py
-graph/prompt_loader.py
-graph/state.py
-graph/tracing.py
-prompts/critic_prompt.txt
-prompts/diagnosis_engine_prompt.txt
-prompts/intake_parser_prompt.txt
-prompts/triage_engine_prompt.txt
-requirements.txt
-runs/2026-03-27T18-48-53Z/scored_results.json
-runs/2026-03-27T19-13-45Z/scored_results.json
-schemas/medscribe_node_schemas.json
-scripts/dev_runner.py
-scripts/test_run_aggregator.py
-service/__init__.py
-service/api.py
-service/input_validation.py
-service/main.py
-service/retrieval.py
-service/run_aggregator.py
-service/run_manager.py
-service/schemas.py
-service/storage.py
-service/tools.py
-tests/test_edge_cases.py
-tests/test_execution_mode.py
-tests/test_hybrid_mode_opt_in.py
-tests/test_run_lifecycle.py
+Root
+- .env.example
+- .gitignore
+- FREEZE_MANIFEST.json
+- README.md
+- REPO_TREE.txt
+- SHA256SUMS.txt
+- requirements.txt
+
+Data and persisted examples
+- data/icd_lookup.json
+- data/runs.jsonl
+- runs/2026-03-27T18-48-53Z/scored_results.json
+- runs/2026-03-27T19-13-45Z/scored_results.json
+
+Documentation
+- docs/architecture.md
+- docs/data_contracts.md
+- docs/LANGSMITH_DATASET_EXPERIMENT_POC.md
+- docs/LANGSMITH_TRACE_DIAGNOSTIC_20260511.md
+- docs/LAYERED_AI_OPS_SYNTHESIS.md
+- docs/HOSTED_DENIAL_EXPERIMENT_ANALYSIS.md
+- docs/DENIAL_OPERATIONS_GRAPH.md
+- docs/CHANGE_CLASSIFICATION_20260508_RUNTIME_EXPERIMENTS.md
+- docs/ENVIRONMENT_VERIFICATION_20260511.md
+- docs/case_studies/rca_icd_specificity_evaluator.md
+
+CDI graph and runtime
+- graph/graph_builder.py
+- graph/state.py
+- graph/config.py
+- graph/llm_client.py
+- graph/tracing.py
+- graph/diagnostics.py
+- graph/prompt_loader.py
+- graph/nodes/intake_parser.py
+- graph/nodes/triage_engine.py
+- graph/nodes/diagnosis_engine.py
+- graph/nodes/icd_mapper.py
+- graph/nodes/critic.py
+- graph/nodes/governance_policy.py
+- prompts/intake_parser_prompt.txt
+- prompts/triage_engine_prompt.txt
+- prompts/diagnosis_engine_prompt.txt
+- prompts/critic_prompt.txt
+- governance/policy_rules.json
+- schemas/medscribe_node_schemas.json
+
+Denial operations graph
+- graph/denial_graph.py
+- graph/operational_alerts.py
+- graph/nodes/denials/denial_intake_parser.py
+- graph/nodes/denials/denial_classifier.py
+- graph/nodes/denials/recoverability_analyzer.py
+- graph/nodes/denials/documentation_gap_analyzer.py
+- graph/nodes/denials/routing_engine.py
+- graph/nodes/denials/governance_policy.py
+
+Service layer
+- service/main.py
+- service/api.py
+- service/run_manager.py
+- service/storage.py
+- service/retrieval.py
+- service/run_aggregator.py
+- service/tools.py
+- service/input_validation.py
+- service/schemas.py
+
+Evaluation tooling
+- evaluation/eval_runner.py
+- evaluation/score_runner.py
+- evaluation/run_icd_eval.py
+- evaluation/run_governed_pipeline.py
+- evaluation/run_synthetic_incidents.py
+- evaluation/langsmith_experiment_runner.py
+- evaluation/run_denial_ops_traces.py
+- evaluation/_legacy/aggregate_runner.py
+
+Operational benchmark corpora and outputs
+- evaluation/dataset.json
+- evaluation/operational_benchmark_cases.json
+- evaluation/denial_benchmark_cases.json
+- evaluation/synthetic_incidents/incidents.json
+- evaluation/synthetic_incidents/denial_incidents.json
+- evaluation/synthetic_incidents/last_run_summary.json
+- evaluation/icd_eval_cases.json
+- evaluation/icd_eval_scale_cases.json
+- evaluation/icd_eval_results_baseline.json
+- evaluation/icd_eval_results_finetuned.json
+- evaluation/icd_eval_results_governed.json
+- evaluation/icd_eval_summary.json
+- evaluation/icd_eval_v2_comparison.json
+- evaluation/icd_eval_scale_summary.json
+- evaluation/full_system_comparison.json
+- evaluation/raw_results.json
+- evaluation/scored_results.json
+
+LangSmith, pairwise, and routing-distribution support
+- evaluation/langsmith_experiment_runner.py
+- evaluation/run_denial_ops_traces.py
+- docs/LANGSMITH_DATASET_EXPERIMENT_POC.md
+- docs/LANGSMITH_TRACE_DIAGNOSTIC_20260511.md
+- docs/HOSTED_DENIAL_EXPERIMENT_ANALYSIS.md
+- docs/LAYERED_AI_OPS_SYNTHESIS.md
+
+Examples and fine-tuning artifacts
+- examples/README.md
+- examples/governed_eval_example.json
+- evaluation/examples/pass_example.json
+- evaluation/examples/revise_example.json
+- evaluation/examples/fail_example.json
+- fine_tuning/icd_mapping_dataset.jsonl
+- fine_tuning/icd_mapping_dataset_v2.jsonl
+- fine_tuning/fine_tune_job.json
+- fine_tuning/fine_tune_job_v2.json
+- fine_tuning/sample_outputs.json
+- fine_tuning/sample_outputs_v2.json
+
+Regression tests
+- tests/test_denial_graph.py
+- tests/test_edge_cases.py
+- tests/test_execution_mode.py
+- tests/test_hybrid_mode_opt_in.py
+- tests/test_run_lifecycle.py
+
+Development scripts
+- scripts/dev_runner.py
+- scripts/test_run_aggregator.py
+
+Public exclusions
+- .env is excluded.
+- .venv, caches, and generated bytecode are excluded.
+- .local_sitrecs/ is excluded as local-only material.
+- telemetry/ is excluded as local-only operational telemetry.
+- ignored reconnaissance and phase working notes are excluded.

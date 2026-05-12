@@ -15,5 +15,7 @@ Constraints:
 - Do not include markdown fences or commentary.
 - Required keys: level, rationale, valid_levels.
 - level must be one of: urgent, routine, home_care, escalate.
+- rationale must be one short sentence, 12 words or fewer.
+- Prefer the shortest safe routing rationale.
 - Keep routing reproducible and contract-safe.
 - Do not add speculative medical reasoning beyond the demo-safe rules.

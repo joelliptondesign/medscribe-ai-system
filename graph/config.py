@@ -26,6 +26,17 @@ def get_model_name() -> str:
     return model
 
 
+def get_model_max_tokens() -> int:
+    raw_value = os.getenv("MEDSCRIBE_MAX_TOKENS", "128").strip()
+    try:
+        max_tokens = int(raw_value)
+    except ValueError as exc:
+        raise ValueError("Invalid MEDSCRIBE_MAX_TOKENS: value must be an integer") from exc
+    if max_tokens < 64 or max_tokens > 1024:
+        raise ValueError("Invalid MEDSCRIBE_MAX_TOKENS: value must be between 64 and 1024")
+    return max_tokens
+
+
 def get_langsmith_metadata() -> dict[str, str | bool]:
     tracing_enabled = os.getenv("LANGCHAIN_TRACING_V2", "").strip().lower() in {"1", "true", "yes"}
     return {

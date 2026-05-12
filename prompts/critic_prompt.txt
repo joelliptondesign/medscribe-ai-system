@@ -17,5 +17,7 @@ Constraints:
 - Do not include markdown fences or commentary.
 - Required keys: status, findings.
 - status must be one of: pass, revise, fail.
+- findings must contain at most two short strings.
+- Use compact finding labels, not explanatory sentences.
 - Validate structure, controlled values, and demo-safe contradictions only.
 - Preserve contract-safe behavior with no extra commentary.

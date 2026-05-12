@@ -1,6 +1,6 @@
 {
   "policy_version": "policy_v1",
-  "governance_version": "governance_v1",
+  "governance_version": "governance_v2_low_evidence_boundary",
   "thresholds": {
     "diagnosis_consistency_min_for_pass": 0.75,
     "diagnosis_consistency_min_for_revise": 0.5,
@@ -21,6 +21,7 @@
     "confidence_pass": "RULE_CONFIDENCE_PASS",
     "confidence_revise": "RULE_CONFIDENCE_REVISE",
     "critic_recommendation_fail": "RULE_CRITIC_RECOMMENDATION_FAIL",
-    "critic_recommendation_revise": "RULE_CRITIC_RECOMMENDATION_REVISE"
+    "critic_recommendation_revise": "RULE_CRITIC_RECOMMENDATION_REVISE",
+    "low_evidence_boundary_revise": "RULE_LOW_EVIDENCE_BOUNDARY_REVISE"
   }
 }

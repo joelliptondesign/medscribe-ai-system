@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,7 @@ from dotenv import load_dotenv
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DATASET_PATH = REPO_ROOT / "evaluation" / "synthetic_incidents" / "incidents.json"
+DENIAL_DATASET_PATH = REPO_ROOT / "evaluation" / "synthetic_incidents" / "denial_incidents.json"
 SUMMARY_DIR = REPO_ROOT / "evaluation" / "synthetic_incidents"
 
 if str(REPO_ROOT) not in sys.path:
@@ -25,7 +27,7 @@ def _utc_stamp() -> str:
 
 
 def _safe_case_tags(case: dict[str, Any]) -> list[str]:
-    tags = ["medscribe", "synthetic-incident", "phase2"]
+    tags = ["medscribe", "synthetic-incident", "phase2", "workflow:synthetic_incident", "contains_phi:false"]
     for tag in case.get("tags", []):
         text = str(tag).strip()
         if text and text not in tags:
@@ -33,6 +35,114 @@ def _safe_case_tags(case: dict[str, Any]) -> list[str]:
     tags.append(f"incident_id:{case['incident_id']}")
     tags.append(f"incident_class:{case['incident_class']}")
     return tags
+
+
+def _dedupe_tags(tags: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for tag in tags:
+        text = str(tag).strip()
+        if text and text not in seen:
+            seen.add(text)
+            result.append(text)
+    return result
+
+
+def _token_cost_status(record: dict[str, Any] | None, *, llm_used: bool) -> tuple[bool, str]:
+    if isinstance(record, dict):
+        metadata = record.get("metadata")
+        if isinstance(metadata, dict) and isinstance(metadata.get("token_usage"), dict) and metadata["token_usage"]:
+            return True, ""
+    if llm_used:
+        return False, "provider_metadata_unavailable"
+    return False, "no_provider_call"
+
+
+def _cdi_llm_used(record: dict[str, Any] | None) -> bool:
+    if not isinstance(record, dict):
+        return False
+    diagnostics = record.get("node_diagnostics")
+    if not isinstance(diagnostics, list):
+        return False
+    return any(
+        isinstance(diagnostic, dict) and bool(diagnostic.get("live_call_returned"))
+        for diagnostic in diagnostics
+    )
+
+
+def _incident_operational_metadata(
+    case: dict[str, Any],
+    record: dict[str, Any] | None,
+    summary: dict[str, Any],
+    *,
+    workflow: str,
+    latency_ms: int,
+) -> dict[str, Any]:
+    llm_used = False if workflow == "denial" else _cdi_llm_used(record)
+    token_available, token_unavailable_reason = _token_cost_status(record, llm_used=llm_used)
+    execution_mode = None
+    node_latency_ms = None
+    if isinstance(record, dict):
+        metadata = record.get("metadata")
+        if isinstance(metadata, dict):
+            execution_mode = metadata.get("execution_mode")
+        timing = record.get("timing")
+        if isinstance(timing, dict):
+            node_latency_ms = timing
+    return {
+        "workflow": workflow,
+        "incident_id": case.get("incident_id"),
+        "incident_class": case.get("incident_class"),
+        "routing_action": summary.get("routing_action"),
+        "governance_posture": summary.get("governance_posture"),
+        "denial_category": summary.get("denial_category"),
+        "recoverability": summary.get("recoverability"),
+        "degraded_mode": bool(summary.get("degraded_mode")),
+        "fallback_used": bool(summary.get("fallback_used")),
+        "contains_phi": False,
+        "execution_mode": execution_mode,
+        "llm_used": llm_used,
+        "token_cost_available": token_available,
+        "token_cost_unavailable_reason": token_unavailable_reason or None,
+        "latency_ms": latency_ms,
+        "node_latency_ms": node_latency_ms,
+    }
+
+
+def _incident_tags(summary: dict[str, Any], metadata: dict[str, Any], base_tags: list[str]) -> list[str]:
+    tags = list(base_tags)
+    for key in ("routing_action", "governance_posture", "incident_class"):
+        value = metadata.get(key)
+        if value:
+            tags.append(f"{key}:{str(value).strip().lower().replace(' ', '_')}")
+    tags.append(f"degraded_mode:{str(bool(metadata.get('degraded_mode'))).lower()}")
+    tags.append(f"fallback_used:{str(bool(metadata.get('fallback_used'))).lower()}")
+    if metadata.get("status"):
+        tags.append(f"status:{metadata['status']}")
+    if metadata.get("max_alert_severity"):
+        tags.append(f"severity:{metadata['max_alert_severity']}")
+    for alert in metadata.get("alerts", []):
+        if isinstance(alert, dict) and alert.get("class"):
+            tags.append(f"alert:{alert['class']}")
+    return _dedupe_tags(tags)
+
+
+def _apply_layer1_probe(case: dict[str, Any], record: dict[str, Any] | None, metadata: dict[str, Any]) -> dict[str, Any] | None:
+    probe = case.get("layer1_probe")
+    if not isinstance(probe, dict):
+        return record
+    if "latency_ms" in probe:
+        metadata["latency_ms"] = probe["latency_ms"]
+    for field in probe.get("remove_metadata_fields", []):
+        metadata.pop(str(field), None)
+    if not isinstance(record, dict):
+        return record
+    probed_record = dict(record)
+    if probe.get("malformed_payload_observed"):
+        probed_record["malformed_payload_observed"] = True
+    if probe.get("trace_incomplete"):
+        probed_record["trace"] = probed_record.get("trace", [])[:1]
+    return probed_record
 
 
 def _failure_localization(record: dict[str, Any]) -> str:
@@ -509,6 +619,75 @@ def _summarize_record(case: dict[str, Any], record: dict[str, Any] | None, error
     return summary
 
 
+def _denial_high_level_match(case: dict[str, Any], record: dict[str, Any] | None, error: str | None) -> bool:
+    if error or not record:
+        return False
+    incident_class = case["incident_class"]
+    route = str(record.get("routing_action", "")).strip().upper()
+    posture = str(record.get("governance_posture", "")).strip().upper()
+    gaps = record.get("documentation_gaps", {})
+    if not isinstance(gaps, dict):
+        gaps = {}
+    if incident_class == "malformed_denial_parsing":
+        return bool(record.get("denial_reason")) and bool(record.get("node_diagnostics"))
+    if incident_class == "ambiguity_escalation_collapse":
+        return route == "ESCALATE" and posture in {"AMBIGUOUS", "HIGH_RISK"}
+    if incident_class == "unsafe_write_off_tendency":
+        return not (route == "WRITE_OFF" and record.get("recoverability") in {"likely recoverable", "partially recoverable"})
+    if incident_class == "routing_instability":
+        return route in {"APPEAL", "RESUBMIT", "WRITE_OFF", "ESCALATE"} and bool(record.get("recoverability"))
+    if incident_class == "fallback_degraded_execution":
+        return record.get("status") in {"completed", "degraded"} and "fallback_used" in record
+    if incident_class == "conflicting_evidence_interpretation":
+        return bool(gaps.get("ambiguity")) and route == "ESCALATE"
+    if incident_class == "conflicting_evidence_collapse":
+        return bool(gaps.get("ambiguity")) and route == "ESCALATE" and posture in {"AMBIGUOUS", "HIGH_RISK"}
+    if incident_class == "unsupported_certainty_escalation":
+        return route != "APPEAL" and posture in {"LOW_EVIDENCE", "AMBIGUOUS", "LOW_CONFIDENCE"}
+    if incident_class == "ambiguity_routing_oscillation":
+        return bool(gaps.get("timeline_inconsistency")) and route == "ESCALATE"
+    if incident_class == "evidence_extraction_failure":
+        return bool(gaps.get("missing_evidence")) and route == "RESUBMIT"
+    if incident_class == "partial_documentation_instability":
+        return bool(gaps.get("partial_support")) and route != "WRITE_OFF"
+    if incident_class == "specialist_escalation_instability":
+        return bool(gaps.get("specialist_review_signal")) and route == "ESCALATE"
+    return bool(route and posture)
+
+
+def _summarize_denial_record(case: dict[str, Any], record: dict[str, Any] | None, error: str | None) -> dict[str, Any]:
+    if record is None:
+        return {
+            "incident_id": case["incident_id"],
+            "incident_class": case["incident_class"],
+            "runtime_status": "error",
+            "routing_action": "",
+            "governance_posture": "",
+            "fallback_used": False,
+            "high_level_expected_match": False,
+            "failure_localization_clue": error or "runner_error",
+        }
+    gaps = record.get("documentation_gaps", {})
+    if not isinstance(gaps, dict):
+        gaps = {}
+    return {
+        "incident_id": case["incident_id"],
+        "incident_class": case["incident_class"],
+        "runtime_status": record.get("status", ""),
+        "routing_action": record.get("routing_action", ""),
+        "governance_posture": record.get("governance_posture", ""),
+        "denial_category": record.get("denial_category", ""),
+        "recoverability": record.get("recoverability", ""),
+        "documentation_gaps": gaps,
+        "evidence_profile": record.get("evidence_profile", {}),
+        "fallback_used": bool(record.get("fallback_used")),
+        "degraded_mode": bool(record.get("degraded_mode")),
+        "node_diagnostic_count": len(record.get("node_diagnostics", [])),
+        "failure_localization_clue": "route:" + str(record.get("routing_action", "unknown")),
+        "high_level_expected_match": _denial_high_level_match(case, record, error),
+    }
+
+
 def _langsmith_visibility(project: str, expected_count: int) -> dict[str, Any]:
     if not os.getenv("LANGCHAIN_API_KEY", "").strip():
         return {"queried": False, "reason": "LANGCHAIN_API_KEY not configured"}
@@ -555,6 +734,7 @@ def run_incidents(dataset_path: Path, output_path: Path | None = None) -> dict[s
         os.environ["LANGCHAIN_TRACING_V2"] = "true"
 
     from graph.tracing import trace_span
+    from graph.operational_alerts import build_layer1_payload
     from service.run_manager import execute
 
     payload = json.loads(dataset_path.read_text(encoding="utf-8"))
@@ -565,6 +745,7 @@ def run_incidents(dataset_path: Path, output_path: Path | None = None) -> dict[s
 
     for case in incidents:
         run_id = f"synthetic-{case['incident_id'].lower()}-{started_at.replace(':', '').replace('-', '')}"
+        case_start = time.perf_counter()
         metadata = {
             "incident_id": case["incident_id"],
             "incident_class": case["incident_class"],
@@ -588,7 +769,48 @@ def run_incidents(dataset_path: Path, output_path: Path | None = None) -> dict[s
                 partial = getattr(exc, "partial_record", None)
                 if isinstance(partial, dict):
                     record = partial
+            latency_ms = max(1, int((time.perf_counter() - case_start) * 1000))
             summary = _summarize_record(case, record, error)
+            summary["output"] = summary.get("governed_decision") or summary.get("runtime_status") or "unknown"
+            summary["metadata"] = _incident_operational_metadata(
+                case,
+                record,
+                summary,
+                workflow="synthetic_incident",
+                latency_ms=latency_ms,
+            )
+            layer1_record = _apply_layer1_probe(case, record, summary["metadata"])
+            layer1 = build_layer1_payload(
+                workflow="synthetic_incident",
+                status=str(summary.get("runtime_status") or "failed"),
+                output=summary["output"],
+                metadata=summary["metadata"],
+                record=layer1_record,
+                existing_error=error,
+                expected_trace_count=6,
+            )
+            summary.update(
+                {
+                    "status": layer1["status"],
+                    "error": layer1["error"],
+                    "alerts": layer1["alerts"],
+                    "alert_count": layer1["alert_count"],
+                    "max_alert_severity": layer1["max_alert_severity"],
+                    "operational_metrics": layer1["operational_metrics"],
+                    "operational_thresholds": layer1["operational_thresholds"],
+                }
+            )
+            summary["metadata"].update(
+                {
+                    "status": layer1["status"],
+                    "error": layer1["error"],
+                    "alerts": layer1["alerts"],
+                    "alert_count": layer1["alert_count"],
+                    "max_alert_severity": layer1["max_alert_severity"],
+                    "operational_metrics": layer1["operational_metrics"],
+                }
+            )
+            summary["tags"] = _incident_tags(summary, summary["metadata"], _safe_case_tags(case))
             span.set_outputs(summary)
         summaries.append(summary)
         print(
@@ -628,12 +850,144 @@ def run_incidents(dataset_path: Path, output_path: Path | None = None) -> dict[s
     return result
 
 
+def run_denial_incidents(dataset_path: Path, output_path: Path | None = None) -> dict[str, Any]:
+    load_dotenv(REPO_ROOT / ".env")
+
+    from graph.denial_graph import run_denial_graph
+    from graph.operational_alerts import build_layer1_payload
+    from graph.tracing import trace_span
+
+    payload = json.loads(dataset_path.read_text(encoding="utf-8"))
+    incidents = payload["incidents"]
+    project = os.getenv("LANGCHAIN_PROJECT", "medscribe-phase1-runtime")
+    started_at = _utc_stamp()
+    summaries: list[dict[str, Any]] = []
+
+    for case in incidents:
+        case_start = time.perf_counter()
+        record = None
+        error = None
+        metadata = {
+            "incident_id": case["incident_id"],
+            "incident_class": case["incident_class"],
+            "dataset_name": payload["dataset_name"],
+            "dataset_version": payload["dataset_version"],
+            "contains_phi": False,
+            "workflow": "denial",
+            "expected_failure_mode": case["expected_failure_mode"],
+        }
+        with trace_span(
+            "medscribe.denial_synthetic_incident",
+            inputs={"incident_id": case["incident_id"], "case_payload": case["case_payload"]},
+            metadata=metadata,
+            tags=_dedupe_tags(_safe_case_tags(case) + ["workflow:denial"]),
+        ) as span:
+            try:
+                record = run_denial_graph(case["case_payload"])
+            except Exception as exc:
+                error = exc.__class__.__name__
+            latency_ms = max(1, int((time.perf_counter() - case_start) * 1000))
+            summary = _summarize_denial_record(case, record, error)
+            summary["output"] = (
+                summary.get("routing_action")
+                or summary.get("governance_posture")
+                or summary.get("denial_category")
+                or summary.get("runtime_status")
+                or "unknown"
+            )
+            summary["metadata"] = _incident_operational_metadata(
+                case,
+                record,
+                summary,
+                workflow="denial",
+                latency_ms=latency_ms,
+            )
+            layer1_record = _apply_layer1_probe(case, record, summary["metadata"])
+            layer1 = build_layer1_payload(
+                workflow="denial",
+                status=str(summary.get("runtime_status") or "failed"),
+                output=summary["output"],
+                metadata=summary["metadata"],
+                record=layer1_record,
+                existing_error=error,
+                expected_trace_count=6,
+            )
+            summary.update(
+                {
+                    "status": layer1["status"],
+                    "error": layer1["error"],
+                    "alerts": layer1["alerts"],
+                    "alert_count": layer1["alert_count"],
+                    "max_alert_severity": layer1["max_alert_severity"],
+                    "operational_metrics": layer1["operational_metrics"],
+                    "operational_thresholds": layer1["operational_thresholds"],
+                }
+            )
+            summary["metadata"].update(
+                {
+                    "status": layer1["status"],
+                    "error": layer1["error"],
+                    "alerts": layer1["alerts"],
+                    "alert_count": layer1["alert_count"],
+                    "max_alert_severity": layer1["max_alert_severity"],
+                    "operational_metrics": layer1["operational_metrics"],
+                }
+            )
+            summary["tags"] = _incident_tags(summary, summary["metadata"], _dedupe_tags(_safe_case_tags(case) + ["workflow:denial"]))
+            span.set_outputs(summary)
+        summaries.append(summary)
+        print(
+            f"{case['incident_id']} {case['incident_class']} "
+            f"status={summary['runtime_status']} route={summary['routing_action']} "
+            f"match={summary['high_level_expected_match']}"
+        )
+
+    passed = sum(1 for item in summaries if item["high_level_expected_match"])
+    failed = len(summaries) - passed
+    result = {
+        "dataset_name": payload["dataset_name"],
+        "dataset_version": payload["dataset_version"],
+        "workflow": "denial",
+        "started_at": started_at,
+        "completed_at": _utc_stamp(),
+        "langsmith_project": project,
+        "incident_count": len(summaries),
+        "passed_high_level": passed,
+        "failed_high_level": failed,
+        "summaries": summaries,
+        "langsmith_visibility": {"queried": False, "reason": "denial_local_incident_summary_only"},
+    }
+    if output_path is None:
+        output_path = SUMMARY_DIR / "denial_last_run_summary.json"
+    output_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    timestamped = SUMMARY_DIR / f"denial_run_summary_{started_at.replace(':', '').replace('-', '')}.json"
+    timestamped.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    print("summary_path=" + str(output_path))
+    print("timestamped_summary_path=" + str(timestamped))
+    print("incident_count=" + str(result["incident_count"]))
+    print("passed_high_level=" + str(passed))
+    print("failed_high_level=" + str(failed))
+    print("langsmith_project=" + project)
+    print("langsmith_visibility=" + json.dumps(result["langsmith_visibility"], sort_keys=True))
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run synthetic MedScribe incident pack.")
+    parser.add_argument("--workflow", default="cdi", choices=["cdi", "denial"])
     parser.add_argument("--dataset", default=str(DATASET_PATH))
     parser.add_argument("--output", default=str(SUMMARY_DIR / "last_run_summary.json"))
     args = parser.parse_args()
-    run_incidents(Path(args.dataset), Path(args.output))
+    dataset = Path(args.dataset)
+    output = Path(args.output)
+    if args.workflow == "denial":
+        if args.dataset == str(DATASET_PATH):
+            dataset = DENIAL_DATASET_PATH
+        if args.output == str(SUMMARY_DIR / "last_run_summary.json"):
+            output = SUMMARY_DIR / "denial_last_run_summary.json"
+        run_denial_incidents(dataset, output)
+    else:
+        run_incidents(dataset, output)
     return 0
 
 

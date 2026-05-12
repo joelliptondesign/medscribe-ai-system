@@ -20,4 +20,6 @@ Constraints:
 - Required keys: symptoms, duration, medications, allergies, comorbidities, severity_descriptors, missing_fields, missing_data_questions.
 - Symptoms must be an array of strings using the local demo symptom vocabulary when possible.
 - Do not make diagnoses.
+- Keep lists concise and avoid duplicate or explanatory values.
+- Limit missing_data_questions to at most three concise questions.
 - Keep output JSON-compatible and aligned to the local schema contract.

@@ -11,6 +11,7 @@ POLICY_PATH = Path(__file__).resolve().parents[2] / "governance" / "policy_rules
 EXPERIMENTAL_ESCALATED_REVIEW_STATUS = "REVISE_ESCALATED"
 EXPERIMENTAL_ESCALATION_RULE = "EXPERIMENTAL_RULE_URGENT_TRIAGE_ICD_SPECIFICITY_ESCALATED_REVIEW"
 EXPERIMENTAL_ESCALATION_REASON = "EXPERIMENTAL_URGENT_TRIAGE_CODING_REVIEW"
+LOW_EVIDENCE_BOUNDARY_REASON = "LOW_EVIDENCE_BOUNDARY_REVIEW"
 STATUS_RANK = {"PASS": 0, "REVISE": 1, EXPERIMENTAL_ESCALATED_REVIEW_STATUS: 1, "FAIL": 2}
 FAIL_RULE_IDS = {
     "diagnosis_consistency_score": "RULE_DIAGNOSIS_CONSISTENCY_FAIL",
@@ -111,6 +112,43 @@ def _experimental_escalated_review_applies(
         and recommended_status == "revise"
         and len(governance_fail_drivers) == 1
         and governance_fail_drivers[0].get("input") == "critic_review.icd_specificity_score"
+    )
+
+
+def _low_evidence_boundary_applies(
+    state: dict[str, Any],
+    governance_status: str,
+    reason_codes: list[str],
+) -> bool:
+    intake_data = state.get("intake_data", {})
+    triage_level = str(state.get("triage", {}).get("level", "")).strip().lower()
+    diagnoses = state.get("diagnoses", [])
+    icd_mappings = state.get("icd_mappings", [])
+    severity = {str(item).strip().lower() for item in intake_data.get("severity_descriptors", [])}
+    symptoms = intake_data.get("symptoms", [])
+    no_icd_match = bool(icd_mappings) and all(
+        isinstance(mapping, dict)
+        and str(mapping.get("status", "")).strip().upper() == "NO_MATCH_FOUND"
+        for mapping in icd_mappings
+    )
+    low_evidence_markers = (
+        "INSUFFICIENT",
+        "LOW_EVIDENCE",
+        "NO_ICD",
+        "NO_DIAGNOS",
+        "MISSING_SYMPTOM",
+        "AMBIGU",
+    )
+    reason_code_text = " ".join(str(code).upper() for code in reason_codes)
+    return (
+        governance_status == "FAIL"
+        and triage_level == "escalate"
+        and not symptoms
+        and not diagnoses
+        and no_icd_match
+        and "urgent" not in severity
+        and "severe" not in severity
+        and any(marker in reason_code_text for marker in low_evidence_markers)
     )
 
 
@@ -250,6 +288,27 @@ def run(state: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
+    low_evidence_boundary_applied = _low_evidence_boundary_applies(
+        state,
+        governance_status,
+        reason_codes,
+    )
+    if low_evidence_boundary_applied:
+        governance_status = "REVISE"
+        applied_rule = rule_ids["low_evidence_boundary_revise"]
+        applied_rules.append(applied_rule)
+        reason_codes.append(LOW_EVIDENCE_BOUNDARY_REASON)
+        governance_rule_evaluations.append(
+            {
+                "input": "low_evidence_boundary",
+                "value": "insufficient_evidence_no_match_nonurgent",
+                "severity": "REVISE",
+                "applied_rule": applied_rule,
+                "reason_code": LOW_EVIDENCE_BOUNDARY_REASON,
+                "bounded_policy_intervention": True,
+            }
+        )
+
     governance_result = {
         "final_status": governance_status,
         "escalation_required": governance_status in {"REVISE", "FAIL", EXPERIMENTAL_ESCALATED_REVIEW_STATUS},
@@ -262,6 +321,13 @@ def run(state: dict[str, Any]) -> dict[str, Any]:
             "applied": policy_simulation_applied,
             "experimental_status": EXPERIMENTAL_ESCALATED_REVIEW_STATUS,
             "condition": "urgent_or_escalate_triage_with_single_icd_specificity_fail_driver_and_critic_revise",
+            "preserves_escalation_required": True,
+        },
+        "low_evidence_boundary": {
+            "enabled": True,
+            "applied": low_evidence_boundary_applied,
+            "status": "REVISE",
+            "condition": "escalate_triage_without_structured_symptoms_diagnoses_or_icd_match",
             "preserves_escalation_required": True,
         },
         "governance_attribution": {

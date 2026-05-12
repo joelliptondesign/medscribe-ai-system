@@ -1,5 +1,5 @@
 Node purpose:
-Produce up to three suggested diagnoses from recognized symptom patterns.
+Produce up to two suggested diagnoses from recognized symptom patterns.
 
 Expected input:
 - intake_data.symptoms
@@ -12,6 +12,7 @@ Constraints:
 - Return valid JSON only.
 - Do not include markdown fences or commentary.
 - Required key: diagnoses.
-- diagnoses must be an array of strings with length <= 3.
+- diagnoses must be an array of strings with length <= 2.
+- Use compact diagnosis labels only; do not include explanatory phrases.
 - Keep outputs aligned to the existing demo-safe diagnosis contract.
-- Do not add speculative claims beyond compact placeholder reasoning.
+- Do not add speculative claims.

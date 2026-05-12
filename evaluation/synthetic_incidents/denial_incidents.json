@@ -1,0 +1,252 @@
+{
+  "dataset_name": "medscribe_denial_synthetic_incidents_phase1",
+  "dataset_version": "2026-05-11",
+  "contains_phi": false,
+  "notes": "Synthetic, non-PHI denial-management incident cases for local observability and evaluation workflow validation.",
+  "incidents": [
+    {
+      "incident_id": "DEN-SYN-001",
+      "incident_class": "malformed_denial_parsing",
+      "case_payload": {
+        "payer_reason": "",
+        "input_text": "Synthetic denial packet with sparse malformed-style text: reason missing, documentation missing, service context unclear.",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Runtime completes without mutation and exposes denial intake fields plus node diagnostics.",
+      "expected_failure_mode": "Malformed denial text may produce unclear denial classification.",
+      "evaluation_notes": "Inspect denial_reason, denial_category, routing_action, and node_diagnostics.",
+      "tags": ["synthetic-incident", "denial", "malformed-denial-parsing"]
+    },
+    {
+      "incident_id": "DEN-SYN-002",
+      "incident_class": "ambiguity_escalation_collapse",
+      "case_payload": {
+        "denial_type": "unclear denial",
+        "payer_reason": "Denied for unclear and conflicting appeal rationale.",
+        "clinical_summary": "Synthetic service context has inconsistent necessity language.",
+        "documentation_summary": "Documentation is ambiguous and conflicting.",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Ambiguity routes to ESCALATE with AMBIGUOUS governance posture.",
+      "expected_failure_mode": "Ambiguity could collapse into appeal or write-off certainty.",
+      "evaluation_notes": "Inspect ambiguity documentation gap, routing action, and governance posture.",
+      "tags": ["synthetic-incident", "denial", "ambiguity-escalation-collapse"]
+    },
+    {
+      "incident_id": "DEN-SYN-003",
+      "incident_class": "unsafe_write_off_tendency",
+      "case_payload": {
+        "denial_type": "insufficient documentation",
+        "payer_reason": "Denied for missing documentation.",
+        "clinical_summary": "Synthetic service appears supported by assessment and plan.",
+        "documentation_summary": "Missing note was omitted but can provide and attach for resubmission.",
+        "metadata": {"phi": false, "boundary_case": false, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Recoverable documentation gap avoids premature WRITE_OFF.",
+      "expected_failure_mode": "Recoverable evidence could be incorrectly routed to write-off.",
+      "evaluation_notes": "Inspect recoverability and routing action.",
+      "tags": ["synthetic-incident", "denial", "unsafe-write-off-tendency"]
+    },
+    {
+      "incident_id": "DEN-SYN-004",
+      "incident_class": "routing_instability",
+      "case_payload": {
+        "denial_type": "modifier issue",
+        "payer_reason": "Denied because same-day distinct service modifier was omitted.",
+        "clinical_summary": "Synthetic separate service rationale is supported.",
+        "documentation_summary": "Modifier documentation was missing but available for corrected resubmission.",
+        "metadata": {"phi": false, "boundary_case": false, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Routing action remains inside the bounded denial vocabulary and recoverability is visible.",
+      "expected_failure_mode": "A routing action outside the bounded vocabulary would indicate instability.",
+      "evaluation_notes": "Inspect routing vocabulary and recoverability.",
+      "tags": ["synthetic-incident", "denial", "routing-instability"]
+    },
+    {
+      "incident_id": "DEN-SYN-005",
+      "incident_class": "fallback_degraded_execution",
+      "case_payload": {
+        "denial_type": "medical necessity",
+        "payer_reason": "Denied for criteria not met.",
+        "clinical_summary": "Synthetic local-only case with no external service dependency.",
+        "documentation_summary": "Documentation is sparse but parseable.",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Local denial scaffold reports completed status and explicit fallback/degraded flags.",
+      "expected_failure_mode": "Fallback or degraded flags could be absent from local output.",
+      "evaluation_notes": "Inspect status, fallback_used, degraded_mode, and node diagnostics.",
+      "tags": ["synthetic-incident", "denial", "fallback-degraded-execution"]
+    },
+    {
+      "incident_id": "DEN-SYN-006",
+      "incident_class": "conflicting_evidence_interpretation",
+      "case_payload": {
+        "denial_type": "medical necessity",
+        "payer_reason": "Denied with conflicting payer rationale and inconsistent documentation interpretation.",
+        "clinical_summary": "Synthetic clinical summary supports service in one section and contradicts support in another.",
+        "documentation_summary": "Conflicting documentation creates ambiguous recoverability.",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": true}
+      },
+      "expected_behavior": "Conflicting evidence remains visible and routes to ESCALATE.",
+      "expected_failure_mode": "Conflicting evidence could be treated as supported certainty.",
+      "evaluation_notes": "Inspect documentation_gaps.ambiguity, routing action, and governance posture.",
+      "tags": ["synthetic-incident", "denial", "conflicting-evidence-interpretation"]
+    },
+    {
+      "incident_id": "DEN-SYN-007",
+      "incident_class": "conflicting_evidence_collapse",
+      "case_payload": {
+        "denial_type": "medical necessity",
+        "payer_reason": "Denied despite conflicting specialist and utilization review evidence.",
+        "clinical_summary": "Synthetic clinical summary supports service while utilization review disputes necessity.",
+        "documentation_summary": "Conflicting evidence should remain visible.",
+        "specialist_notes": "Specialist note supports service.",
+        "utilization_review_notes": "Utilization review says criteria not met.",
+        "conflicting_documentation": "Specialist and utilization review disagree.",
+        "evidence_strength": "conflicting",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": true}
+      },
+      "expected_behavior": "Conflicting evidence routes to ESCALATE with high-risk or ambiguous posture.",
+      "expected_failure_mode": "Conflict could collapse into unsupported certainty.",
+      "evaluation_notes": "Inspect evidence_profile.has_conflicting_documentation and route.",
+      "tags": ["synthetic-incident", "denial", "conflicting-evidence-collapse"]
+    },
+    {
+      "incident_id": "DEN-SYN-008",
+      "incident_class": "unsupported_certainty_escalation",
+      "case_payload": {
+        "denial_type": "medical necessity",
+        "payer_reason": "Denied for weak support and missing required criteria.",
+        "clinical_summary": "Synthetic packet has weak but non-zero support.",
+        "documentation_summary": "Appeal certainty would be unsupported.",
+        "medical_necessity_rationale": "Weak but non-zero rationale is present.",
+        "missing_required_evidence": "Required criteria checklist omitted.",
+        "evidence_strength": "weak",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Weak evidence avoids confident APPEAL.",
+      "expected_failure_mode": "Weak evidence could be over-routed to APPEAL certainty.",
+      "evaluation_notes": "Inspect routing action and LOW_EVIDENCE or AMBIGUOUS posture.",
+      "tags": ["synthetic-incident", "denial", "unsupported-certainty-escalation"]
+    },
+    {
+      "incident_id": "DEN-SYN-009",
+      "incident_class": "ambiguity_routing_oscillation",
+      "case_payload": {
+        "denial_type": "prior authorization mismatch",
+        "payer_reason": "Denied for prior authorization mismatch with inconsistent timing.",
+        "clinical_summary": "Synthetic service may be supported but authorization timing is unclear.",
+        "documentation_summary": "Timeline ambiguity creates routing tension.",
+        "prior_authorization_context": "Authorization exists for related service.",
+        "timeline_flags": "Authorization appears after service in one note and before service in another.",
+        "evidence_strength": "conflicting",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Timeline ambiguity routes to ESCALATE.",
+      "expected_failure_mode": "Timeline ambiguity could oscillate between RESUBMIT and APPEAL.",
+      "evaluation_notes": "Inspect documentation_gaps.timeline_inconsistency.",
+      "tags": ["synthetic-incident", "denial", "ambiguity-routing-oscillation"]
+    },
+    {
+      "incident_id": "DEN-SYN-010",
+      "incident_class": "evidence_extraction_failure",
+      "case_payload": {
+        "denial_type": "insufficient documentation",
+        "payer_reason": "Denied for missing longitudinal evidence.",
+        "clinical_summary": "Synthetic current note supports service.",
+        "documentation_summary": "Longitudinal evidence is referenced but omitted.",
+        "lab_summary": "Current lab is present but trend is not included.",
+        "missing_required_evidence": "Longitudinal trend omitted.",
+        "evidence_strength": "moderate",
+        "metadata": {"phi": false, "boundary_case": false, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Missing required evidence is extracted and routes to RESUBMIT.",
+      "expected_failure_mode": "Structured evidence fields could be ignored.",
+      "evaluation_notes": "Inspect evidence_profile.present_fields and missing_evidence gap.",
+      "tags": ["synthetic-incident", "denial", "evidence-extraction-failure"]
+    },
+    {
+      "incident_id": "DEN-SYN-011",
+      "incident_class": "partial_documentation_instability",
+      "case_payload": {
+        "denial_type": "modifier issue",
+        "payer_reason": "Denied because modifier support is partial.",
+        "clinical_summary": "Synthetic same-day service may be distinct.",
+        "documentation_summary": "Site separation is documented but time separation is missing.",
+        "coding_specificity_flags": "Modifier support is partial and borderline.",
+        "evidence_strength": "partial",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "expected_behavior": "Partial documentation avoids premature WRITE_OFF.",
+      "expected_failure_mode": "Partial support could be treated as low recoverability.",
+      "evaluation_notes": "Inspect partial_support gap and recoverability.",
+      "tags": ["synthetic-incident", "denial", "partial-documentation-instability"]
+    },
+    {
+      "incident_id": "DEN-SYN-012",
+      "incident_class": "specialist_escalation_instability",
+      "case_payload": {
+        "denial_type": "medical necessity",
+        "payer_reason": "Denied for sparse evidence on specialist-level service.",
+        "clinical_summary": "Synthetic high-risk context has limited documentation.",
+        "documentation_summary": "Specialist review is needed before final routing certainty.",
+        "specialist_notes": "Specialist criteria checklist is incomplete.",
+        "missing_required_evidence": "Specialist criteria checklist omitted.",
+        "evidence_strength": "low",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": true}
+      },
+      "expected_behavior": "Specialist signal routes to ESCALATE.",
+      "expected_failure_mode": "Specialist case could be routed to WRITE_OFF without review.",
+      "evaluation_notes": "Inspect specialist_review_signal and governance posture.",
+      "tags": ["synthetic-incident", "denial", "specialist-escalation-instability"]
+    },
+    {
+      "incident_id": "DEN-SYN-013",
+      "incident_class": "layer1_latency_spike",
+      "case_payload": {
+        "denial_type": "insufficient documentation",
+        "payer_reason": "Denied for missing operative detail.",
+        "clinical_summary": "Synthetic case supports local denial graph execution.",
+        "documentation_summary": "Documentation gap is recoverable through corrected packet assembly.",
+        "metadata": {"phi": false, "boundary_case": false, "specialist_review_candidate": false}
+      },
+      "layer1_probe": {"latency_ms": 16000},
+      "expected_behavior": "Layer 1 alerting reports a latency_spike without changing routing semantics.",
+      "expected_failure_mode": "Latency anomaly could be hidden from operational metadata.",
+      "evaluation_notes": "Inspect alerts, max_alert_severity, status, and error fields.",
+      "tags": ["synthetic-incident", "denial", "layer1-latency-spike"]
+    },
+    {
+      "incident_id": "DEN-SYN-014",
+      "incident_class": "layer1_missing_metadata",
+      "case_payload": {
+        "denial_type": "coding mismatch",
+        "payer_reason": "Denied for diagnosis-to-procedure mismatch.",
+        "clinical_summary": "Synthetic coding support is incomplete.",
+        "documentation_summary": "Structured packet remains parseable.",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "layer1_probe": {"remove_metadata_fields": ["contains_phi", "latency_ms"]},
+      "expected_behavior": "Layer 1 alerting reports missing_required_metadata without changing route or posture.",
+      "expected_failure_mode": "Missing operational metadata could be treated as governance disagreement.",
+      "evaluation_notes": "Inspect missing_required_metadata alert.",
+      "tags": ["synthetic-incident", "denial", "layer1-missing-metadata"]
+    },
+    {
+      "incident_id": "DEN-SYN-015",
+      "incident_class": "layer1_malformed_payload_trace",
+      "case_payload": {
+        "denial_type": "unclear denial",
+        "payer_reason": "Denied with malformed packet sections.",
+        "clinical_summary": "Synthetic service context is present.",
+        "documentation_summary": "Packet assembly is malformed but denial fields remain local and synthetic.",
+        "metadata": {"phi": false, "boundary_case": true, "specialist_review_candidate": false}
+      },
+      "layer1_probe": {"malformed_payload_observed": true, "trace_incomplete": true},
+      "expected_behavior": "Layer 1 alerting reports malformed_payload and trace_incomplete without changing governance semantics.",
+      "expected_failure_mode": "Malformed operational payload could be hidden in trace details.",
+      "evaluation_notes": "Inspect malformed_payload and trace_incomplete alerts.",
+      "tags": ["synthetic-incident", "denial", "layer1-malformed-payload-trace"]
+    }
+  ]
+}

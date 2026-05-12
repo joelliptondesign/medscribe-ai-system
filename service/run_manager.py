@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 
 from graph.config import get_execution_mode, get_langsmith_metadata
 from graph.nodes import governance_policy, triage_engine
+from graph.operational_alerts import build_layer1_payload
 from graph.state import initial_state, load_schema
 from graph.tracing import trace_span
 from service import storage
@@ -175,6 +176,10 @@ def _fallback_nodes(node_diagnostics: list[dict[str, Any]]) -> list[str]:
     ]
 
 
+def _llm_used(node_diagnostics: list[dict[str, Any]]) -> bool:
+    return any(bool(diagnostic.get("live_call_returned")) for diagnostic in node_diagnostics)
+
+
 def _fallback_reasons(node_diagnostics: list[dict[str, Any]]) -> dict[str, str]:
     reasons: dict[str, str] = {}
     for diagnostic in node_diagnostics:
@@ -203,13 +208,58 @@ def _build_record(
     mapping_ms: int | None,
     scoring_ms: int | None,
     total_ms: int | None,
-) -> dict[str, Any]:
+    ) -> dict[str, Any]:
     node_diagnostics = _diagnostic_snapshot(state)
     timing = _timing_snapshot(parse_ms, diagnosis_ms, mapping_ms, scoring_ms, total_ms)
+    final_decision = state.get("governance_result", {}).get("final_status", "FAIL")
+    llm_used = _llm_used(node_diagnostics)
+    metadata = {
+        "pipeline_version": "v1",
+        "model_version": "unknown",
+        "execution_mode": execution_mode,
+        "hybrid_attempted": execution_mode == "hybrid",
+        "langsmith": get_langsmith_metadata(),
+        "workflow": "cdi",
+        "contains_phi": False,
+        "llm_used": llm_used,
+        "token_cost_available": False,
+        "token_cost_unavailable_reason": "provider_metadata_unavailable" if llm_used else "no_provider_call",
+        "latency_ms": total_ms,
+        "node_latency_ms": timing,
+        "degraded_mode": degraded_mode,
+        "fallback_used": fallback_used,
+    }
+    layer1 = build_layer1_payload(
+        workflow="cdi",
+        status=status,
+        output=final_decision,
+        metadata=metadata,
+        record={
+            "status": status,
+            "failed_stage": failed_stage,
+            "fallback_used": fallback_used,
+            "degraded_mode": degraded_mode,
+            "trace": list(TRACE),
+            "latency_ms": total_ms,
+        },
+        existing_error=error,
+        expected_trace_count=len(TRACE),
+    )
+    metadata.update(
+        {
+            "status": layer1["status"],
+            "error": layer1["error"],
+            "alerts": layer1["alerts"],
+            "alert_count": layer1["alert_count"],
+            "max_alert_severity": layer1["max_alert_severity"],
+            "operational_metrics": layer1["operational_metrics"],
+        }
+    )
     return {
         "run_id": run_id,
         "timestamp": timestamp,
         "input": input_text,
+        "output": final_decision,
         "parsed_input": state.get("intake_data", {}),
         "diagnosis": {
             "diagnoses": state.get("diagnoses", []),
@@ -219,27 +269,27 @@ def _build_record(
             "mappings": state.get("icd_mappings", []),
         },
         "scores": state.get("critic_review", {}),
-        "decision": state.get("governance_result", {}).get("final_status", "FAIL"),
+        "decision": final_decision,
         "summary": _build_summary(state),
         "timing": timing,
+        "latency_ms": total_ms,
         "operational_observability": _operational_observability_snapshot(state, timing),
         "trace": list(TRACE),
         "node_diagnostics": node_diagnostics,
         "fallback_nodes": _fallback_nodes(node_diagnostics),
         "fallback_reasons": _fallback_reasons(node_diagnostics),
-        "metadata": {
-            "pipeline_version": "v1",
-            "model_version": "unknown",
-            "execution_mode": execution_mode,
-            "hybrid_attempted": execution_mode == "hybrid",
-            "langsmith": get_langsmith_metadata(),
-        },
-        "status": status,
+        "metadata": metadata,
+        "status": layer1["status"],
         "retry_count": retry_count,
         "failed_stage": failed_stage,
         "fallback_used": fallback_used,
         "degraded_mode": degraded_mode,
         "error": error,
+        "alerts": layer1["alerts"],
+        "alert_count": layer1["alert_count"],
+        "max_alert_severity": layer1["max_alert_severity"],
+        "operational_metrics": layer1["operational_metrics"],
+        "operational_thresholds": layer1["operational_thresholds"],
     }
 
 
@@ -302,7 +352,7 @@ def execute(
             "operational_observability_version": "regen_stabilization_v1",
             "comparison_profile": "regenerated_live_hybrid",
         },
-        tags=["medscribe", "governed-runtime"],
+        tags=["medscribe", "governed-runtime", "workflow:cdi"],
     ) as span:
         result = _execute_pipeline(
             input_text,

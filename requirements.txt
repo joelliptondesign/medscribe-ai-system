@@ -7,3 +7,4 @@ langchain-openai
 langsmith==0.4.37
 pydantic
 python-dotenv
+pytest
